@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'Ui/apparbar/myappbar.dart';
+import 'loan_appbar.dart';
 
-
-class Notification1 extends StatefulWidget {
-  const Notification1({super.key});
+class Viewloan_Activitiesandcomments extends StatefulWidget {
+  const Viewloan_Activitiesandcomments({super.key});
 
   @override
-  State<Notification1> createState() => _Notification1State();
+  State<Viewloan_Activitiesandcomments> createState() => _Viewloan_ActivitiesandcommentsState();
 }
 
-class _Notification1State extends State<Notification1> {
-
+class _Viewloan_ActivitiesandcommentsState extends State<Viewloan_Activitiesandcomments> {
   @override
   Widget build(BuildContext context) {
     var mheight= MediaQuery.of(context).size.height;
@@ -21,9 +19,9 @@ class _Notification1State extends State<Notification1> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: MyAppbar(),
+        title: Loan_appbar(),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor:Colors.white,
       body: Stack(
         children: [
           Column(
@@ -34,7 +32,7 @@ class _Notification1State extends State<Notification1> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Notification", style: TextStyle(
+                child: Text("Activities and Comments", style: TextStyle(
                     fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
               ),
               SizedBox(

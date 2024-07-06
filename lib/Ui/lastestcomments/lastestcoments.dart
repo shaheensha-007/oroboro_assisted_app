@@ -1,28 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'Ui/apparbar/myappbar.dart';
+import '../apparbar/myappbar.dart';
 
 
-class Notification1 extends StatefulWidget {
-  const Notification1({super.key});
+class Lastest_comments extends StatefulWidget {
+  const Lastest_comments({super.key});
 
   @override
-  State<Notification1> createState() => _Notification1State();
+  State<Lastest_comments> createState() => _Lastest_commentsState();
 }
 
-class _Notification1State extends State<Notification1> {
-
+class _Lastest_commentsState extends State<Lastest_comments> {
   @override
   Widget build(BuildContext context) {
     var mheight= MediaQuery.of(context).size.height;
     var mwidth= MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        shadowColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        title: MyAppbar(),
-      ),
+     appBar: AppBar(
+       shadowColor: Colors.white,
+       surfaceTintColor: Colors.white,
+       title: MyAppbar(),
+     ),
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -34,7 +32,7 @@ class _Notification1State extends State<Notification1> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Notification", style: TextStyle(
+                child: Text("Lastest Comments", style: TextStyle(
                     fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
               ),
               SizedBox(
