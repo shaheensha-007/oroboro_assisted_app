@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oroboro_assisted_app/Ui/Signup/agent_onbording/enter_pan.dart';
 import 'package:oroboro_assisted_app/modeles/Ifscmodel/IfscModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Blocs/Ifsc_bloc/ifsc_bloc.dart';
+import '../../Blocs/bankregstratin_bloc/bankregstration_bloc.dart';
+import '../../modeles/bank_registrationModel/Bank_registratioModel.dart';
 import '../Signin/signin_page.dart';
 import 'loan_application_verification.dart';
 
@@ -15,17 +19,18 @@ class Bank_registration extends StatefulWidget {
   State<Bank_registration> createState() => _Bank_registrationState();
 }
 late IfscModel veriflyifsc;
+late BankRegistratioModel bankregstrationmodel;
 String? selectedAccountType;
 final List<String> accountTypes = ['savings', 'current', 'fixed Deposit'];
 TextEditingController Accountno=TextEditingController();
 TextEditingController ifscno=TextEditingController();
 TextEditingController accountholders=TextEditingController();
-TextEditingController bankname=TextEditingController();
-TextEditingController branchname=TextEditingController();
 final accountnumberkey = GlobalKey<FormState>();
 final ifscnumberkey = GlobalKey<FormState>();
 final accountholderkey=GlobalKey<FormState>();
 bool ifscshow=false;
+String BANKNAME="";
+String branchName="";
 
 class _Bank_registrationState extends State<Bank_registration> {
 
@@ -232,8 +237,8 @@ class _Bank_registrationState extends State<Bank_registration> {
                         CircularProgressIndicator();
                       } if(state is IfscblocLoaded){
                         veriflyifsc=BlocProvider.of<IfscBloc>(context).isverifiedifsc;
-                        String BANKNAME=veriflyifsc.result!.bankDetails!.bankName.toString();
-                        String branchName=veriflyifsc.result!.bankDetails!.branchName.toString();
+                         BANKNAME=veriflyifsc.result!.bankDetails!.bankName.toString();
+                         branchName=veriflyifsc.result!.bankDetails!.branchName.toString();
                         return Column(
                           children: [
                             SizedBox(
@@ -334,19 +339,49 @@ class _Bank_registrationState extends State<Bank_registration> {
                 SizedBox(
                   height: mheight*0.1,
                 ),
-                Center(
+                BlocListener<BankregstrationBloc, BankregstrationState>(
+  listener: (context, state) {
+    if(state is BankregstrationblocLoading){
+      CircularProgressIndicator();
+    }
+  if(state is BankregstrationblocError){
+    _showErrorSnackBar("internal issue");
+  }
+  if(state is BankregstrationblocLoaded){
+    bankregstrationmodel=BlocProvider.of<BankregstrationBloc>(context).isbankverification;
+    if(bankregstrationmodel.result!.activityStatus=="SUCCESS"){
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Loan_application_verification()), (route) => false);
+    }else{
+      String bankregstrationerror=bankregstrationmodel.message.toString();
+      _showErrorSnackBar(bankregstrationerror);
+    }
+  }
+    // TODO: implement listener
+  },
+  child: Center(
                   child: ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                       backgroundColor: Color(0xff284389)
-                  ),onPressed: (){
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Loan_application_verification()), (route) => false);
+                  ),onPressed: ()async{
+                    final SharedPreferences preferences = await SharedPreferences.getInstance();
+                    final accountholdervalid=accountholderkey.currentState?.validate();
+                    if(accountholdervalid==true){
+                      BlocProvider.of<BankregstrationBloc>(context).add(FetchBankregstration(
+                          clientId: MainclientId, PAN: Pannumber.text, PartnerCode:preferences.getString("partnercode").toString(), OnboardingFor: "Agent", AcoountNumber:Accountno.text , IFSC: ifscno.text, AccountType: selectedAccountType.toString(), BankName: BANKNAME, BranchName:branchName, AccountHolderName:accountholders.text , ctx: context));
+                        accountnumberkey.currentState?.save();
+                    }
                   }, child:Text("Verify Your Bank Account",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                   ),
+),
               ],
             ),
           )
         ],
       ),
     );
+  }
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message,style: TextStyle(fontSize: 12,fontFamily: "font2"),),));
   }
 }

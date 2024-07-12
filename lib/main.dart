@@ -7,6 +7,7 @@ import 'package:oroboro_assisted_app/Blocs/Agentbusiness_bloc/agentbusiness_bloc
 import 'package:oroboro_assisted_app/Blocs/Esign_bloc/esign_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Ifsc_bloc/ifsc_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/MobileotpVerify_bloc/mobileotpverify_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/bankregstratin_bloc/bankregstration_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/refershtoken_bloc/refreshtoken_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/token_bloc/token_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/vetrifypan_bloc/verifypan_bloc.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=>PreviewdocumentBloc()),
         BlocProvider(create: (context)=>EsignBloc()),
         BlocProvider(create: (context)=>IfscBloc()),
+        BlocProvider(create: (context)=>BankregstrationBloc()),
       ],
       child: MaterialApp(
           title: 'Flutter Demo',

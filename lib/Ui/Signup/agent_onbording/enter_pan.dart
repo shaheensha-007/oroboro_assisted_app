@@ -264,9 +264,9 @@ class _Enter_panState extends State<Enter_pan> {
       CircularProgressIndicator();
     }
     if (state is VerifypanblocLoaded) {
-      // final verifypanname = isverification.result?.innerResult?.name ?? "N/A";
-      // final verifypanDOB= isverification.result?.innerResult?.dob ?? "N/A";
-
+      isverification=BlocProvider.of<VerifypanBloc>(context).isverifypan;
+       String verifypanname = isverification.result?.innerResult?.name ?? "N/A";
+      String verifypanDOB= isverification.result?.innerResult?.dob ?? "N/A";
       return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
