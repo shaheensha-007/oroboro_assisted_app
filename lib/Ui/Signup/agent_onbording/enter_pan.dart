@@ -3,14 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/AgentKyc_bloc/agentkyc_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/vetrifypan_bloc/verifypan_bloc.dart';
 import 'package:oroboro_assisted_app/Ui/Signin/signin_page.dart';
+import 'package:oroboro_assisted_app/Ui/Signup/Preview_document/Preview_of%20documents.dart';
+import 'package:oroboro_assisted_app/Ui/Signup/bank_registration.dart';
+import 'package:oroboro_assisted_app/Ui/Signup/loan_application_verification.dart';
+import 'package:oroboro_assisted_app/modeles/AgentKycModel/AgentKycModel.dart';
+import 'package:oroboro_assisted_app/modeles/mobile_agentModel/mobileagentmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Blocs/ Mobileagent_bloc/mobileagent_bloc.dart';
+import '../../../Blocs/MobileotpVerify_bloc/mobileotpverify_bloc.dart';
 import '../../../Blocs/token_bloc/token_bloc.dart';
+import '../../../modeles/MobileOtpVerifyModel/MobileOtpverifyModel.dart';
 import '../../../modeles/verifly_pan_model/Veriflypanmodel.dart';
 import '../../Splansh_screen/Splansh_Screen.dart';
-import 'enter_business.dart';
+import '../agentbusiness_onborading.dart';
 
 class Enter_pan extends StatefulWidget {
   const Enter_pan({super.key});
@@ -19,19 +28,23 @@ class Enter_pan extends StatefulWidget {
   State<Enter_pan> createState() => _Enter_panState();
 }
 late VerifypanModel isverification;
+late MobileagentModel isverificationmobile;
+late MobileOtpverifyModel isverificationOTP;
+late AgentKycModel isverificationAgentkyc;
 final pankey1 = GlobalKey<FormState>();
 final mobilekey = GlobalKey<FormState>();
 final mobileotpkey = GlobalKey<FormState>();
 final emailkey=GlobalKey<FormState>();
-TextEditingController pannumber=TextEditingController();
+TextEditingController Pannumber=TextEditingController();
 TextEditingController mobilenumber=TextEditingController();
 TextEditingController mobileotp=TextEditingController();
 TextEditingController email=TextEditingController();
 
 bool showItems = false;
 bool resendotp=false;
-bool buttonenable=false;
-bool nextprocess=false;
+
+String verifypanname="";
+String verifypanDOB="";
 class _Enter_panState extends State<Enter_pan> {
 
   String? validatePAN(value) {
@@ -69,6 +82,10 @@ class _Enter_panState extends State<Enter_pan> {
   Widget build(BuildContext context) {
     var mheight= MediaQuery.of(context).size.height;
     var mwidth= MediaQuery.of(context).size.width;
+
+
+
+    /// enter the pan number
     return Column(
           children: [
             BlocListener<VerifypanBloc, VerifypanState>(
@@ -79,10 +96,43 @@ class _Enter_panState extends State<Enter_pan> {
       if(state is VerifypanblocLoaded){
         isverification=BlocProvider.of<VerifypanBloc>(context).isverifypan;
         print("value${isverification}");
+
+        if (isverification.result.innerResult != null) {
+          verifypanname = isverification.result.innerResult!.name.toString();
+          verifypanDOB = isverification.result.innerResult!.dob.toString();
+
+          if (verifypanDOB != null && verifypanDOB.isNotEmpty) {
+            try {
+              DateTime dobDateTime = DateTime.parse(verifypanDOB);
+              // Date parsed successfully, you can use dobDateTime here
+            } catch (e) {
+              // Handle parsing error
+              print('Error parsing date: $e');
+            }
+          } else {
+            // Handle case where verifypanDOB is null or empty
+            print('Error: verifypanDOB is null or empty');
+          }
+        } else {
+          // Handle the case when innerResult is null
+          // For example, set verifypanname and verifypanDOB to some default value
+          print('innerResult is null');
+        }
+        final verifynextprocess = isverification.result.nextprocess.toString();
+        if (verifynextprocess != null) {
+          if (verifynextprocess == "/AgentOnboarding/BusinessRegistration") {
+           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Agent_business_onboarding()), (route) => false);
+          }
+           else if (verifynextprocess == "/AgentOnboarding/ESign") {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Preview_of_documents()));
+           } else if (verifynextprocess == "/AgentOnboarding/BankVerification") {
+             Navigator.of(context).push(MaterialPageRoute(builder: (context) => Bank_registration()));
+           } else if (verifynextprocess == "/AgentOnboarding/Success") {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Loan_application_verification()));
+           }
+        }
       }
-      if(state is VerifypanblocError){
-      return null;
-      }
+
       // TODO: implement listener
     },
     child: Form(
@@ -103,11 +153,11 @@ class _Enter_panState extends State<Enter_pan> {
                           children: [
                             Expanded(
                               child: TextFormField(
-                                controller: pannumber,
+                                controller: Pannumber,
                                 validator:validatePAN,
                                 onChanged: (text){
-                                 pannumber.text=text.toUpperCase();
-                                 pannumber.selection=TextSelection.fromPosition(TextPosition(offset: pannumber.text.length));
+                                 Pannumber.text=text.toUpperCase();
+                                 Pannumber.selection=TextSelection.fromPosition(TextPosition(offset: Pannumber.text.length));
                                 },
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(10)
@@ -145,7 +195,7 @@ class _Enter_panState extends State<Enter_pan> {
         BlocProvider.of<VerifypanBloc>(context)
             .add(FetchVerifypan(
          clientId: MainclientId,
-          PAN: pannumber.text,
+          PAN: Pannumber.text,
           OnboardingFor: "Agent",
           ctx: context,
         ));
@@ -208,28 +258,59 @@ class _Enter_panState extends State<Enter_pan> {
               child: showItems
                   ? Padding(
       padding: EdgeInsets.only(right: mwidth * 0.2),
-      child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-      SizedBox(
-      height: mheight * 0.02,
-      ),
-      Center(child: Text("Name", style: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w200,
-      fontFamily: "regulartext"))),
-      Center(child: Text("DOB", style: TextStyle(fontSize: 14,
-      fontWeight: FontWeight.w200,
-      fontFamily: "regulartext"))),
-      ]
-      )
+      child: BlocBuilder<VerifypanBloc, VerifypanState>(
+  builder: (context, state) {
+    if (state is VerifypanblocLoading) {
+      CircularProgressIndicator();
+    }
+    if (state is VerifypanblocLoaded) {
+      // final verifypanname = isverification.result?.innerResult?.name ?? "N/A";
+      // final verifypanDOB= isverification.result?.innerResult?.dob ?? "N/A";
+
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: mheight * 0.02,
+            ),
+            Center(child: Text(verifypanname, style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w200,
+                fontFamily: "regulartext"))),
+            Center(child: Text(verifypanDOB, style: TextStyle(fontSize: 14,
+                fontWeight: FontWeight.w200,
+                fontFamily: "regulartext"))),
+          ]
+      );
+    }if(state is VerifypanblocError){
+      return SizedBox();
+    }else{
+      return SizedBox();
+    }
+  }
+)
       )
                   : SizedBox(),
             ),
+
+            /// enter monbile number registrtion
             SizedBox(
               height: mheight*0.04,
             ),
-            Form(
+            BlocListener<MobileagentBloc, MobileagentState>(
+  listener: (context, state) {
+    if(state is MobileagentblocLoading){
+      CircularProgressIndicator();
+    }
+    if(state is MobileagentblocError){
+      _showErrorSnackBar("Not Send OTP");
+    }
+    if(state is VerifypanblocLoaded){
+      isverificationmobile=BlocProvider.of<MobileagentBloc>(context).ismobile;
+    }
+    // TODO: implement listener
+  },
+  child: Form(
               key:mobilekey,
               child: Container(
                 height: mheight*0.06,
@@ -273,9 +354,12 @@ class _Enter_panState extends State<Enter_pan> {
                             ),
                             backgroundColor: Color(0xff284389),
                           ),
-                          onPressed: () {
+                          onPressed: () async{
+                            final SharedPreferences preferences = await SharedPreferences.getInstance();
                             final ismobilevalid = mobilekey.currentState?.validate();
                             if (ismobilevalid == true) {
+                              BlocProvider.of<MobileagentBloc>(context).add(FetchMobileagent(clientId: MainclientId, mobile:mobilenumber.text , OnboardingFor: "Agent", ctx: context));
+                              preferences.setString("MOBILENUMBER", mobilenumber.text);
                               mobilekey.currentState?.save();
                               setState(() {
                                 showItems=false;
@@ -299,6 +383,7 @@ class _Enter_panState extends State<Enter_pan> {
                 ),
               ),
             ),
+),
             AnimatedSwitcher(
               duration: Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
@@ -314,7 +399,23 @@ class _Enter_panState extends State<Enter_pan> {
                   SizedBox(
                     height: mheight*0.04,
                   ),
-                  Form(
+                  BlocListener<MobileotpverifyBloc, MobileotpverifyState>(
+  listener: (context, state) {
+    if(state is MobileotpverifyblocLoading){
+      CircularProgressIndicator();
+    }
+    if(state is MobileotpverifyblocError){
+      _showErrorSnackBar("Not validate OTP");
+    }
+    if(state is MobileotpverifyblocLoaded){
+    final otpverification= BlocProvider.of<MobileotpverifyBloc>(context).ismobileOtp;
+      if(otpverification.result!.activityStatus=="VERIFIED"){
+        _showErrorSnackBar("OTP VERIFIED");
+      }
+    }
+    // TODO: implement listener
+  },
+  child: Form(
                     key: mobileotpkey,
                     child: Container(
                       height: mheight*0.06,
@@ -335,10 +436,7 @@ class _Enter_panState extends State<Enter_pan> {
                             final isvalidmobileotp = mobileotpkey.currentState
                                 ?.validate();
                             if (isvalidmobileotp == true) {
-                              mobileotpkey.currentState?.save();
-                              setState(() {
-                                resendotp = false;
-                              });
+                              BlocProvider.of<MobileotpverifyBloc>(context).add(FetchMobileotpverify(clientId: MainclientId, Mobile: mobilenumber.text, Otp:mobileotp.text, OnboardingFor:"Agent", ctx: context));
                               print(mobileotpkey);
                             }
                           },
@@ -355,6 +453,7 @@ class _Enter_panState extends State<Enter_pan> {
                       ),
                     ),
                   ),
+),
                   SizedBox(
                     height: mheight*0.02,
                   ),
@@ -407,17 +506,36 @@ class _Enter_panState extends State<Enter_pan> {
             SizedBox(
               height: mheight*0.04,
             ),
-            ElevatedButton(style: ElevatedButton.styleFrom(
+            BlocListener<AgentkycBloc, AgentkycState>(
+  listener: (context, state) {
+    if(state is AgentKycblocLoading){
+      CircularProgressIndicator();
+    }
+    if(state is AgentKycblocError){
+      _showErrorSnackBar("internal server issue");
+    }
+    if(state is AgentKycblocLoaded){
+      isverificationAgentkyc=BlocProvider.of<AgentkycBloc>(context).isagentkyccompleted;
+      if(isverificationAgentkyc.result!.activityStatus=="SUCCESS"){
+        _showErrorSnackBar("Agent is Completed");
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Agent_business_onboarding()), (route) => false);
+      }else{
+        _showErrorSnackBar("Agent not Completed");
+      }
+    }
+    // TODO: implement listener
+  },
+  child: ElevatedButton(style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         backgroundColor: Color(0xff284389)
-        ),onPressed: (){
+        ),onPressed: ()async{
         final isvalidmobileotp = emailkey.currentState
             ?.validate();
         if (isvalidmobileotp == true) {
+          final SharedPreferences preferences = await SharedPreferences.getInstance();
+          BlocProvider.of<AgentkycBloc>(context).add(FetchAgentKyc(clientId: MainclientId, PartnerCode:preferences.getString("partnercode").toString() , PAN:Pannumber.text, Mobile: mobilenumber.text, Email:email.text, OnboardingFor:"Agent", ctx:context));
         emailkey.currentState?.save();
-        setState(() {
-        buttonenable = true;
-        });
+
         print(mobileotpkey);
         }
         }, child:Text("Next",style: TextStyle(
@@ -426,23 +544,21 @@ class _Enter_panState extends State<Enter_pan> {
               fontFamily: "regulartext",
               color: Colors.white,
             ),)),
-            AnimatedSwitcher(
-              duration: Duration(milliseconds: 300),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return SizeTransition(
-                  sizeFactor: animation,
-                  child: child,
-                  axisAlignment: 1.0,
-                );
-              },
-          child: buttonenable
-          ?Enter_businessdetalis()
-          :SizedBox(),
-        ),
+),
           ],
-        );
+    );
+  }
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message,style: TextStyle(fontSize: 12,fontFamily: "font2"),),));
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }
+
 void userInfo(String token, String refreshToken) async {
   final preferences = await SharedPreferences.getInstance();
   await preferences.setString('Token', token);

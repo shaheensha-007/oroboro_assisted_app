@@ -1,7 +1,19 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/pan_verification.dart';
+import 'package:oroboro_assisted_app/Ui/Signup/agent_onbording/enter_pan.dart';
+import 'package:oroboro_assisted_app/Ui/Signup/agentbusiness_onborading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 
-import 'Preview_of documents.dart';
+import '../../Blocs/Agentbusiness_bloc/agentbusiness_bloc.dart';
+import '../../modeles/AgentbusinessModel/AgentbusinessModel.dart';
+import '../Signin/signin_page.dart';
+import 'Preview_document/Preview_of documents.dart';
 
 class Draw_in_signature extends StatefulWidget {
   const Draw_in_signature({super.key});
@@ -10,12 +22,48 @@ class Draw_in_signature extends StatefulWidget {
   State<Draw_in_signature> createState() => _Draw_in_signatureState();
 }
 
+late AgentbusinessModel Agentbusiness;
+String? base64Signature;
+late String lat;
+late String long;
 class _Draw_in_signatureState extends State<Draw_in_signature> {
   SignatureController _controller = SignatureController(
     penColor: Colors.black,
     penStrokeWidth: 4,
   );
+
+  ///MAIN PROGRAMMING LOCATION
+  Future<Position> getCurrentLocation()async{
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location disabled');
+    }
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permission denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('Location permission denied');
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
   @override
+  void initState() {
+    getCurrentLocation().then((Position){
+      setState(() {
+        lat=Position.latitude.toString();
+        long =Position.longitude.toString();
+      });
+    });
+    // TODO: implement initState
+    super.initState();
+  }
+
+    @override
   Widget build(BuildContext context) {
     var mheight= MediaQuery.of(context).size.height;
     var mwidth= MediaQuery.of(context).size.width;
@@ -34,21 +82,44 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
                 child: Text("Draw your Signature",style: TextStyle(fontSize: 20,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
               ),
               SizedBox(
-                height: mheight*0.05,
+                height: mheight*0.1,
               ),
               Center(
                 child: Container(
                   height: mheight*0.4,
-                  width: mwidth*0.8,
+                  width: mwidth*0.9,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 3),
+                    border: Border.all(color: Colors.black, width:2),
                   ),
-                  child: Signature(
-                    controller: _controller,
-                    backgroundColor: Colors.grey,
-                    height: mheight * 0.4,
-                    width: mwidth*0.8,
-                  ),
+                  child: BlocListener<AgentbusinessBloc, AgentbusinessState>(
+  listener: (context, state) {
+    if(state is AgentbusinessblocLoading){
+      CircularProgressIndicator();
+    }
+    if(state is AgentbusinessblocError){
+      _showErrorSnackBar("internal server issue");
+    }
+    if(state is AgentbusinessblocLoaded){
+      Agentbusiness=BlocProvider.of<AgentbusinessBloc>(context).isagentbusiness;
+      print(Agentbusiness);
+      if(Agentbusiness.result!.activityStatus=="SUCCESS"){
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Preview_of_documents()), (route) => false);
+      }
+      else{
+        final errormessage=Agentbusiness.message.toString();
+        _showErrorSnackBar(errormessage);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Agent_business_onboarding()), (route) => false);
+      }
+    }
+    // TODO: implement listener
+  },
+  child: Signature(
+                                    controller: _controller,
+                                    backgroundColor: Colors.white10,
+                                    height: mheight * 0.4,
+                                    width: mwidth*0.8,
+                                  ),
+),
                 ),
               ),
       SizedBox(
@@ -56,27 +127,69 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
       ),
       Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                backgroundColor: Color(0xff284389)
-            ),  onPressed: () => _controller.clear(),
-             child:Text("Clear",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
-            ElevatedButton(style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                backgroundColor: Color(0xff284389)
-            ), onPressed: (){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Preview_of_documents()), (route) => false);
-            },
-                child:Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
-            ]
-        ),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                      backgroundColor: Color(0xff284389)
+                  ),  onPressed: () => _controller.clear(),
+                   child:Text("Clear",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+
+                  ElevatedButton(style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                      backgroundColor: Color(0xff284389)
+                  ), onPressed: ()async{
+      final Uint8List? signatureBytes =
+      await _controller.toPngBytes();
+
+      // Encode bytes to base64
+      if (signatureBytes != null) {
+      setState(() {
+      base64Signature =
+      base64Encode(signatureBytes);
+      });
+      final SharedPreferences preferences = await SharedPreferences
+          .getInstance();
+      BlocProvider.of<AgentbusinessBloc>(context).add(FetchAgentbusiness(
+      clientId: MainclientId,
+      PAN: Pannumber.text,
+      PartnerCode: preferences.getString("partnercode").toString(),
+      OnboardingFor: "Agent",
+      GSTNUMBER: gstnumber.text,
+      REGISTRATIONTYPE: "GST",
+      AGENTNAME: ownername.text,
+      BRANDNAME: shopname.text,
+      TANNUMBER: tannumber.text,
+      TELEPHONE: preferences.getString("MOBILENUMBER").toString(),
+      SIGNATURE: base64Signature!,
+      LATITUDE: lat,
+      LONGITUDE: long,
+      ctx: context));
+      }
+      },child:Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                  ]
+              ),
       ),
             ],
           )
         ],
       ),
     );
+  }
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message,style: TextStyle(fontSize: 12,fontFamily: "font2"),),));
+  }
+  @override
+  void dispose() {
+   setState(() {
+     _controller.clear();
+     gstnumber.clear();
+     shopname.clear();
+     ownername.clear();
+     tannumber.clear();
+   });
+    // TODO: implement dispose
+    super.dispose();
   }
 }

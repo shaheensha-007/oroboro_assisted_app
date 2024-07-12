@@ -193,7 +193,8 @@ class _Signin_pageState extends State<Signin_page> {
   void  _partnercodeshowDialog(){
     late List<String> tokenModel;
     final partnercodekey = GlobalKey<FormState>();
-    TextEditingController partnercode=TextEditingController();
+    String? selectedPartnerCode;
+    List<String> partnerCodes = ["ORO003"];
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -239,25 +240,47 @@ class _Signin_pageState extends State<Signin_page> {
                     ),
                     child: Padding(
                       padding:EdgeInsets.only(left: mwidth*0.03),
-                      child: TextFormField(
-                        controller: partnercode,
-                        validator: (value){
-                          if (value!.isEmpty) {
-                            return 'Please enter a Partnercode';
+                      child:  DropdownButtonFormField<String>(
+                        value: selectedPartnerCode, // The currently selected value
+                        items: partnerCodes.map((String code) {
+                          return DropdownMenuItem<String>(
+                            value: code,
+                            child: Text(
+                              code,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "regulartext",
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedPartnerCode = newValue;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please choose a Partnercode';
                           }
+                          return null;
                         },
-                        onChanged: (text){
-                          partnercode.text=text.toUpperCase();
-                          partnercode.selection=TextSelection.fromPosition(TextPosition(offset: partnercode.text.length));
-                        },
-                        style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           hintText: "__choose__",
-                          hintStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                          errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
+                          hintStyle: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w200,
+                            fontFamily: "regulartext",
+                          ),
+                          errorStyle: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w200,
+                            fontFamily: "regulartext",
+                          ),
                         ),
                       ),
                     ),
@@ -287,14 +310,16 @@ class _Signin_pageState extends State<Signin_page> {
                     child: ElevatedButton(style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                         backgroundColor: Color(0xff284389)
-                    ),onPressed: (){
-                      TextInput.finishAutofillContext();
-                      BlocProvider.of<TokenBloc>(context).add(FetchToken(
-                       passwordInBase64: "ASBTRYIMNYER654",
-                           userName: "OroboroTestClient",
-                              ctx: context));
+                    ),onPressed: ()async{
+                      final SharedPreferences preferences = await SharedPreferences.getInstance();
+                      preferences.setString("partnercode", selectedPartnerCode.toString());
+                        TextInput.finishAutofillContext();
+                        BlocProvider.of<TokenBloc>(context).add(FetchToken(
+                            passwordInBase64: "ASBTRYIMNYER654",
+                            userName: "OroboroTestClient",
+                            ctx: context));
                     //  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Agent_onborading()), (route) => false);
-                    }, child:Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                    }, child:Text("Submit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                   ),
                   ),
                 ],
