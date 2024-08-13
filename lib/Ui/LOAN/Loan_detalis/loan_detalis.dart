@@ -1,8 +1,5 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:oroboro_assisted_app/Ui/LOAN/Loan_detalis/pendding.dart';
 
 
@@ -23,7 +20,7 @@ class _Loan_detalisState extends State<Loan_detalis> {
 
   int position = 0;
 
- List<Widget>screen=[Pendding(),Inprocess(),Rejected()];
+ List<Widget>screen=[const Pendding(),const Inprocess(),const Rejected()];
 
   void onpresedbutton(int index){
     setState(() {
@@ -39,7 +36,7 @@ class _Loan_detalisState extends State<Loan_detalis> {
       appBar:AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title:MyAppbar() ,
+        title:const MyAppbar() ,
       ) ,
       body: Stack(
         children: [
@@ -51,7 +48,7 @@ class _Loan_detalisState extends State<Loan_detalis> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Loan Details",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                child: const Text("Loan Details",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
               ),
               SizedBox(
                 height: mheight*0.05,
@@ -63,27 +60,27 @@ class _Loan_detalisState extends State<Loan_detalis> {
                   children: [
                     ElevatedButton(style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                        backgroundColor: _selectedIndex==0?Color(0xff284389): Color(0xffD9D9D9),
+                        backgroundColor: _selectedIndex==0?const Color(0xff284389): const Color(0xffD9D9D9),
                     ),onPressed: (){
                       setState(() {
                         position=0;
                         onpresedbutton(0);
                       });
                     }, child:Text("Pending",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,color:_selectedIndex == 0 ? Colors.white : Colors.black,fontFamily: "regulartext"),)),
-                    Spacer(),
+                    const Spacer(),
                     ElevatedButton(style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                        backgroundColor: _selectedIndex==1?Color(0xff284389): Color(0xffD9D9D9),
+                        backgroundColor: _selectedIndex==1?const Color(0xff284389): const Color(0xffD9D9D9),
                     ),onPressed: (){
                       position=1;
                       onpresedbutton(1);
                     }, child:Text("In- Process",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,color: _selectedIndex == 1 ? Colors.white : Colors.black,fontFamily: "regulartext"),)),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding:EdgeInsets.only(right: mwidth*0.05),
                       child: ElevatedButton(style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          backgroundColor: _selectedIndex==2?Color(0xff284389): Color(0xffD9D9D9),
+                          backgroundColor: _selectedIndex==2?const Color(0xff284389): const Color(0xffD9D9D9),
                       ),onPressed: (){
                           position=2;
                         onpresedbutton(2);

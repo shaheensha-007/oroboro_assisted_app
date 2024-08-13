@@ -6,7 +6,7 @@ import '../../../main.dart';
 
 class TokenApi {
   Future<List<String>?> getToken(String username, String password) async {
-    final tokenUrl = basePath+'token';
+    const tokenUrl = '${basePath}token';
     List<String>tokens=[];
     final body = {
       'username': username,

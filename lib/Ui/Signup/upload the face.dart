@@ -33,16 +33,16 @@ class _Upload_faceState extends State<Upload_face> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _image == null
-                ? Text('No image selected.')
+                ? const Text('No image selected.')
                 : Image.file(_image!),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                backgroundColor: Color(0xff284389),
+                backgroundColor: const Color(0xff284389),
               ),
               onPressed: _pickImage,
-              child: Text(
+              child: const Text(
                 "Capture Image",
                 style: TextStyle(
                   fontSize: 16,
@@ -52,21 +52,21 @@ class _Upload_faceState extends State<Upload_face> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                backgroundColor: Color(0xff284389),
+                backgroundColor: const Color(0xff284389),
               ),
               onPressed: () {
                 if (_image != null) {
                   Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => Draw_in_signature()),
+                    MaterialPageRoute(builder: (context) => const Draw_in_signature()),
                         (route) => false,
                   );
                 }
               },
-              child: Text(
+              child: const Text(
                 "Submit",
                 style: TextStyle(
                   fontSize: 16,

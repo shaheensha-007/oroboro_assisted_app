@@ -27,7 +27,7 @@ class _Choose_your_emi_tenureState extends State<Choose_your_emi_tenure> {
                 SizedBox(
                   height: mheight*0.2,
                 ),
-                Text("Choose your EMI Tenure",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                const Text("Choose your EMI Tenure",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                 SizedBox(
                   height: mheight*0.05,
                 ),
@@ -36,7 +36,7 @@ class _Choose_your_emi_tenureState extends State<Choose_your_emi_tenure> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -44,7 +44,7 @@ class _Choose_your_emi_tenureState extends State<Choose_your_emi_tenure> {
                   child: Padding(
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child:DropdownButtonFormField<String>(
-                      icon: Icon(Icons.arrow_drop_down),
+                      icon: const Icon(Icons.arrow_drop_down),
                       value: emiTenure,
                       onChanged: (value){
                         setState(() {
@@ -54,14 +54,14 @@ class _Choose_your_emi_tenureState extends State<Choose_your_emi_tenure> {
                       items: chooseemitenure.map((tenure) {
                         return DropdownMenuItem(
                         value: tenure,
-                        child: Text(tenure, style: TextStyle(
+                        child: Text(tenure, style: const TextStyle(
                                 fontSize: 12,
                               fontWeight: FontWeight.w800,
                              fontFamily: "regulartext",
                                 ),),
                                  );
                                  }).toList(),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                         // Adjust content padding as needed
                         border: InputBorder.none,
@@ -77,15 +77,15 @@ class _Choose_your_emi_tenureState extends State<Choose_your_emi_tenure> {
                       ),
                     )
                   ),
-                Spacer(),
+                const Spacer(),
                 Center(
                   child: ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)
+                      backgroundColor: const Color(0xff284389)
                   ),  onPressed: (){
-                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Bank_details()), (route) => false);
+                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Bank_details()), (route) => false);
                   },
-                      child:Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                      child:const Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                 ),
                 SizedBox(
                   height: mheight*0.05,

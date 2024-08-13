@@ -4,14 +4,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:oroboro_assisted_app/Ui/Customer_onbording/pan_verification.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/agent_onbording/enter_pan.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/agentbusiness_onborading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 
-import '../../Blocs/Agentbusiness_bloc/agentbusiness_bloc.dart';
-import '../../modeles/AgentbusinessModel/AgentbusinessModel.dart';
+
+import '../../Blocs/Signupblocs/Agentbusiness_bloc/agentbusiness_bloc.dart';
+import '../../modeles/signupModelclass/AgentbusinessModel/AgentbusinessModel.dart';
 import '../Signin/signin_page.dart';
 import 'Preview_document/Preview_of documents.dart';
 
@@ -27,7 +27,7 @@ String? base64Signature;
 late String lat;
 late String long;
 class _Draw_in_signatureState extends State<Draw_in_signature> {
-  SignatureController _controller = SignatureController(
+  final SignatureController _controller = SignatureController(
     penColor: Colors.black,
     penStrokeWidth: 4,
   );
@@ -79,7 +79,7 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
               ),
               Padding(
                 padding:EdgeInsets.only(right:mwidth*0.3),
-                child: Text("Draw your Signature",style: TextStyle(fontSize: 20,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                child: const Text("Draw your Signature",style: TextStyle(fontSize: 20,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
               ),
               SizedBox(
                 height: mheight*0.1,
@@ -94,7 +94,7 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
                   child: BlocListener<AgentbusinessBloc, AgentbusinessState>(
   listener: (context, state) {
     if(state is AgentbusinessblocLoading){
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
     if(state is AgentbusinessblocError){
       _showErrorSnackBar("internal server issue");
@@ -103,12 +103,12 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
       Agentbusiness=BlocProvider.of<AgentbusinessBloc>(context).isagentbusiness;
       print(Agentbusiness);
       if(Agentbusiness.result!.activityStatus=="SUCCESS"){
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Preview_of_documents()), (route) => false);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Preview_of_documents()), (route) => false);
       }
       else{
         final errormessage=Agentbusiness.message.toString();
         _showErrorSnackBar(errormessage);
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Agent_business_onboarding()), (route) => false);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Agent_business_onboarding()), (route) => false);
       }
     }
     // TODO: implement listener
@@ -131,13 +131,13 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
                 children: [
                   ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)
+                      backgroundColor: const Color(0xff284389)
                   ),  onPressed: () => _controller.clear(),
-                   child:Text("Clear",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                   child:const Text("Clear",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
 
                   ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)
+                      backgroundColor: const Color(0xff284389)
                   ), onPressed: ()async{
       final Uint8List? signatureBytes =
       await _controller.toPngBytes();
@@ -166,7 +166,7 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
       LONGITUDE: long,
       ctx: context));
       }
-      },child:Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+      },child:const Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                   ]
               ),
       ),
@@ -178,7 +178,7 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
   }
   void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message,style: TextStyle(fontSize: 12,fontFamily: "font2"),),));
+        .showSnackBar(SnackBar(content: Text(message,style: const TextStyle(fontSize: 12,fontFamily: "font2"),),));
   }
   @override
   void dispose() {

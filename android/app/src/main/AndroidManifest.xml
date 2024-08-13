@@ -2,9 +2,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>  <!-- add this line -->
 
 
-    <application
+
+
+        <application
         android:label="oroboro_assisted_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

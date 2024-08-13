@@ -7,7 +7,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 class PDFViewerPage extends StatefulWidget {
   final String convertbase;
 
-  const PDFViewerPage({Key? key, required this.convertbase}) : super(key: key);
+  const PDFViewerPage({super.key, required this.convertbase});
 
   @override
   _PDFViewerPageState createState() => _PDFViewerPageState();
@@ -36,7 +36,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PDF Viewer'),
+        title: const Text('PDF Viewer'),
       ),
       body: Center(
         child: filePath != null
@@ -48,7 +48,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
           pageFling: false,
           pageSnap: true,
         )
-            : CircularProgressIndicator(),
+            : const CircularProgressIndicator(),
       ),
     );
   }

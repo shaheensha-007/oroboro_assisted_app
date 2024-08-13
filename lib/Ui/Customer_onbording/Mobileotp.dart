@@ -26,11 +26,11 @@ class _MobileotpState extends State<Mobileotp> {
                 SizedBox(
                 height: mheight*0.2,
               ),
-                Text("Mobile Verification",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                const Text("Mobile Verification",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                 SizedBox(
                   height: mheight*0.01,
                 ),
-                Text(" Verify your mobile\n number",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
+                const Text(" Verify your mobile\n number",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
                 SizedBox(
                   height: mheight*0.1,
                 ),
@@ -40,10 +40,10 @@ class _MobileotpState extends State<Mobileotp> {
                     padding: EdgeInsets.only(left: mwidth*0.05),
                     child: PinCodeTextField(
                       controller:onbordingotp,
-                      pinTheme: PinTheme(shape: PinCodeFieldShape.underline,inactiveColor: Color(0xffC9D2EA),fieldWidth: mwidth*0.15,borderRadius: BorderRadius.circular(5)),
+                      pinTheme: PinTheme(shape: PinCodeFieldShape.underline,inactiveColor: const Color(0xffC9D2EA),fieldWidth: mwidth*0.15,borderRadius: BorderRadius.circular(5)),
                       appContext: context,onSubmitted: (value){
                     },onCompleted: (vale){
-                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Panverfication()), (route) => false);
+                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Panverfication()), (route) => false);
                     },
                       length: 4,
                     ),
@@ -53,8 +53,8 @@ class _MobileotpState extends State<Mobileotp> {
                   padding:EdgeInsets.only(left: mwidth*0.2),
                   child: Column(
                     children: [
-                      Text("Didn’t you  receive any code?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
-                      TextButton(onPressed: (){}, child: Text("Resend New Code",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext",color: Color(0xffFF7C00)),))
+                      const Text("Didn’t you  receive any code?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
+                      TextButton(onPressed: (){}, child: const Text("Resend New Code",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext",color: Color(0xffFF7C00)),))
                     ],
                   ),
                 )

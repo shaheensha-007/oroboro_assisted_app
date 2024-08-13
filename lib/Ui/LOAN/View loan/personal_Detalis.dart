@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'loan_appbar.dart';
@@ -19,7 +18,7 @@ class _Personal_detailsState extends State<Personal_details> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: Loan_appbar(),
+        title: const Loan_appbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -33,7 +32,7 @@ class _Personal_detailsState extends State<Personal_details> {
                 ),
                 Padding(
                   padding:EdgeInsets.only(left: mwidth*0.1),
-                  child: Text("Personal Details",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                  child: const Text("Personal Details",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                 ),
                 SizedBox(
                   height: mheight*0.03,
@@ -48,10 +47,10 @@ class _Personal_detailsState extends State<Personal_details> {
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0xff2B45A3).withOpacity(0.5),
+                          color: const Color(0xff2B45A3).withOpacity(0.5),
                           spreadRadius: -4,
                           blurRadius: 11,
-                          offset: Offset(
+                          offset: const Offset(
                               0, 6), // changes position of shadow
                         ),
                       ],
@@ -64,11 +63,11 @@ class _Personal_detailsState extends State<Personal_details> {
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Row(
                               children: [
-                                Text("Name",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                                Spacer(),
+                                const Text("Name",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                                const Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(right: mwidth*0.05),
-                                  child: Text("MOHAMMED SHAHEEN PK",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                                  child: const Text("MOHAMMED SHAHEEN PK",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                                 )
                               ],
                             ),
@@ -80,11 +79,11 @@ class _Personal_detailsState extends State<Personal_details> {
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Row(
                               children: [
-                                Text("PAN",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                                Spacer(),
+                                const Text("PAN",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                                const Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(right: mwidth*0.05),
-                                  child: Text("HSHPP1158J",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                                  child: const Text("HSHPP1158J",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                                 )
                               ],
                             ),
@@ -96,11 +95,11 @@ class _Personal_detailsState extends State<Personal_details> {
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Row(
                               children: [
-                                Text("Mobile",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                                Spacer(),
+                                const Text("Mobile",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                                const Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(right: mwidth*0.05),
-                                  child: Text("+91 8606648604",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                                  child: const Text("+91 8606648604",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                                 )
                               ],
                             ),
@@ -112,11 +111,11 @@ class _Personal_detailsState extends State<Personal_details> {
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Row(
                               children: [
-                                Text("Aadhaar",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                                Spacer(),
+                                const Text("Aadhaar",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                                const Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(right: mwidth*0.05),
-                                  child: Text("250000567893",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                                  child: const Text("250000567893",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                                 )
                               ],
                             ),
@@ -128,11 +127,11 @@ class _Personal_detailsState extends State<Personal_details> {
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Row(
                               children: [
-                                Text("Name(Aadhaar)",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                                Spacer(),
+                                const Text("Name(Aadhaar)",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                                const Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(right: mwidth*0.05),
-                                  child: Text("MOHAMMED SHAHEEN pervankuzhil",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                                  child: const Text("MOHAMMED SHAHEEN pervankuzhil",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                                 )
                               ],
                             ),
@@ -144,11 +143,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Name",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Name",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("MOHAMMED SHAHEEN PK",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("MOHAMMED SHAHEEN PK",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -160,11 +159,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Date of Birth",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Date of Birth",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("30-09-2000",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("30-09-2000",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -176,11 +175,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Gender",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Gender",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("Male",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("Male",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -192,11 +191,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Perment Address",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Perment Address",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("pervankuzhil (H)",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("pervankuzhil (H)",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -208,11 +207,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Email Address",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Email Address",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("shaheenshaheenpk@2900.com",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("shaheenshaheenpk@2900.com",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -224,11 +223,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Employee Stauts",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Employee Stauts",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("flutter developer",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("flutter developer",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -240,11 +239,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Income",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Income",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("Existing EMI IN(rs)",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("Existing EMI IN(rs)",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -256,11 +255,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Residence Type",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Residence Type",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("dfsdfdfdfffd",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("dfsdfdfdfffd",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -272,11 +271,11 @@ class _Personal_detailsState extends State<Personal_details> {
                     padding:EdgeInsets.only(left: mwidth*0.05),
                     child: Row(
                       children: [
-                        Text("Oroboro Score",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                        Spacer(),
+                        const Text("Oroboro Score",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: mwidth*0.05),
-                          child: Text("345",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                          child: const Text("345",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                         )
                       ],
                     ),
@@ -288,11 +287,11 @@ class _Personal_detailsState extends State<Personal_details> {
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Row(
                               children: [
-                                Text("CIBIL Score",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                                Spacer(),
+                                const Text("CIBIL Score",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                                const Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(right: mwidth*0.05),
-                                  child: Text("752",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                                  child: const Text("752",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                                 )
                               ],
                             ),
@@ -304,11 +303,11 @@ class _Personal_detailsState extends State<Personal_details> {
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Row(
                               children: [
-                                Text("Reference 1",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                                Spacer(),
+                                const Text("Reference 1",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                                const Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(right: mwidth*0.05),
-                                  child: Text(" xgxhsbsbgsnz",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                                  child: const Text(" xgxhsbsbgsnz",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                                 ),
                               ],
                             ),
@@ -320,11 +319,11 @@ class _Personal_detailsState extends State<Personal_details> {
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Row(
                               children: [
-                                Text("Reference 2",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                                Spacer(),
+                                const Text("Reference 2",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                                const Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(right: mwidth*0.05),
-                                  child: Text("uppchi",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                                  child: const Text("uppchi",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                                 )
                               ],
                             ),

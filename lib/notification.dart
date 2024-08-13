@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'Ui/apparbar/myappbar.dart';
@@ -21,7 +20,7 @@ class _Notification1State extends State<Notification1> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: MyAppbar(),
+        title: const MyAppbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -34,7 +33,7 @@ class _Notification1State extends State<Notification1> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Notification", style: TextStyle(
+                child: const Text("Notification", style: TextStyle(
                     fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
               ),
               SizedBox(
@@ -48,10 +47,10 @@ class _Notification1State extends State<Notification1> {
                       children: [
                         Padding(
                           padding:EdgeInsets.only(left: mwidth*0.05),
-                          child: Text("Customers KYC Registration-Done by SHA \n Mobiles13-09-2023",style: TextStyle(fontSize: 14, fontFamily: "boldtext", fontWeight: FontWeight.w200,color: Color(0xff6F788E)),),
+                          child: const Text("Customers KYC Registration-Done by SHA \n Mobiles13-09-2023",style: TextStyle(fontSize: 14, fontFamily: "boldtext", fontWeight: FontWeight.w200,color: Color(0xff6F788E)),),
                         ),
                         Divider(
-                          color: Color(0xff6F788E),
+                          color: const Color(0xff6F788E),
                           indent: mwidth*0.05,
                           endIndent: mwidth*0.05,
                         )

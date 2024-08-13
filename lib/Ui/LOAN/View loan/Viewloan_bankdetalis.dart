@@ -25,7 +25,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: Loan_appbar(),
+        title: const Loan_appbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -38,7 +38,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
             ),
       Padding(
       padding:EdgeInsets.only(left: mwidth*0.1),
-      child: Text("Bank Details", style: TextStyle(
+      child: const Text("Bank Details", style: TextStyle(
           fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
     ),
     SizedBox(
@@ -56,10 +56,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
     color: Colors.white,
     boxShadow: [
     BoxShadow(
-    color: Color(0xff2B45A3).withOpacity(0.5),
+    color: const Color(0xff2B45A3).withOpacity(0.5),
     spreadRadius: -4,
     blurRadius: 11,
-    offset: Offset(
+    offset: const Offset(
     0, 6), // changes position of shadow
     ),
     ],
@@ -73,7 +73,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
               crossAxisAlignment:
               CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Date",
                   style: TextStyle(
                       fontSize: 14,
@@ -84,7 +84,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                 SizedBox(
                   width: mwidth * 0.02,
                 ),
-                Text(
+                const Text(
                   "23_09-2000",
                   style: TextStyle(
                       fontSize: 14,
@@ -94,12 +94,12 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
               ],
             ),
             Divider(
-              color: Color(0xffC9D2EA),
+              color: const Color(0xffC9D2EA),
               endIndent: mwidth * 0.03,
             ),
             Row(
               children: [
-                Text(
+                const Text(
                   "Customer",
                   style: TextStyle(
                       fontSize: 14,
@@ -107,10 +107,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                       color: Color(0xff284389),
                       fontFamily: "regulartext"),
                 ),
-              Spacer(),
+              const Spacer(),
                 Padding(
                   padding:EdgeInsets.only(right: mwidth*0.15),
-                  child: Text(
+                  child: const Text(
                     "shaheen pk",
                     style: TextStyle(
                         fontSize: 14,
@@ -125,7 +125,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
           ),
             Row(
               children: [
-                Text(
+                const Text(
                   "Customer",
                   style: TextStyle(
                       fontSize: 14,
@@ -133,10 +133,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                       color: Color(0xff284389),
                       fontFamily: "regulartext"),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding:EdgeInsets.only(right: mwidth*0.15),
-                  child: Text(
+                  child: const Text(
                     "shaheen pk",
                     style: TextStyle(
                         fontSize: 14,
@@ -151,7 +151,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
             ),
             Row(
               children: [
-                Text(
+                const Text(
                   "Customer",
                   style: TextStyle(
                       fontSize: 14,
@@ -159,10 +159,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                       color: Color(0xff284389),
                       fontFamily: "regulartext"),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding:EdgeInsets.only(right: mwidth*0.15),
-                  child: Text(
+                  child: const Text(
                     "shaheen pk",
                     style: TextStyle(
                         fontSize: 14,
@@ -177,7 +177,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
             ),
             Row(
               children: [
-                Text(
+                const Text(
                   "Customer",
                   style: TextStyle(
                       fontSize: 14,
@@ -185,10 +185,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                       color: Color(0xff284389),
                       fontFamily: "regulartext"),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding:EdgeInsets.only(right: mwidth*0.15),
-                  child: Text(
+                  child: const Text(
                     "shaheen pk",
                     style: TextStyle(
                         fontSize: 14,
@@ -218,10 +218,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0xff2B45A3).withOpacity(0.5),
+                          color: const Color(0xff2B45A3).withOpacity(0.5),
                           spreadRadius: -4,
                           blurRadius: 11,
-                          offset: Offset(
+                          offset: const Offset(
                               0, 6), // changes position of shadow
                         ),
                       ],
@@ -235,7 +235,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                             crossAxisAlignment:
                             CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "Date",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -246,7 +246,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                               SizedBox(
                                 width: mwidth * 0.02,
                               ),
-                              Text(
+                              const Text(
                                 "23_09-2000",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -256,12 +256,12 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                             ],
                           ),
                           Divider(
-                            color: Color(0xffC9D2EA),
+                            color: const Color(0xffC9D2EA),
                             endIndent: mwidth * 0.03,
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Customer",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -269,10 +269,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                                     color: Color(0xff284389),
                                     fontFamily: "regulartext"),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Padding(
                                 padding:EdgeInsets.only(right: mwidth*0.15),
-                                child: Text(
+                                child: const Text(
                                   "shaheen pk",
                                   style: TextStyle(
                                       fontSize: 14,
@@ -287,7 +287,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Customer",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -295,10 +295,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                                     color: Color(0xff284389),
                                     fontFamily: "regulartext"),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Padding(
                                 padding:EdgeInsets.only(right: mwidth*0.15),
-                                child: Text(
+                                child: const Text(
                                   "shaheen pk",
                                   style: TextStyle(
                                       fontSize: 14,
@@ -313,7 +313,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Customer",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -321,10 +321,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                                     color: Color(0xff284389),
                                     fontFamily: "regulartext"),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Padding(
                                 padding:EdgeInsets.only(right: mwidth*0.15),
-                                child: Text(
+                                child: const Text(
                                   "shaheen pk",
                                   style: TextStyle(
                                       fontSize: 14,
@@ -339,7 +339,7 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Customer",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -347,10 +347,10 @@ class _Viewloan_bankdetalisState extends State<Viewloan_bankdetalis> {
                                     color: Color(0xff284389),
                                     fontFamily: "regulartext"),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Padding(
                                 padding:EdgeInsets.only(right: mwidth*0.15),
-                                child: Text(
+                                child: const Text(
                                   "shaheen pk",
                                   style: TextStyle(
                                       fontSize: 14,

@@ -20,7 +20,7 @@ class _ScheduleState extends State<Schedule> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: MyAppbar(),
+        title: const MyAppbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -33,7 +33,7 @@ class _ScheduleState extends State<Schedule> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Schedules",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                child: const Text("Schedules",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
               ),
               SizedBox(
                 height: mheight*0.03,
@@ -44,7 +44,7 @@ class _ScheduleState extends State<Schedule> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -55,7 +55,7 @@ class _ScheduleState extends State<Schedule> {
                     ),
                     Padding(
                       padding:EdgeInsets.only(right: mwidth*0.15),
-                      child: IconButton(onPressed: (){}, icon: Icon(Icons.search)),
+                      child: IconButton(onPressed: (){}, icon: const Icon(Icons.search)),
                     )
                   ],
                 ),
@@ -86,7 +86,7 @@ class _ScheduleState extends State<Schedule> {
                               width: mwidth * 0.8,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                         color: Color(0xffC9D2EA), spreadRadius: 1),
                                   ],
@@ -98,38 +98,38 @@ class _ScheduleState extends State<Schedule> {
                                   children: [
                                     Row(
                                       children: [
-                                        Text("Ref NO :",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
+                                        const Text("Ref NO :",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
-                                        Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
-                                        Spacer(),
-                                        Text("Date :",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
+                                        const Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
+                                        const Spacer(),
+                                        const Text("Date :",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
                                         Padding(
                                           padding:EdgeInsets.only(right: mwidth*0.05),
-                                          child: Text("23-09-20000 ",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
+                                          child: const Text("23-09-20000 ",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
                                         ),
                                       ],
                                     ),
                                     Divider(
-                                      color: Color(0xffC9D2EA),
+                                      color: const Color(0xffC9D2EA),
                                       endIndent: mwidth*0.05,
                                     ),
                                     SizedBox(
                                       height: mheight*0.01,
                                     ),
-                                    Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,) ,),
+                                    const Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,) ,),
                                     SizedBox(
                                       height: mheight*0.01,
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
-                                        Spacer(),
+                                        const Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
+                                        const Spacer(),
                                         Padding(
                                           padding:EdgeInsets.only(right: mwidth*0.05),
                                           child: ElevatedButton(style: ElevatedButton.styleFrom(
@@ -137,15 +137,15 @@ class _ScheduleState extends State<Schedule> {
                                             backgroundColor: Colors.green,
                                           ),
                                               onPressed: (){
-                                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Oustanding_payment()), (route) => false);
-                                              },child: Text("Balance",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Colors.white))),
+                                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Oustanding_payment()), (route) => false);
+                                              },child: const Text("Balance",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Colors.white))),
                                         ),
                                       ],
                                     ),
                                     SizedBox(
                                       height: mheight*0.01,
                                     ),
-                                    Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
+                                    const Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
                                     SizedBox(
                                       height: mheight*0.01,
                                     ),

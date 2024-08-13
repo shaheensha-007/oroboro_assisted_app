@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'loan_appbar.dart';
@@ -19,7 +18,7 @@ class _Viewloan_ActivitiesandcommentsState extends State<Viewloan_Activitiesandc
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: Loan_appbar(),
+        title: const Loan_appbar(),
       ),
       backgroundColor:Colors.white,
       body: Stack(
@@ -32,7 +31,7 @@ class _Viewloan_ActivitiesandcommentsState extends State<Viewloan_Activitiesandc
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Activities and Comments", style: TextStyle(
+                child: const Text("Activities and Comments", style: TextStyle(
                     fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
               ),
               SizedBox(
@@ -46,10 +45,10 @@ class _Viewloan_ActivitiesandcommentsState extends State<Viewloan_Activitiesandc
                       children: [
                         Padding(
                           padding:EdgeInsets.only(left: mwidth*0.05),
-                          child: Text("Customers KYC Registration-Done by SHA \n Mobiles13-09-2023",style: TextStyle(fontSize: 14, fontFamily: "boldtext", fontWeight: FontWeight.w200,color: Color(0xff6F788E)),),
+                          child: const Text("Customers KYC Registration-Done by SHA \n Mobiles13-09-2023",style: TextStyle(fontSize: 14, fontFamily: "boldtext", fontWeight: FontWeight.w200,color: Color(0xff6F788E)),),
                         ),
                         Divider(
-                          color: Color(0xff6F788E),
+                          color: const Color(0xff6F788E),
                           indent: mwidth*0.05,
                           endIndent: mwidth*0.05,
                         )

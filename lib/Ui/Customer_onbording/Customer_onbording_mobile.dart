@@ -16,8 +16,8 @@ TextEditingController onbordingmobile=TextEditingController();
 class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
   @override
   Widget build(BuildContext context) {
-    TextStyle defaultStyle = TextStyle(color: Colors.black, fontSize: 12.0);
-    TextStyle linkStyle = TextStyle(color: Color(0xffFF7C00));
+    TextStyle defaultStyle = const TextStyle(color: Colors.black, fontSize: 12.0);
+    TextStyle linkStyle = const TextStyle(color: Color(0xffFF7C00));
     var mheight= MediaQuery.of(context).size.height;
     var mwidth= MediaQuery.of(context).size.width;
     return Scaffold(
@@ -25,7 +25,7 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: MyAppbar(),
+        title: const MyAppbar(),
       ),
       body: Stack(
         children: [
@@ -37,11 +37,11 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                 SizedBox(
                   height: mheight*0.2,
                 ),
-                Text("Loan  Onboarding ",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                const Text("Loan  Onboarding ",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                 SizedBox(
                   height: mheight*0.03,
                 ),
-                Text(" Enter Customer mobile number. We’ll send you\n a verification for validate mobile number",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
+                const Text(" Enter Customer mobile number. We’ll send you\n a verification for validate mobile number",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
                 SizedBox(
                   height: mheight*0.05,
                 ),
@@ -50,7 +50,7 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -58,13 +58,13 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                   child: Padding(
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                       controller: onbordingmobile,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(10)
                       ],
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -82,10 +82,10 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                   width: mwidth*0.8,
                   child: ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)
+                      backgroundColor: const Color(0xff284389)
                   ),onPressed: (){
-                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Mobileotp()), (route) => false);
-                  }, child:Text("Send OTP",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Mobileotp()), (route) => false);
+                  }, child:const Text("Send OTP",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                 ),
          SizedBox(
            height: mheight*0.05,
@@ -97,7 +97,7 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                     text: TextSpan(
                       style: defaultStyle,
                       children: <TextSpan>[
-                        TextSpan(text: 'By providing my mobile number , i hereby agree and accept the '),
+                        const TextSpan(text: 'By providing my mobile number , i hereby agree and accept the '),
                         TextSpan(
                             text: 'Terms of Service',
                             style: linkStyle,
@@ -105,7 +105,7 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                               ..onTap = () {
                                 print('Terms of Service"');
                               }),
-                        TextSpan(text: ' and'),
+                        const TextSpan(text: ' and'),
                         TextSpan(
                             text: 'Privacy Policy',
                             style: linkStyle,
@@ -113,7 +113,7 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                               ..onTap = () {
                                 print('Privacy Policy"');
                               }),
-                        TextSpan(text: 'in use of the Oroboro Assisted  app.'),
+                        const TextSpan(text: 'in use of the Oroboro Assisted  app.'),
                       ],
                     ),
                   ),

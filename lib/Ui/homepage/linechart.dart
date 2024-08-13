@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -16,7 +15,7 @@ class _LinechartState extends State<Linechart> {
     return  SizedBox(
       height:mheight*0.2,
       child: SfCartesianChart(
-          primaryXAxis: CategoryAxis(),
+          primaryXAxis: const CategoryAxis(),
           series: <CartesianSeries>[
             LineSeries<ChartData, String>(
                 dataSource: [

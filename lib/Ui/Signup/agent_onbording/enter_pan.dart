@@ -1,23 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/AgentKyc_bloc/agentkyc_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/vetrifypan_bloc/verifypan_bloc.dart';
+
 import 'package:oroboro_assisted_app/Ui/Signin/signin_page.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/Preview_document/Preview_of%20documents.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/bank_registration.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/loan_application_verification.dart';
-import 'package:oroboro_assisted_app/modeles/AgentKycModel/AgentKycModel.dart';
-import 'package:oroboro_assisted_app/modeles/mobile_agentModel/mobileagentmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../Blocs/ Mobileagent_bloc/mobileagent_bloc.dart';
-import '../../../Blocs/MobileotpVerify_bloc/mobileotpverify_bloc.dart';
+
+import '../../../Blocs/Signupblocs/ Mobileagent_bloc/mobileagent_bloc.dart';
+import '../../../Blocs/Signupblocs/AgentKyc_bloc/agentkyc_bloc.dart';
+import '../../../Blocs/Signupblocs/MobileotpVerify_bloc/mobileotpverify_bloc.dart';
+import '../../../Blocs/Signupblocs/vetrifypan_bloc/verifypan_bloc.dart';
 import '../../../Blocs/token_bloc/token_bloc.dart';
-import '../../../modeles/MobileOtpVerifyModel/MobileOtpverifyModel.dart';
-import '../../../modeles/verifly_pan_model/Veriflypanmodel.dart';
+import '../../../modeles/signupModelclass/AgentKycModel/AgentKycModel.dart';
+import '../../../modeles/signupModelclass/MobileOtpVerifyModel/MobileOtpverifyModel.dart';
+import '../../../modeles/signupModelclass/mobile_agentModel/mobileagentmodel.dart';
+import '../../../modeles/signupModelclass/verifly_pan_model/Veriflypanmodel.dart';
 import '../../Splansh_screen/Splansh_Screen.dart';
 import '../agentbusiness_onborading.dart';
 
@@ -61,21 +61,23 @@ class _Enter_panState extends State<Enter_pan> {
 
   String? validateMobile(num) {
 // Indian Mobile number are of 10 digit only
-    if (num.length != 10)
+    if (num.length != 10) {
       return 'Mobile Number must be of 10 digit';
-    else
+    } else {
       return null;
+    }
   }/// validation of number
 
 
   String? validateEmail(emailvalue) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern.toString());
-    if (!regex.hasMatch(emailvalue))
+    RegExp regex = RegExp(pattern.toString());
+    if (!regex.hasMatch(emailvalue)) {
       return 'Enter Valid Email';
-    else
+    } else {
       return null;
+    }
   }
 
   @override
@@ -91,17 +93,17 @@ class _Enter_panState extends State<Enter_pan> {
             BlocListener<VerifypanBloc, VerifypanState>(
     listener: (ctx, state) {
       if(state is VerifypanblocLoading){
-        CircularProgressIndicator();
+        const CircularProgressIndicator();
       }
       if(state is VerifypanblocLoaded){
         isverification=BlocProvider.of<VerifypanBloc>(context).isverifypan;
-        print("value${isverification}");
+        print("value$isverification");
 
-        if (isverification.result.innerResult != null) {
-          verifypanname = isverification.result.innerResult!.name.toString();
-          verifypanDOB = isverification.result.innerResult!.dob.toString();
+        if (isverification.result.innerResult == null) {
+          verifypanname = isverification.result.innerResult!.name??"";
+          verifypanDOB = isverification.result.innerResult!.dob??"";
 
-          if (verifypanDOB != null && verifypanDOB.isNotEmpty) {
+          if (verifypanDOB.isNotEmpty) {
             try {
               DateTime dobDateTime = DateTime.parse(verifypanDOB);
               // Date parsed successfully, you can use dobDateTime here
@@ -119,19 +121,17 @@ class _Enter_panState extends State<Enter_pan> {
           print('innerResult is null');
         }
         final verifynextprocess = isverification.result.nextprocess.toString();
-        if (verifynextprocess != null) {
-          if (verifynextprocess == "/AgentOnboarding/BusinessRegistration") {
-           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Agent_business_onboarding()), (route) => false);
-          }
-           else if (verifynextprocess == "/AgentOnboarding/ESign") {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Preview_of_documents()));
-           } else if (verifynextprocess == "/AgentOnboarding/BankVerification") {
-             Navigator.of(context).push(MaterialPageRoute(builder: (context) => Bank_registration()));
-           } else if (verifynextprocess == "/AgentOnboarding/Success") {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Loan_application_verification()));
-           }
+        if (verifynextprocess == "/AgentOnboarding/BusinessRegistration") {
+         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Agent_business_onboarding()), (route) => false);
         }
-      }
+         else if (verifynextprocess == "/AgentOnboarding/ESign") {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Preview_of_documents()));
+         } else if (verifynextprocess == "/AgentOnboarding/BankVerification") {
+           Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Bank_registration()));
+         } else if (verifynextprocess == "/AgentOnboarding/Success") {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Loan_application_verification()));
+         }
+            }
 
       // TODO: implement listener
     },
@@ -142,7 +142,7 @@ class _Enter_panState extends State<Enter_pan> {
                       width: mwidth*0.8,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.grey,spreadRadius: 1),
                           ],
                           color: Colors.white
@@ -162,9 +162,9 @@ class _Enter_panState extends State<Enter_pan> {
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(10)
                                 ],
-                                style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                                style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
 
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   enabledBorder: InputBorder.none,
                                   errorBorder: InputBorder.none,
@@ -180,14 +180,14 @@ class _Enter_panState extends State<Enter_pan> {
                               child: BlocListener<TokenBloc, TokenState>(
   listener: (context, state) {
     if (state is TokenblocLoading) {
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
     if (state is TokenblocLoaded) {
       print("loaded");
       tokenModel =
           BlocProvider.of<TokenBloc>(context).tokenModel;
-      print("access" + tokenModel[0]);
-      print("refresh" + tokenModel[1]);
+      print("access${tokenModel[0]}");
+      print("refresh${tokenModel[1]}");
       final isvaild = pankey1.currentState?.validate();
       if (isvaild == true) {
         pankey1.currentState?.save();
@@ -219,7 +219,7 @@ class _Enter_panState extends State<Enter_pan> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  backgroundColor: Color(0xff284389),
+                                  backgroundColor: const Color(0xff284389),
                                 ),
                                 onPressed: () {
                                   TextInput.finishAutofillContext();
@@ -228,7 +228,7 @@ class _Enter_panState extends State<Enter_pan> {
                                       userName: "OroboroTestClient",
                                       ctx: context));
                                 },
-                                child: Text(
+                                child: const Text(
                                   "verify",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -247,12 +247,12 @@ class _Enter_panState extends State<Enter_pan> {
                   ),
     ),
             AnimatedSwitcher(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
                 return SizeTransition(
                   sizeFactor: animation,
-                  child: child,
                   axisAlignment: 1.0,
+                  child: child,
                 );
               },
               child: showItems
@@ -261,36 +261,38 @@ class _Enter_panState extends State<Enter_pan> {
       child: BlocBuilder<VerifypanBloc, VerifypanState>(
   builder: (context, state) {
     if (state is VerifypanblocLoading) {
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
     if (state is VerifypanblocLoaded) {
       isverification=BlocProvider.of<VerifypanBloc>(context).isverifypan;
-       String verifypanname = isverification.result?.innerResult?.name ?? "N/A";
-      String verifypanDOB= isverification.result?.innerResult?.dob ?? "N/A";
+       String verifypanname = isverification.result.innerResult?.name ?? "N/A";
+      String verifypanDOB= isverification.result.innerResult?.dob ?? "N/A";
+      print(verifypanname.toString());
       return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: mheight * 0.02,
             ),
-            Center(child: Text(verifypanname, style: TextStyle(
+
+            Center(child: Text(verifypanname, style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w200,
                 fontFamily: "regulartext"))),
-            Center(child: Text(verifypanDOB, style: TextStyle(fontSize: 14,
+            Center(child: Text(verifypanDOB, style: const TextStyle(fontSize: 14,
                 fontWeight: FontWeight.w200,
                 fontFamily: "regulartext"))),
           ]
       );
     }if(state is VerifypanblocError){
-      return SizedBox();
+      return const SizedBox();
     }else{
-      return SizedBox();
+      return const SizedBox();
     }
   }
 )
       )
-                  : SizedBox(),
+                  : const SizedBox(),
             ),
 
             /// enter monbile number registrtion
@@ -300,7 +302,7 @@ class _Enter_panState extends State<Enter_pan> {
             BlocListener<MobileagentBloc, MobileagentState>(
   listener: (context, state) {
     if(state is MobileagentblocLoading){
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
     if(state is MobileagentblocError){
       _showErrorSnackBar("Not Send OTP");
@@ -317,7 +319,7 @@ class _Enter_panState extends State<Enter_pan> {
                 width: mwidth*0.8,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(color: Colors.grey,spreadRadius: 1),
                     ],
                     color: Colors.white
@@ -332,9 +334,9 @@ class _Enter_panState extends State<Enter_pan> {
                           validator: validateMobile,
                           keyboardType: TextInputType.phone,
                           inputFormatters: [LengthLimitingTextInputFormatter(10)],
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                          style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
 
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -352,7 +354,7 @@ class _Enter_panState extends State<Enter_pan> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            backgroundColor: Color(0xff284389),
+                            backgroundColor: const Color(0xff284389),
                           ),
                           onPressed: () async{
                             final SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -367,7 +369,7 @@ class _Enter_panState extends State<Enter_pan> {
                               });
                             }
                           },
-                          child: Text(
+                          child: const Text(
                             "OTP",
                             style: TextStyle(
                               fontSize: 14,
@@ -385,12 +387,12 @@ class _Enter_panState extends State<Enter_pan> {
             ),
 ),
             AnimatedSwitcher(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               transitionBuilder: (Widget child, Animation<double> animation) {
                 return SizeTransition(
                   sizeFactor: animation,
-                  child: child,
                   axisAlignment: 1.0,
+                  child: child,
                 );
               },
               child: resendotp
@@ -402,7 +404,7 @@ class _Enter_panState extends State<Enter_pan> {
                   BlocListener<MobileotpverifyBloc, MobileotpverifyState>(
   listener: (context, state) {
     if(state is MobileotpverifyblocLoading){
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
     if(state is MobileotpverifyblocError){
       _showErrorSnackBar("Not validate OTP");
@@ -422,7 +424,7 @@ class _Enter_panState extends State<Enter_pan> {
                       width: mwidth*0.8,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.grey,spreadRadius: 1),
                           ],
                           color: Colors.white
@@ -440,8 +442,8 @@ class _Enter_panState extends State<Enter_pan> {
                               print(mobileotpkey);
                             }
                           },
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                          decoration: InputDecoration(
+                          style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -461,13 +463,13 @@ class _Enter_panState extends State<Enter_pan> {
                     padding:EdgeInsets.only(left: mwidth*0.1),
                     child: Row(
                       children: [
-                        Text("Did't Receive the Verification OTP",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w200,fontFamily: "regulartext"),),
-                        TextButton(onPressed: (){}, child: Text("Resend OTP",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w200,fontFamily: "regulartext",color: Color(0xffFF7C00)),))
+                        const Text("Did't Receive the Verification OTP",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w200,fontFamily: "regulartext"),),
+                        TextButton(onPressed: (){}, child: const Text("Resend OTP",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w200,fontFamily: "regulartext",color: Color(0xffFF7C00)),))
                       ],
                     ),
                   )
                 ],
-              ) :SizedBox(),
+              ) :const SizedBox(),
             ),
 
             SizedBox(
@@ -480,7 +482,7 @@ class _Enter_panState extends State<Enter_pan> {
                 width: mwidth*0.8,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(color: Colors.grey,spreadRadius: 1),
                     ],
                     color: Colors.white
@@ -490,8 +492,8 @@ class _Enter_panState extends State<Enter_pan> {
                   child: TextFormField(
                     controller: email,
                     validator: validateEmail,
-                    style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                    decoration: InputDecoration(
+                    style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
@@ -509,7 +511,7 @@ class _Enter_panState extends State<Enter_pan> {
             BlocListener<AgentkycBloc, AgentkycState>(
   listener: (context, state) {
     if(state is AgentKycblocLoading){
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
     if(state is AgentKycblocError){
       _showErrorSnackBar("internal server issue");
@@ -518,7 +520,7 @@ class _Enter_panState extends State<Enter_pan> {
       isverificationAgentkyc=BlocProvider.of<AgentkycBloc>(context).isagentkyccompleted;
       if(isverificationAgentkyc.result!.activityStatus=="SUCCESS"){
         _showErrorSnackBar("Agent is Completed");
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Agent_business_onboarding()), (route) => false);
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Agent_business_onboarding()), (route) => false);
       }else{
         _showErrorSnackBar("Agent not Completed");
       }
@@ -527,7 +529,7 @@ class _Enter_panState extends State<Enter_pan> {
   },
   child: ElevatedButton(style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        backgroundColor: Color(0xff284389)
+        backgroundColor: const Color(0xff284389)
         ),onPressed: ()async{
         final isvalidmobileotp = emailkey.currentState
             ?.validate();
@@ -538,7 +540,7 @@ class _Enter_panState extends State<Enter_pan> {
 
         print(mobileotpkey);
         }
-        }, child:Text("Next",style: TextStyle(
+        }, child:const Text("Next",style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w800,
               fontFamily: "regulartext",
@@ -550,17 +552,18 @@ class _Enter_panState extends State<Enter_pan> {
   }
   void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message,style: TextStyle(fontSize: 12,fontFamily: "font2"),),));
+        .showSnackBar(SnackBar(content: Text(message,style: const TextStyle(fontSize: 12,fontFamily: "font2"),),));
   }
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
   }
+  void userInfo(String token, String refreshToken) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setString('Token', token);
+    await preferences.setString('RefersToken', refreshToken);
+  }
 }
 
-void userInfo(String token, String refreshToken) async {
-  final preferences = await SharedPreferences.getInstance();
-  await preferences.setString('Token', token);
-  await preferences.setString('RefersToken', refreshToken);
-}
+

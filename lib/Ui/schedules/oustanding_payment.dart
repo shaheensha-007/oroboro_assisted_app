@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../apparbar/myappbar.dart';
@@ -21,7 +20,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: MyAppbar(),
+        title: const MyAppbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -35,7 +34,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                 ),
                 Padding(
                   padding:EdgeInsets.only(left: mwidth*0.1),
-                  child: Text("Outstanding Payments",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                  child: const Text("Outstanding Payments",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                 ),
                 SizedBox(
                   height: mheight*0.03,
@@ -46,7 +45,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none,
                               errorBorder: InputBorder.none,
@@ -57,7 +56,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                       ),
                       Padding(
                         padding:EdgeInsets.only(right: mwidth*0.15),
-                        child: IconButton(onPressed: (){}, icon: Icon(Icons.search)),
+                        child: IconButton(onPressed: (){}, icon: const Icon(Icons.search)),
                       )
                     ],
                   ),
@@ -74,7 +73,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                 ),
                 Padding(
                   padding:EdgeInsets.only(left: mwidth*0.1),
-                  child: Container(
+                  child: SizedBox(
                     height: mheight*0.45,
                     width: mwidth*0.8,
                     child:Column(
@@ -82,11 +81,11 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                       children: [
                          Row(
                            children: [
-                             Text("Outstanding EMI Amount",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext")),
-                             Spacer(),
+                             const Text("Outstanding EMI Amount",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext")),
+                             const Spacer(),
                              Padding(
                                padding:EdgeInsets.only(right: mwidth*0.05),
-                               child: Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext")),
+                               child: const Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext")),
                              )
                            ],
                          ),
@@ -95,11 +94,11 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                         ),
                         Row(
                           children: [
-                            Text("Bounce  charge",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
-                            Spacer(),
+                            const Text("Bounce  charge",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
+                            const Spacer(),
                             Padding(
                               padding:EdgeInsets.only(right: mwidth*0.05),
-                              child: Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
+                              child: const Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
                             )
                           ],
                         ),
@@ -108,11 +107,11 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                         ),
                         Row(
                           children: [
-                            Text("Other  charge",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
-                            Spacer(),
+                            const Text("Other  charge",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
+                            const Spacer(),
                             Padding(
                               padding:EdgeInsets.only(right: mwidth*0.05),
-                              child: Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
+                              child: const Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
                             )
                           ],
                         ),
@@ -121,11 +120,11 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                         ),
                         Row(
                           children: [
-                            Text("Delay payment  ",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
-                            Spacer(),
+                            const Text("Delay payment  ",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
+                            const Spacer(),
                             Padding(
                               padding:EdgeInsets.only(right: mwidth*0.05),
-                              child: Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
+                              child: const Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Color(0xff3E4C57))),
                             )
                           ],
                         ),
@@ -134,11 +133,11 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                         ),
                         Row(
                           children: [
-                            Text("Total Amount",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext")),
-                            Spacer(),
+                            const Text("Total Amount",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext")),
+                            const Spacer(),
                             Padding(
                               padding:EdgeInsets.only(right: mwidth*0.05),
-                              child: Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext")),
+                              child: const Text("₹6000",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext")),
                             )
                           ],
                         ),
@@ -149,7 +148,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                        mainAxisAlignment: MainAxisAlignment.center,
                        children: [
                          Checkbox(
-                           shape: CircleBorder(side: BorderSide(color: Colors.grey)),
+                           shape: const CircleBorder(side: BorderSide(color: Colors.grey)),
                            value: totalcollection, onChanged:
                              (bool? value) {
                            setState(() {
@@ -157,7 +156,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                            });
                          },
                          ),
-                         Text("Pay Total Collections",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"))
+                         const Text("Pay Total Collections",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"))
                        ],
                      ),
                         Padding(
@@ -165,7 +164,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                           child: Row(
                             children: [
                               Checkbox(
-                                shape: CircleBorder(side: BorderSide(color: Colors.grey)),
+                                shape: const CircleBorder(side: BorderSide(color: Colors.grey)),
                                 value: paycustom, onChanged:
                                   (bool? value) {
                                 setState(() {
@@ -173,20 +172,20 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                                 });
                               },
                               ),
-                              Text("Pay  Custom",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"))
+                              const Text("Pay  Custom",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"))
                             ],
                           ),
                         ),
                         if (paycustom)
                           Padding(
                             padding: EdgeInsets.only(top:mheight*0.03,left: mwidth*0.2),
-                            child: Container(
+                            child: SizedBox(
                               height: mheight*0.06,
                               width: mwidth*0.3,
                               child: TextFormField(
-                                style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"),
+                                style: const TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"),
                                 controller: customAmountController,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: "₹ 2000",
                                   errorStyle:TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"),
                                   border: OutlineInputBorder(),
@@ -212,10 +211,10 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                         color: Colors.white,
                         boxShadow: [
                         BoxShadow(
-                        color: Color(0xff2B45A3).withOpacity(0.5),
+                        color: const Color(0xff2B45A3).withOpacity(0.5),
                     spreadRadius: -4,
                     blurRadius: 11,
-                    offset: Offset(
+                    offset: const Offset(
                         0, 6), // changes position of shadow
                   ),
                   ]
@@ -225,7 +224,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                       children: [
                         Padding(
                           padding:EdgeInsets.only(left: mwidth*0.05,top: mheight*0.02),
-                          child: Text("Net Banking",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,fontFamily: "blodtext"),),
+                          child: const Text("Net Banking",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,fontFamily: "blodtext"),),
                         ),
                         SizedBox(
                           height: mheight*0.01,
@@ -233,8 +232,8 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                         Padding(
                           padding:EdgeInsets.only(left: mwidth*0.05),
                           child: Container(
-                            color: Color(0xffF1F1FE),
-                            child: Text("Powered by Razorpay",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"),),
+                            color: const Color(0xffF1F1FE),
+                            child: const Text("Powered by Razorpay",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"),),
                           ),
                         ),
                       ],
@@ -254,10 +253,10 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Color(0xff2B45A3).withOpacity(0.5),
+                              color: const Color(0xff2B45A3).withOpacity(0.5),
                               spreadRadius: -4,
                               blurRadius: 11,
-                              offset: Offset(
+                              offset: const Offset(
                                   0, 6), // changes position of shadow
                             ),
                           ]
@@ -267,7 +266,7 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                         children: [
                           Padding(
                             padding:EdgeInsets.only(left: mwidth*0.05,top: mheight*0.02),
-                            child: Text("QR code / UPINet",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,fontFamily: "blodtext"),),
+                            child: const Text("QR code / UPINet",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,fontFamily: "blodtext"),),
                           ),
                           SizedBox(
                             height: mheight*0.01,
@@ -275,8 +274,8 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                           Padding(
                             padding:EdgeInsets.only(left: mwidth*0.05),
                             child: Container(
-                              color: Color(0xffF1F1FE),
-                              child: Text("Scan the QR and Payment ",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"),),
+                              color: const Color(0xffF1F1FE),
+                              child: const Text("Scan the QR and Payment ",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext"),),
                             ),
                           ),
                         ],
@@ -288,10 +287,10 @@ class _Oustanding_paymentState extends State<Oustanding_payment> {
                 ),
                SizedBox(width: double.infinity,
                    child: ElevatedButton(style: ElevatedButton.styleFrom(
-                     shape: RoundedRectangleBorder(),
-                     backgroundColor: Color(0xff284389)
+                     shape: const RoundedRectangleBorder(),
+                     backgroundColor: const Color(0xff284389)
                    ),
-                       onPressed: (){}, child: Text("Pay",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Colors.white),)))
+                       onPressed: (){}, child: const Text("Pay",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "blodtext",color: Colors.white),)))
               ],
             ),
           )

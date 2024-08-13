@@ -30,8 +30,8 @@ class _BarchartState extends State<Barchart> {
     return SizedBox(
       height: mheight*0.2,
       child: SfCartesianChart(
-          primaryXAxis: CategoryAxis(),
-          primaryYAxis: NumericAxis(minimum: 0, maximum: 40, interval: 10),
+          primaryXAxis: const CategoryAxis(),
+          primaryYAxis: const NumericAxis(minimum: 0, maximum: 40, interval: 10),
           tooltipBehavior: _tooltip,
           series: <CartesianSeries<_ChartData, String>>[
             ColumnSeries<_ChartData, String>(
@@ -39,7 +39,7 @@ class _BarchartState extends State<Barchart> {
                 xValueMapper: (_ChartData data, _) => data.x,
                 yValueMapper: (_ChartData data, _) => data.y,
                 name: 'Gold',
-                color: Color.fromRGBO(8, 142, 255, 1))
+                color: const Color.fromRGBO(8, 142, 255, 1))
           ]),
     );
   }

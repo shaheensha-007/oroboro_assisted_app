@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/aadhar%20upload.dart';
 
 import 'aadhaar_otp.dart';
 
@@ -27,11 +28,11 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
                 SizedBox(
                   height: mheight*0.2,
                 ),
-                Text("Aadhaar Verification ",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                const Text("Aadhaar Verification ",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
               SizedBox(
               height: mheight*0.03,
             ),
-            Text(" Enter customer aadhaar number .We’ll send \nyou a verification code for UIDAI verification \nprocess.",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
+            const Text(" Enter customer aadhaar number .We’ll send \nyou a verification code for UIDAI verification \nprocess.",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
             SizedBox(
               height: mheight*0.05,
             ),
@@ -40,7 +41,7 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
               width: mwidth*0.8,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(color: Colors.grey,spreadRadius: 1),
                   ],
                   color: Colors.white
@@ -48,13 +49,13 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
               child: Padding(
                 padding:EdgeInsets.only(left: mwidth*0.03),
                 child: TextFormField(
-                  style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                  style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                   controller: aadhaarnumber,
                   keyboardType: TextInputType.number,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(15)
                   ],
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
@@ -69,7 +70,11 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
               height: mheight*0.02,
             ),
 
-            Center(child: Text("Aadhaar  not linked with Mobile number ?",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "regulartext",color: Color(0xffFC9738)))),
+             Center(child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Aadhaarupload()), (route) => false);
+                },
+                child: Text("Aadhaar  not linked with Mobile number ?",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "regulartext",color: Color(0xffFC9738))))),
             SizedBox(
               height: mheight*0.05,
             ),
@@ -77,10 +82,10 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
               width: mwidth*0.8,
               child: ElevatedButton(style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  backgroundColor: Color(0xff284389)
+                  backgroundColor: const Color(0xff284389)
               ),onPressed: (){
-                 Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>AaadharOtp()), (route) => false);
-              }, child:Text("Send OTP",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                 Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const AaadharOtp()), (route) => false);
+              }, child:const Text("Send OTP",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
             )
               ],
             ),

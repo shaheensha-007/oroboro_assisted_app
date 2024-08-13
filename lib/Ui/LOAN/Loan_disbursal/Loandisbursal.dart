@@ -17,7 +17,7 @@ class _Loan_disbursalState extends State<Loan_disbursal> {
 
   int position = 0;
 
-  List<Widget>screen=[Disbursal_pendding(),Disbursed()];
+  List<Widget>screen=[const Disbursal_pendding(),const Disbursed()];
 
   void onpresssed(int index){
     setState(() {
@@ -31,7 +31,7 @@ class _Loan_disbursalState extends State<Loan_disbursal> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: MyAppbar(),
+        title: const MyAppbar(),
       ),
       body: Stack(
         children: [
@@ -43,7 +43,7 @@ class _Loan_disbursalState extends State<Loan_disbursal> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.05),
-                child: Text("Loan Disbursal",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                child: const Text("Loan Disbursal",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
               ),
               SizedBox(
                 height: mheight*0.05,
@@ -55,7 +55,7 @@ class _Loan_disbursalState extends State<Loan_disbursal> {
                   children: [
                     ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: _selectedIndex==0?Color(0xff284389): Color(0xffD9D9D9),
+                      backgroundColor: _selectedIndex==0?const Color(0xff284389): const Color(0xffD9D9D9),
                     ),onPressed: (){
                       setState(() {
                         position=0;
@@ -67,7 +67,7 @@ class _Loan_disbursalState extends State<Loan_disbursal> {
                 ),
                     ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: _selectedIndex==1?Color(0xff284389): Color(0xffD9D9D9),
+                      backgroundColor: _selectedIndex==1?const Color(0xff284389): const Color(0xffD9D9D9),
                     ),onPressed: (){
                       setState(() {
                         position=1;

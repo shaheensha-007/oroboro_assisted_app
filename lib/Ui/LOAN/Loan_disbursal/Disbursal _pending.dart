@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -29,7 +28,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "From",
                       style: TextStyle(
                           fontSize: 18,
@@ -47,7 +46,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                           width: mwidth * 0.4,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(color: Colors.grey, spreadRadius: 1),
                               ],
                               color: Colors.white),
@@ -58,12 +57,12 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                 Expanded(
                                   child: TextFormField(
                                     keyboardType: TextInputType.datetime,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w800,
                                         fontFamily: "regulartext"),
                                     controller: disbursalfromdate2,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       enabledBorder: InputBorder.none,
                                       errorBorder: InputBorder.none,
@@ -98,7 +97,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                         });
                                       }
                                     },
-                                    icon: Icon(Icons.calendar_month))
+                                    icon: const Icon(Icons.calendar_month))
                               ],
                             ),
                           ),
@@ -113,7 +112,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "To",
                       style: TextStyle(
                           fontSize: 18,
@@ -128,7 +127,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                       width: mwidth * 0.4,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.grey, spreadRadius: 1),
                           ],
                           color: Colors.white),
@@ -139,12 +138,12 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                             Expanded(
                               child: TextFormField(
                                 keyboardType: TextInputType.datetime,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w800,
                                     fontFamily: "regulartext"),
                                 controller: disbursalTodate1,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   enabledBorder: InputBorder.none,
                                   errorBorder: InputBorder.none,
@@ -178,7 +177,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                     });
                                   }
                                 },
-                                icon: Icon(Icons.calendar_month))
+                                icon: const Icon(Icons.calendar_month))
                           ],
                         ),
                       ),
@@ -196,11 +195,11 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
-                    backgroundColor: Color(0xff284389)),
+                    backgroundColor: const Color(0xff284389)),
                 onPressed: () {
                   // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Customer_onbording_mobile()), (route) => false);
                 },
-                child: Text(
+                child: const Text(
                   "Find",
                   style: TextStyle(
                       fontSize: 16,
@@ -215,7 +214,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
           Container(
             height: mheight,
             width: mwidth,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
               color: Color(0xffC9D2EA),
@@ -236,7 +235,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                       width: mwidth * 0.8,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                                 color: Colors.grey, spreadRadius: 1),
                           ],
@@ -251,7 +250,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                               crossAxisAlignment:
                               CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "Date",
                                   style: TextStyle(
                                       fontSize: 14,
@@ -262,15 +261,15 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                 SizedBox(
                                   width: mwidth * 0.02,
                                 ),
-                                Text(
+                                const Text(
                                   "23_09-2000",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w800,
                                       fontFamily: "regulartext"),
                                 ),
-                                Spacer(),
-                                Text(
+                                const Spacer(),
+                                const Text(
                                   "Loan No",
                                   style: TextStyle(
                                       fontSize: 14,
@@ -283,7 +282,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                 ),
                                 Padding(
                                   padding:EdgeInsets.only(right: mwidth*0.02),
-                                  child: Text(
+                                  child: const Text(
                                     "ORO003A11-9009",
                                     style: TextStyle(
                                         fontSize: 14,
@@ -294,7 +293,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                               ],
                             ),
                             Divider(
-                              color: Color(0xffC9D2EA),
+                              color: const Color(0xffC9D2EA),
                               endIndent: mwidth * 0.03,
                             ),
 
@@ -304,7 +303,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Customer",
                                       style: TextStyle(
                                           fontSize: 14,
@@ -315,7 +314,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                     SizedBox(
                                       width: mwidth * 0.02,
                                     ),
-                                    Text(
+                                    const Text(
                                       "shaheen pk",
                                       style: TextStyle(
                                           fontSize: 14,
@@ -324,13 +323,13 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                     ),
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Padding(
                                   padding:EdgeInsets.only(right: mwidth*0.04),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Amount",
                                         style: TextStyle(
                                             fontSize: 14,
@@ -341,7 +340,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                       SizedBox(
                                         width: mwidth * 0.02,
                                       ),
-                                      Text(
+                                      const Text(
                                         "45899",
                                         style: TextStyle(
                                             fontSize: 14,
@@ -354,7 +353,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                               ],
                             ),
                             Divider(
-                              color: Color(0xffC9D2EA),
+                              color: const Color(0xffC9D2EA),
                               endIndent: mwidth * 0.03,
                             ),
                             Row(
@@ -363,7 +362,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Product value",
                                       style: TextStyle(
                                           fontSize: 14,
@@ -374,7 +373,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                     SizedBox(
                                       width: mwidth * 0.02,
                                     ),
-                                    Text(
+                                    const Text(
                                       "10,0000",
                                       style: TextStyle(
                                           fontSize: 14,
@@ -383,13 +382,13 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                     ),
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Padding(
                                   padding:EdgeInsets.only(right: mwidth*0.04),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Status",
                                         style: TextStyle(
                                             fontSize: 14,
@@ -400,7 +399,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                       SizedBox(
                                         width: mwidth * 0.02,
                                       ),
-                                      Text(
+                                      const Text(
                                         "Active",
                                         style: TextStyle(
                                             fontSize: 14,
@@ -415,14 +414,14 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                               ],
                             ),
                             Divider(
-                              color: Color(0xffC9D2EA),
+                              color: const Color(0xffC9D2EA),
                               endIndent: mwidth * 0.03,
                             ),
                             Row(
                               crossAxisAlignment:
                               CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "Comments",
                                   style: TextStyle(
                                       fontSize: 14,
@@ -433,7 +432,7 @@ class _Disbursal_penddingState extends State<Disbursal_pendding> {
                                 SizedBox(
                                   width: mwidth * 0.02,
                                 ),
-                                Padding(
+                                const Padding(
                                   padding:EdgeInsets.only(top:3),
                                   child: Text(
                                     "ORO11ORO11C-10102 Disbursed 06/10/2024 17:18:33",

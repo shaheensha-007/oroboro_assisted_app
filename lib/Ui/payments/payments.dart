@@ -18,7 +18,7 @@ class _PaymentsState extends State<Payments> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: MyAppbar(),
+        title: const MyAppbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -31,7 +31,7 @@ class _PaymentsState extends State<Payments> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Payments",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                child: const Text("Payments",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
               ),
               SizedBox(
                 height: mheight*0.03,
@@ -42,7 +42,7 @@ class _PaymentsState extends State<Payments> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -53,7 +53,7 @@ class _PaymentsState extends State<Payments> {
                     ),
                     Padding(
                       padding:EdgeInsets.only(right: mwidth*0.15),
-                      child: IconButton(onPressed: (){}, icon: Icon(Icons.search)),
+                      child: IconButton(onPressed: (){}, icon: const Icon(Icons.search)),
                     )
                   ],
                 ),
@@ -84,7 +84,7 @@ class _PaymentsState extends State<Payments> {
                               width: mwidth * 0.8,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                         color: Color(0xffC9D2EA), spreadRadius: 1),
                                   ],
@@ -96,30 +96,30 @@ class _PaymentsState extends State<Payments> {
                                   children: [
                                     Row(
                                       children: [
-                                        Text("Ref NO :",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
+                                        const Text("Ref NO :",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
-                                        Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
-                                        Spacer(),
-                                        Text("Date :",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
+                                        const Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
+                                        const Spacer(),
+                                        const Text("Date :",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
                                         Padding(
                                           padding:EdgeInsets.only(right: mwidth*0.05),
-                                          child: Text("23-09-20000 ",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
+                                          child: const Text("23-09-20000 ",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,)),
                                         ),
                                       ],
                                     ),
                                     Divider(
-                                      color: Color(0xffC9D2EA),
+                                      color: const Color(0xffC9D2EA),
                                       endIndent: mwidth*0.05,
                                     ),
                                     SizedBox(
                                       height: mheight*0.01,
                                     ),
-                                    Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,) ,),
+                                    const Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,) ,),
                                     SizedBox(
                                       height: mheight*0.01,
                                     ),
@@ -127,9 +127,9 @@ class _PaymentsState extends State<Payments> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
-                                        Spacer(),
-                                        Text("Balance : 29-09-2000",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xffA9713A))),
+                                        const Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
+                                        const Spacer(),
+                                        const Text("Balance : 29-09-2000",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xffA9713A))),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
@@ -138,11 +138,11 @@ class _PaymentsState extends State<Payments> {
                                     SizedBox(
                                       height: mheight*0.01,
                                     ),
-                                    Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
+                                    const Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
                                     SizedBox(
                                       height: mheight*0.01,
                                     ),
-                                    Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
+                                    const Text("Loan No :ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"regulartext",fontWeight: FontWeight.bold,color: Color(0xff3E4C57)) ,),
                                   ],
                                 ),
                               ),

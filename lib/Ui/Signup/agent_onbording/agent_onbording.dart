@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oroboro_assisted_app/Ui/Signup/upload%20the%20face.dart';
 import 'enter_pan.dart';
 
 class Agent_onborading extends StatelessWidget {
@@ -22,7 +20,7 @@ class Agent_onborading extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: mwidth * 0.2),
-                  child: Text(
+                  child: const Text(
                     "Let’s Start Your\nAgent  Onboarding  Journey",
                     style: TextStyle(
                       fontSize: 20,
@@ -34,7 +32,7 @@ class Agent_onborading extends StatelessWidget {
                 SizedBox(
                   height: mheight * 0.05,
                 ),
-                Enter_pan(),
+                const Enter_pan(),
                 SizedBox(
                   height: mheight * 0.03,
                 ),

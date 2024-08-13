@@ -15,7 +15,7 @@ class ApiClient {
     final preferences = await SharedPreferences.getInstance();
 
     final token = preferences.getString('Token');
-    print("hi"+token.toString());
+    print("hi$token");
     Map<String, String> headerParams = {};
     Response response;
 
@@ -102,16 +102,12 @@ class ApiClient {
         });
     }
 
-    print('status of $path =>' + (response.statusCode).toString());
+    print('status of $path =>${response.statusCode}');
     print(response.body);
     if (response.statusCode == 400|| response.statusCode==401) {
 
       BlocProvider.of<RefreshtokenBloc>(context).add(FetchRefreshtoken());
-      log(path +
-          ' : ' +
-          response.statusCode.toString() +
-          ' : ' +
-          response.body);
+      log('$path : ${response.statusCode} : ${response.body}');
 
       throw ApiException(_decodeBodyBytes(response), response.statusCode);
     }

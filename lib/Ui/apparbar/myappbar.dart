@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oroboro_assisted_app/notification.dart';
 
@@ -6,6 +5,7 @@ import '../homepage/Mainhome_page.dart';
 
 class MyAppbar extends StatelessWidget {
   const MyAppbar({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +17,19 @@ class MyAppbar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding:EdgeInsets.all(5.0),
+            padding:const EdgeInsets.all(5.0),
             child: IconButton(onPressed: (){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Mainhome()), (route) => false);
-                  }, icon:Icon(Icons.arrow_back_ios_new)),
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Mainhome()), (route) => false);
+                  }, icon:const Icon(Icons.arrow_back_ios_new)),
           ),
-          Spacer(),
+          const Spacer(),
           Padding(
             padding:EdgeInsets.only(right:mwidth*0.03),
             child: IconButton(onPressed: (){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Notification1()), (route) => false);
-            }, icon:Icon(Icons.notifications)),
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Notification1()), (route) => false);
+            }, icon:const Icon(Icons.notifications)),
           ),
-          Padding(
+          const Padding(
             padding:EdgeInsets.all(5.0),
             child: CircleAvatar(
               backgroundColor:Colors.green,

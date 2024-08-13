@@ -27,11 +27,11 @@ class _FogotpasswordState extends State<Fogotpassword> {
                   SizedBox(
                     height: mheight*0.2,
                   ),
-                  Text("Forgot Password",style: TextStyle(fontSize: 20,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                  const Text("Forgot Password",style: TextStyle(fontSize: 20,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                   SizedBox(
                     height: mheight*0.01,
                   ),
-                  Text("Please  enter your  email address . You will  receive\na link to create a new Password via email.",style: TextStyle(fontSize: 12,fontFamily: "regulartext",fontWeight: FontWeight.w800),),
+                  const Text("Please  enter your  email address . You will  receive\na link to create a new Password via email.",style: TextStyle(fontSize: 12,fontFamily: "regulartext",fontWeight: FontWeight.w800),),
                   SizedBox(
                     height: mheight*0.1,
                   ),
@@ -40,7 +40,7 @@ class _FogotpasswordState extends State<Fogotpassword> {
                     width: mwidth*0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(color: Colors.grey,spreadRadius: 1),
                         ],
                         color: Colors.white
@@ -48,9 +48,9 @@ class _FogotpasswordState extends State<Fogotpassword> {
                     child: Padding(
                       padding:EdgeInsets.only(left: mwidth*0.03),
                       child: TextFormField(
-                        style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                        style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                         controller: forgotpassword,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
@@ -69,10 +69,10 @@ class _FogotpasswordState extends State<Fogotpassword> {
             padding:EdgeInsets.only(right: mwidth*0.1),
             child: ElevatedButton(style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                backgroundColor: Color(0xff284389)
+                backgroundColor: const Color(0xff284389)
             ),onPressed: (){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Signin_page()), (route) => false);
-            }, child:Text("Send",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Signin_page()), (route) => false);
+            }, child:const Text("Send",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
           ),
         ),
                   SizedBox(
@@ -80,7 +80,7 @@ class _FogotpasswordState extends State<Fogotpassword> {
                   ),
                   Center(child: Padding(
                     padding:EdgeInsets.only(right: mwidth*0.1),
-                    child: Text("Version 1.0.0.1",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
+                    child: const Text("Version 1.0.0.1",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
                   ))
                 ],
               ),

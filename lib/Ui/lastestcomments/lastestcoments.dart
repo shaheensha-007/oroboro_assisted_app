@@ -19,7 +19,7 @@ class _Lastest_commentsState extends State<Lastest_comments> {
      appBar: AppBar(
        shadowColor: Colors.white,
        surfaceTintColor: Colors.white,
-       title: MyAppbar(),
+       title: const MyAppbar(),
      ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -32,7 +32,7 @@ class _Lastest_commentsState extends State<Lastest_comments> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Lastest Comments", style: TextStyle(
+                child: const Text("Lastest Comments", style: TextStyle(
                     fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
               ),
               SizedBox(
@@ -46,10 +46,10 @@ class _Lastest_commentsState extends State<Lastest_comments> {
                       children: [
                         Padding(
                           padding:EdgeInsets.only(left: mwidth*0.05),
-                          child: Text("Customers KYC Registration-Done by SHA \n Mobiles13-09-2023",style: TextStyle(fontSize: 14, fontFamily: "boldtext", fontWeight: FontWeight.w200,color: Color(0xff6F788E)),),
+                          child: const Text("Customers KYC Registration-Done by SHA \n Mobiles13-09-2023",style: TextStyle(fontSize: 14, fontFamily: "boldtext", fontWeight: FontWeight.w200,color: Color(0xff6F788E)),),
                         ),
                         Divider(
-                          color: Color(0xff6F788E),
+                          color: const Color(0xff6F788E),
                           indent: mwidth*0.05,
                           endIndent: mwidth*0.05,
                         )

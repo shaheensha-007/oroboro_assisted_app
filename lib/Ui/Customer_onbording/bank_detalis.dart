@@ -27,7 +27,7 @@ class _Bank_detailsState extends State<Bank_details> {
                 SizedBox(
                   height: mheight*0.2,
                 ),
-                Text("Bank Details",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                const Text("Bank Details",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                 SizedBox(
                   height: mheight*0.1,
                 ),
@@ -36,7 +36,7 @@ class _Bank_detailsState extends State<Bank_details> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -44,8 +44,8 @@ class _Bank_detailsState extends State<Bank_details> {
                   child: Padding(
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -64,7 +64,7 @@ class _Bank_detailsState extends State<Bank_details> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -72,8 +72,8 @@ class _Bank_detailsState extends State<Bank_details> {
                   child: Padding(
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -92,7 +92,7 @@ class _Bank_detailsState extends State<Bank_details> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -100,7 +100,7 @@ class _Bank_detailsState extends State<Bank_details> {
                   child: Padding(
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child: DropdownButtonFormField<String>(
-                      icon: Icon(Icons.arrow_drop_down),
+                      icon: const Icon(Icons.arrow_drop_down),
                       value:accounttype,
                       onChanged: (value){
                         setState(() {
@@ -110,14 +110,14 @@ class _Bank_detailsState extends State<Bank_details> {
                       items:listaccounttype.map((account){
                         return DropdownMenuItem(
                         value: account,
-                        child: Text(account, style: TextStyle(
+                        child: Text(account, style: const TextStyle(
                                fontSize: 12,
                                 fontWeight: FontWeight.w800,
                                 fontFamily: "regulartext",
                                     ),),
                                     );
                                     }).toList(),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                         // Adjust content padding as needed
                         border: InputBorder.none,
@@ -144,18 +144,18 @@ class _Bank_detailsState extends State<Bank_details> {
                     children: [
                       ElevatedButton(style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          backgroundColor: Color(0xff284389)
+                          backgroundColor: const Color(0xff284389)
                       ),  onPressed: (){
                         // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>), (route) => false);
                       },
-                          child:Text("Previous",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                          child:const Text("Previous",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                       ElevatedButton(style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          backgroundColor: Color(0xff284389)
+                          backgroundColor: const Color(0xff284389)
                       ),  onPressed: (){
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Upload_bank_book()), (route) => false);
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Upload_bank_book()), (route) => false);
                       },
-                          child:Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                          child:const Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                     ],
                   ),
                 ),

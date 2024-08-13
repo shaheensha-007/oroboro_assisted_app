@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oroboro_assisted_app/Apis/refreshtokenApi/refreshtokenApi.dart';
-import 'package:oroboro_assisted_app/Blocs/%20Mobileagent_bloc/mobileagent_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/AgentKyc_bloc/agentkyc_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/Agentbusiness_bloc/agentbusiness_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/Esign_bloc/esign_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/Ifsc_bloc/ifsc_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/MobileotpVerify_bloc/mobileotpverify_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/bankregstratin_bloc/bankregstration_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/refershtoken_bloc/refreshtoken_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/token_bloc/token_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/vetrifypan_bloc/verifypan_bloc.dart';
-import 'package:oroboro_assisted_app/Ui/Signin/signin_page.dart';
-import 'package:oroboro_assisted_app/Ui/Signup/Draw_in_signature.dart';
-import 'Blocs/previewdocuments_bloc/previewdocument_bloc.dart';
-import 'Ui/Splansh_screen/Splansh_Screen.dart';
+import 'package:oroboro_assisted_app/Ui/Splansh_screen/Splansh_Screen.dart';
+import 'Blocs/Signinblocs/Signin_bloc/signin_bloc.dart';
+import 'Blocs/Signupblocs/ Mobileagent_bloc/mobileagent_bloc.dart';
+import 'Blocs/Signupblocs/AgentKyc_bloc/agentkyc_bloc.dart';
+import 'Blocs/Signupblocs/Agentbusiness_bloc/agentbusiness_bloc.dart';
+import 'Blocs/Signupblocs/Esign_bloc/esign_bloc.dart';
+import 'Blocs/Signupblocs/Ifsc_bloc/ifsc_bloc.dart';
+import 'Blocs/Signupblocs/MobileotpVerify_bloc/mobileotpverify_bloc.dart';
+import 'Blocs/Signupblocs/bankregstratin_bloc/bankregstration_bloc.dart';
+import 'Blocs/Signupblocs/previewdocuments_bloc/previewdocument_bloc.dart';
+import 'Blocs/Signupblocs/vetrifypan_bloc/verifypan_bloc.dart';
+import 'Ui/Customer_onbording/addhaar number.dart';
+import 'Ui/Customer_onbording/personal information.dart';
+
 
 const String basePath = "https://apidoc.oroboro.in/api/";
 
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=>EsignBloc()),
         BlocProvider(create: (context)=>IfscBloc()),
         BlocProvider(create: (context)=>BankregstrationBloc()),
+        BlocProvider(create: (context)=>SigninBloc()),
+
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
@@ -49,7 +52,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: Signin_page()
+          home: const Splash_Screen()
       ),
     );
   }

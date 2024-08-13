@@ -19,7 +19,7 @@ class _Viewloan_previousloandetailsState extends State<Viewloan_previousloandeta
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: Loan_appbar(),
+        title: const Loan_appbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -32,7 +32,7 @@ class _Viewloan_previousloandetailsState extends State<Viewloan_previousloandeta
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Collateral Details", style: TextStyle(
+                child: const Text("Collateral Details", style: TextStyle(
                     fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
               ),
               SizedBox(

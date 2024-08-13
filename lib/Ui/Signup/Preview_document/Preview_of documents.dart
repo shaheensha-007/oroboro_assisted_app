@@ -1,17 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:oroboro_assisted_app/Blocs/Esign_bloc/esign_bloc.dart';
-import 'package:oroboro_assisted_app/Blocs/Esign_bloc/esign_bloc.dart';
+
 import 'package:oroboro_assisted_app/Ui/Signin/signin_page.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/Preview_document/pdfview.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/agent_onbording/enter_pan.dart';
 
-import '../../../Blocs/previewdocuments_bloc/previewdocument_bloc.dart';
-import '../../../modeles/EsignagreementModel/EsignagreementModel.dart';
-import '../../../modeles/Priviewdocumentmodel/PreviewdocumentModel.dart';
+import '../../../Blocs/Signupblocs/Esign_bloc/esign_bloc.dart';
+import '../../../Blocs/Signupblocs/previewdocuments_bloc/previewdocument_bloc.dart';
+import '../../../modeles/signupModelclass/EsignagreementModel/EsignagreementModel.dart';
+import '../../../modeles/signupModelclass/Priviewdocumentmodel/PreviewdocumentModel.dart';
 import '../bank_registration.dart';
 
 class Preview_of_documents extends StatefulWidget {
@@ -42,7 +39,7 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
             ),
             Padding(
               padding: EdgeInsets.only(right: mwidth * 0.3),
-              child: Text(
+              child: const Text(
                 "Preview Agreement",
                 style: TextStyle(
                     fontSize: 20,
@@ -60,7 +57,7 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
                 BlocListener<PreviewdocumentBloc, PreviewdocumentState>(
                   listener: (context, state) {
                     if (state is Previewdocumentblocloading) {
-                      CircularProgressIndicator();
+                      const CircularProgressIndicator();
                     }
                     if (state is PreviewdocumentblocError) {
                       _showErrorSnackBar("Internal server issue");
@@ -69,8 +66,7 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
                       previewdocumentdata =
                           BlocProvider.of<PreviewdocumentBloc>(context)
                               .ispreviewdocument;
-                      if (previewdocumentdata != null &&
-                          previewdocumentdata.result != null &&
+                      if (previewdocumentdata.result != null &&
                           previewdocumentdata.result!.fileBytes != null) {
                         setState(() {
                           base64String = previewdocumentdata.result!.fileBytes!.toString();
@@ -89,7 +85,7 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389),
+                      backgroundColor: const Color(0xff284389),
                     ),
                     onPressed: () {
                       BlocProvider.of<PreviewdocumentBloc>(context).add(
@@ -101,7 +97,7 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
                         ),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       "Preview document",
                       style: TextStyle(
                           fontSize: 16,
@@ -117,16 +113,16 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
                 BlocListener<EsignBloc, EsignState>(
   listener: (context, state) {
     if(state is EsignblocLoading){
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
     if(state is EsignblocLoaded){
       esignagreementprocess=BlocProvider.of<EsignBloc>(context).isvalidesign;
       if(esignagreementprocess.result!.activityStatus=="SUCCESS"){
-       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Bank_registration()), (route) => false);
+       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Bank_registration()), (route) => false);
       }else{
         final esignmessage=esignagreementprocess.message.toString();
         _showErrorSnackBar(esignmessage);
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Preview_of_documents()), (route) => false);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Preview_of_documents()), (route) => false);
       }
     }
     // TODO: implement listener
@@ -135,12 +131,12 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)),
+                      backgroundColor: const Color(0xff284389)),
                   onPressed: () {
                    BlocProvider.of<EsignBloc>(context).add(FetchEsin(
                        clientId: MainclientId, PAN: Pannumber.text, OnboardingFor: "Agent", ctx: context));
                   },
-                  child: Text(
+                  child: const Text(
                     "Submit",
                     style: TextStyle(
                         fontSize: 16,
@@ -162,7 +158,7 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
         message,
-        style: TextStyle(fontSize: 12, fontFamily: "font2"),
+        style: const TextStyle(fontSize: 12, fontFamily: "font2"),
       ),
     ));
   }

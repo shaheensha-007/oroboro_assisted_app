@@ -18,7 +18,7 @@ class _Search_CustomersState extends State<Search_Customers> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: MyAppbar(),
+        title: const MyAppbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -31,7 +31,7 @@ class _Search_CustomersState extends State<Search_Customers> {
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Find Your Customer",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                child: const Text("Find Your Customer",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
               ),
               SizedBox(
                 height: mheight*0.03,
@@ -43,7 +43,7 @@ class _Search_CustomersState extends State<Search_Customers> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -52,8 +52,8 @@ class _Search_CustomersState extends State<Search_Customers> {
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child: TextFormField(
                       controller: serachCustomerController,
-                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -75,7 +75,7 @@ class _Search_CustomersState extends State<Search_Customers> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -83,8 +83,8 @@ class _Search_CustomersState extends State<Search_Customers> {
                   child: Padding(
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -102,11 +102,11 @@ class _Search_CustomersState extends State<Search_Customers> {
               Center(
                 child:  ElevatedButton(style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                    backgroundColor: Color(0xff284389)
+                    backgroundColor: const Color(0xff284389)
                 ),  onPressed: (){
                   // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>()), (route) => false);
                 },
-                    child:Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                    child:const Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
               ),
               SizedBox(
                 height: mheight*0.06,
@@ -130,7 +130,7 @@ class _Search_CustomersState extends State<Search_Customers> {
                               width: mwidth * 0.85,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                         color: Color(0xffC9D2EA), spreadRadius: 1),
                                   ],
@@ -142,24 +142,24 @@ class _Search_CustomersState extends State<Search_Customers> {
                                   children: [
                                     Row(
                                       children: [
-                                        Text("Ref NO :",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                        const Text("Ref NO :",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
-                                        Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
-                                        Spacer(),
-                                        Text("Date :",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                        const Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                        const Spacer(),
+                                        const Text("Date :",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
                                         Padding(
                                           padding:EdgeInsets.only(right: mwidth*0.05),
-                                          child: Text("23-09-20000 ",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                          child: const Text("23-09-20000 ",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         ),
                                       ],
                                     ),
                                     Divider(
-                                      color: Color(0xffC9D2EA),
+                                      color: const Color(0xffC9D2EA),
                                       endIndent: mwidth*0.05,
                                     ),
                                     SizedBox(
@@ -167,19 +167,19 @@ class _Search_CustomersState extends State<Search_Customers> {
                                     ),
                                     Row(
                                       children: [
-                                        Text("Ac.no :",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                        const Text("Ac.no :",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
-                                        Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
-                                        Spacer(),
-                                        Text("Credit ",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,color: Colors.green)),
+                                        const Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                        const Spacer(),
+                                        const Text("Credit ",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,color: Colors.green)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
                                         Padding(
                                           padding:EdgeInsets.only(right: mwidth*0.05),
-                                          child: Text(": #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                          child: const Text(": #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         ),
                                       ],
                                     ),
@@ -189,29 +189,29 @@ class _Search_CustomersState extends State<Search_Customers> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text("Balance :",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                        const Text("Balance :",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
                                         Padding(
                                           padding:EdgeInsets.only(right: mwidth*0.05),
-                                          child: Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                          child: const Text(" #ORBOR001",style:TextStyle(fontSize: 12,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         ),
                                       ],
                                     ),
                                     Divider(
-                                      color: Color(0xffC9D2EA),
+                                      color: const Color(0xffC9D2EA),
                                       endIndent: mwidth*0.05,
                                     ),
                                     Row(
                                       children: [
-                                        Text("Narration :",style:TextStyle(fontSize: 10,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                        const Text("Narration :",style:TextStyle(fontSize: 10,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         SizedBox(
                                           width: mwidth*0.01,
                                         ),
                                         Padding(
                                           padding:EdgeInsets.only(right: mwidth*0.05,top: mheight*0.02),
-                                          child: Text("Lorem Ipsum is dummy text of the printing.",style:TextStyle(fontSize: 10,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
+                                          child: const Text("Lorem Ipsum is dummy text of the printing.",style:TextStyle(fontSize: 10,fontFamily:"shorts",fontWeight: FontWeight.bold,)),
                                         ),
                                       ],
                                     )

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'loan_appbar.dart';
@@ -19,7 +18,7 @@ class _Viewloan_collateraldetalisState extends State<Viewloan_collateraldetalis>
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: Loan_appbar(),
+        title: const Loan_appbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -33,7 +32,7 @@ class _Viewloan_collateraldetalisState extends State<Viewloan_collateraldetalis>
                 ),
                 Padding(
                   padding:EdgeInsets.only(left: mwidth*0.1),
-                  child: Text("Collateral Details", style: TextStyle(
+                  child: const Text("Collateral Details", style: TextStyle(
                       fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
                 ),
                 SizedBox(
@@ -49,10 +48,10 @@ class _Viewloan_collateraldetalisState extends State<Viewloan_collateraldetalis>
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xff2B45A3).withOpacity(0.5),
+                  color: const Color(0xff2B45A3).withOpacity(0.5),
                   spreadRadius: -4,
                   blurRadius: 11,
-                  offset: Offset(
+                  offset: const Offset(
                       0, 6), // changes position of shadow
                 ),
               ],
@@ -65,11 +64,11 @@ class _Viewloan_collateraldetalisState extends State<Viewloan_collateraldetalis>
               padding:EdgeInsets.only(left: mwidth*0.05),
               child: Row(
                 children: [
-                  Text("Name",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                  Spacer(),
+                  const Text("Name",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                  const Spacer(),
                   Padding(
                     padding: EdgeInsets.only(right: mwidth*0.05),
-                    child: Text("MOHAMMED SHAHEEN PK",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                    child: const Text("MOHAMMED SHAHEEN PK",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                   )
                 ],
               ),
@@ -81,11 +80,11 @@ class _Viewloan_collateraldetalisState extends State<Viewloan_collateraldetalis>
                 padding:EdgeInsets.only(left: mwidth*0.05),
                 child: Row(
                   children: [
-                    Text("PAN",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                    Spacer(),
+                    const Text("PAN",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                    const Spacer(),
                     Padding(
                       padding: EdgeInsets.only(right: mwidth*0.05),
-                      child: Text("HSHPP1158J",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                      child: const Text("HSHPP1158J",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                     )
                   ],
                 ),
@@ -97,11 +96,11 @@ class _Viewloan_collateraldetalisState extends State<Viewloan_collateraldetalis>
                 padding:EdgeInsets.only(left: mwidth*0.05),
                 child: Row(
                   children: [
-                    Text("Mobile",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                    Spacer(),
+                    const Text("Mobile",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                    const Spacer(),
                     Padding(
                       padding: EdgeInsets.only(right: mwidth*0.05),
-                      child: Text("+91 8606648604",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                      child: const Text("+91 8606648604",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                     )
                   ],
                 ),
@@ -113,11 +112,11 @@ class _Viewloan_collateraldetalisState extends State<Viewloan_collateraldetalis>
                 padding:EdgeInsets.only(left: mwidth*0.05),
                 child: Row(
                   children: [
-                    Text("Aadhaar",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                    Spacer(),
+                    const Text("Aadhaar",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                    const Spacer(),
                     Padding(
                       padding: EdgeInsets.only(right: mwidth*0.05),
-                      child: Text("250000567893",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                      child: const Text("250000567893",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                     )
                   ],
                 ),
@@ -129,11 +128,11 @@ class _Viewloan_collateraldetalisState extends State<Viewloan_collateraldetalis>
                 padding:EdgeInsets.only(left: mwidth*0.05),
                 child: Row(
                   children: [
-                    Text("Aadhaar",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
-                    Spacer(),
+                    const Text("Aadhaar",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ,),
+                    const Spacer(),
                     Padding(
                       padding: EdgeInsets.only(right: mwidth*0.05),
-                      child: Text("250000567893",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
+                      child: const Text("250000567893",style: TextStyle(fontSize:14,fontFamily: "boldtext",fontWeight: FontWeight.w800) ),
                     )
                   ],
                 ),

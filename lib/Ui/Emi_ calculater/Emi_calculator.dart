@@ -44,7 +44,7 @@ class _Emi_calculatorState extends State<Emi_calculator> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: MyAppbar(),
+        title: const MyAppbar(),
       ),
       body: Stack(
         children: [
@@ -56,7 +56,7 @@ class _Emi_calculatorState extends State<Emi_calculator> {
                 SizedBox(
                   height: mheight * 0.1,
                 ),
-                Text(
+                const Text(
                   "EMI Calculator",
                   style: TextStyle(
                       fontSize: 18,
@@ -71,21 +71,21 @@ class _Emi_calculatorState extends State<Emi_calculator> {
                   width: mwidth * 0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey, spreadRadius: 1),
                       ],
                       color: Colors.white),
                   child: Padding(
                     padding: EdgeInsets.only(left: mwidth * 0.03),
                     child: TextFormField(
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w800,
                           fontFamily: "regulartext"),
                       controller: productvalue,
                       keyboardType: TextInputType.number,
                       inputFormatters: [LengthLimitingTextInputFormatter(10)],
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -110,14 +110,14 @@ class _Emi_calculatorState extends State<Emi_calculator> {
                     width: mwidth * 0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(color: Colors.grey, spreadRadius: 1),
                         ],
                         color: Colors.white),
                     child: Padding(
                       padding: EdgeInsets.only(left: mwidth * 0.03),
                       child: DropdownButtonFormField<String>(
-                        icon: Icon(Icons.arrow_drop_down),
+                        icon: const Icon(Icons.arrow_drop_down),
                         value: emiternure,
                         onChanged: (value) {
                           emiternure = value;
@@ -127,7 +127,7 @@ class _Emi_calculatorState extends State<Emi_calculator> {
                             value: emitype,
                             child: Text(
                               emitype,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w800,
                                 fontFamily: "regulartext",
@@ -135,7 +135,7 @@ class _Emi_calculatorState extends State<Emi_calculator> {
                             ),
                           );
                         }).toList(),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.0), // Adjust content padding as needed
                           border: InputBorder.none, // Remove the border
                           hintText: "Emi Tenure",
@@ -155,7 +155,7 @@ class _Emi_calculatorState extends State<Emi_calculator> {
                 SizedBox(
                   height: mheight * 0.03,
                 ),
-                Text(
+                const Text(
                   "Choose Your insurance  Type",
                   style: TextStyle(
                       fontSize: 14,
@@ -167,13 +167,13 @@ class _Emi_calculatorState extends State<Emi_calculator> {
                 ),
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: emilistQuestion.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Row(
                       children: [
                         Checkbox(
-                          shape: CircleBorder(
+                          shape: const CircleBorder(
                               side: BorderSide(color: Colors.grey)),
                           value: EmiselectedList[index],
                           onChanged: (bool? value) {
@@ -184,7 +184,7 @@ class _Emi_calculatorState extends State<Emi_calculator> {
                         ),
                         Text(
                           emilistQuestion[index],
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w800,
                               fontFamily: "boldtext",

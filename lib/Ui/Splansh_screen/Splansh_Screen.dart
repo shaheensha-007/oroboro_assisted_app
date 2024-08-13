@@ -4,14 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 import '../Signin/signin_page.dart';
-import '../Signup/agent_onbording/agent_onbording.dart';
 import '../mpin/alreadyMpin.dart';
 
 
 
 
 class Splash_Screen extends StatefulWidget {
-  const Splash_Screen({Key? key}) : super(key: key);
+  const Splash_Screen({super.key});
 
   @override State<Splash_Screen> createState() => _Splash_ScreenState();
 }
@@ -22,7 +21,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     final preferences = await SharedPreferences.getInstance();
 
     Future.delayed(const Duration(seconds: 2), () {
-      if (preferences.containsKey('Token')) {
+      if (preferences.containsKey('success')) {
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
             builder: (context) => const Already_mpin()), (route) => true);
       }
@@ -40,6 +39,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
   }
 
   // TODO: implement initState    super.initState();  }
+  @override
   Widget build(BuildContext context) {
     var mwidth = MediaQuery
         .of(context)

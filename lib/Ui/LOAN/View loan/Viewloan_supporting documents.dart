@@ -24,7 +24,7 @@ class _Viewloan_supportingdocumentState extends State<Viewloan_supportingdocumen
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: Loan_appbar(),
+        title: const Loan_appbar(),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -37,7 +37,7 @@ class _Viewloan_supportingdocumentState extends State<Viewloan_supportingdocumen
               ),
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
-                child: Text("Supporting  Documents", style: TextStyle(
+                child: const Text("Supporting  Documents", style: TextStyle(
                     fontSize: 18, fontFamily: "boldtext", fontWeight: FontWeight.w800),),
               ),
               SizedBox(

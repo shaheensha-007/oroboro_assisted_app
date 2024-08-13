@@ -64,7 +64,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: mwidth * 0.2),
-                  child: Text(
+                  child: const Text(
                     "Let’s Start Your\nAgent  Business  Journey",
                     style: TextStyle(
                       fontSize: 20,
@@ -83,7 +83,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                     width: mwidth*0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(color: Colors.grey,spreadRadius: 1),
                         ],
                         color: Colors.white
@@ -92,9 +92,9 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                       padding:EdgeInsets.only(left: mwidth*0.03),
                       child: TextFormField(
                              validator:validateGST,
-                            style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                            style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                             controller: gstnumber,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               enabledBorder: InputBorder.none,
                               errorBorder: InputBorder.none,
@@ -128,7 +128,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                     width: mwidth*0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(color: Colors.grey,spreadRadius: 1),
                         ],
                         color: Colors.white
@@ -145,9 +145,9 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                             ownernamekey.currentState?.save();
                           }
                         },
-                        style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                        style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                         controller: ownername,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
@@ -159,7 +159,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                     ),
                   ),
                 )
-                :SizedBox(),
+                :const SizedBox(),
                 SizedBox(
                   height: mheight*0.03,
                 ),
@@ -171,7 +171,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                     width: mwidth*0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(color: Colors.grey,spreadRadius: 1),
                         ],
                         color: Colors.white
@@ -188,9 +188,9 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                             shopnamekey.currentState?.save();
                           }
                         },
-                        style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                        style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                         controller: shopname,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
@@ -202,7 +202,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                     ),
                   ),
                 )
-                :SizedBox(),
+                :const SizedBox(),
         
                 SizedBox(
                   height: mheight*0.03,
@@ -215,7 +215,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                     width: mwidth*0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(color: Colors.grey,spreadRadius: 1),
                         ],
                         color: Colors.white
@@ -224,8 +224,8 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                       padding:EdgeInsets.only(left: mwidth*0.03),
                       child: TextFormField(
                         controller: tannumber,
-                        style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                        decoration: InputDecoration(
+                        style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
@@ -237,7 +237,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                     ),
                   ),
                 )
-                :SizedBox(),
+                :const SizedBox(),
         
                 SizedBox(
                   height: mheight*0.05,
@@ -245,16 +245,16 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                 Center(
                   child: ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)
+                      backgroundColor: const Color(0xff284389)
                   ),onPressed: (){
                   final isvalidtan= tannumberkey.currentState?.validate();
                   if(isvalidtan==true) {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) =>
-                            Draw_in_signature()), (route) => false);
+                            const Draw_in_signature()), (route) => false);
                     tannumberkey.currentState?.save();
                   }
-                  }, child:Text("Submit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                  }, child:const Text("Submit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                 ),
               ],
             )

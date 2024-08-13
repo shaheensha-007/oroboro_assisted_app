@@ -13,7 +13,7 @@ class RefreshtokenApi {
   Future<List<String>?> getrefreshToken() async {
     List<String>newTokens=[];
     ApiClient apiClient = ApiClient();
-    final tokenUrl = basePath+'token';
+    const tokenUrl = '${basePath}token';
     print(tokenUrl)
     ;    final preferences = await SharedPreferences.getInstance();
     final token = preferences.getString('Token');

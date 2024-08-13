@@ -1,3 +1,7 @@
+
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +24,10 @@ TextEditingController reference2age = TextEditingController();
 
 String? stringemploymentstatus;
 String? residencestatus;
-
+String? fileName1;
+String? fileName2;
+String? base64filename1;
+String? base64filename2;
 class _Personal_informationState extends State<Personal_information> {
   List<String> status = ['Employed', 'Unemployed'];
   List<String> statusresidence = [
@@ -52,7 +59,7 @@ class _Personal_informationState extends State<Personal_information> {
                 SizedBox(
                 height: mheight*0.2,
               ),
-              Text("Personal information", style: TextStyle(fontSize: 18,
+              const Text("Personal information", style: TextStyle(fontSize: 18,
                   fontFamily: "boldtext",
                   fontWeight: FontWeight.w800),),
               SizedBox(
@@ -63,7 +70,7 @@ class _Personal_informationState extends State<Personal_information> {
                 width: mwidth * 0.8,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(color: Colors.grey, spreadRadius: 1),
                     ],
                     color: Colors.white
@@ -71,7 +78,7 @@ class _Personal_informationState extends State<Personal_information> {
                 child: Padding(
                     padding: EdgeInsets.only(left: mwidth * 0.03),
                     child: DropdownButtonFormField<String>(
-                      icon: Icon(Icons.arrow_drop_down),
+                      icon: const Icon(Icons.arrow_drop_down),
                       value: stringemploymentstatus,
                       onChanged: (value) {
                         setState(() {
@@ -81,14 +88,14 @@ class _Personal_informationState extends State<Personal_information> {
                       items: status.map((employeed) {
                         return DropdownMenuItem(
                           value: employeed,
-                          child: Text(employeed, style: TextStyle(
+                          child: Text(employeed, style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w800,
                             fontFamily: "regulartext",
                           ),),
                         );
                       }).toList(),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                         // Adjust content padding as needed
                         border: InputBorder.none,
@@ -112,7 +119,7 @@ class _Personal_informationState extends State<Personal_information> {
                 width: mwidth * 0.8,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(color: Colors.grey, spreadRadius: 1),
                     ],
                     color: Colors.white
@@ -120,11 +127,11 @@ class _Personal_informationState extends State<Personal_information> {
                 child: Padding(
                   padding: EdgeInsets.only(left: mwidth * 0.03),
                   child: TextFormField(
-                    style: TextStyle(fontSize: 14,
+                    style: const TextStyle(fontSize: 14,
                         fontWeight: FontWeight.w800,
                         fontFamily: "regulartext"),
                     controller: montlyincome,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
@@ -148,7 +155,7 @@ class _Personal_informationState extends State<Personal_information> {
                 width: mwidth * 0.8,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(color: Colors.grey, spreadRadius: 1),
                     ],
                     color: Colors.white
@@ -156,11 +163,11 @@ class _Personal_informationState extends State<Personal_information> {
                 child: Padding(
                   padding: EdgeInsets.only(left: mwidth * 0.03),
                   child: TextFormField(
-                    style: TextStyle(fontSize: 14,
+                    style: const TextStyle(fontSize: 14,
                         fontWeight: FontWeight.w800,
                         fontFamily: "regulartext"),
                     controller: montlycommited,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
@@ -183,7 +190,7 @@ class _Personal_informationState extends State<Personal_information> {
                   width: mwidth * 0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey, spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -191,7 +198,7 @@ class _Personal_informationState extends State<Personal_information> {
                   child: Padding(
                       padding: EdgeInsets.only(left: mwidth * 0.03),
                       child: DropdownButtonFormField<String>(
-                        icon: Icon(Icons.arrow_drop_down),
+                        icon: const Icon(Icons.arrow_drop_down),
                         value: residencestatus,
                         onChanged: (value) {
                           setState(() {
@@ -201,14 +208,14 @@ class _Personal_informationState extends State<Personal_information> {
                         items: statusresidence.map((Residence) {
                           return DropdownMenuItem(
                             value: Residence,
-                            child: Text(Residence, style: TextStyle(
+                            child: Text(Residence, style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w800,
                               fontFamily: "regulartext",
                             ),),
                           );
                         }).toList(),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 10.0),
                           // Adjust content padding as needed
@@ -233,7 +240,7 @@ class _Personal_informationState extends State<Personal_information> {
             SizedBox(
               height: mheight * 0.03,
             ),
-            Text("Reference 1", style: TextStyle(fontSize: 18,
+            const Text("Reference 1", style: TextStyle(fontSize: 18,
                 fontFamily: "regulartext",
                 fontWeight: FontWeight.w800),),
             SizedBox(
@@ -246,7 +253,7 @@ class _Personal_informationState extends State<Personal_information> {
                   width: mwidth * 0.35,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey, spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -254,11 +261,11 @@ class _Personal_informationState extends State<Personal_information> {
                   child: Padding(
                     padding: EdgeInsets.only(left: mwidth * 0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,
+                      style: const TextStyle(fontSize: 14,
                           fontWeight: FontWeight.w800,
                           fontFamily: "regulartext"),
                       controller: reference1name,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -281,7 +288,7 @@ class _Personal_informationState extends State<Personal_information> {
                   width: mwidth * 0.35,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey, spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -289,11 +296,11 @@ class _Personal_informationState extends State<Personal_information> {
                   child: Padding(
                     padding: EdgeInsets.only(left: mwidth * 0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,
+                      style: const TextStyle(fontSize: 14,
                           fontWeight: FontWeight.w800,
                           fontFamily: "regulartext"),
                       controller: reference1age,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -313,7 +320,7 @@ class _Personal_informationState extends State<Personal_information> {
             SizedBox(
               height: mheight * 0.03,
             ),
-            Text("Reference 1", style: TextStyle(fontSize: 18,
+            const Text("Reference 1", style: TextStyle(fontSize: 18,
                 fontFamily: "regulartext",
                 fontWeight: FontWeight.w800),),
             SizedBox(
@@ -326,7 +333,7 @@ class _Personal_informationState extends State<Personal_information> {
                   width: mwidth * 0.35,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey, spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -334,11 +341,11 @@ class _Personal_informationState extends State<Personal_information> {
                   child: Padding(
                     padding: EdgeInsets.only(left: mwidth * 0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,
+                      style: const TextStyle(fontSize: 14,
                           fontWeight: FontWeight.w800,
                           fontFamily: "regulartext"),
                       controller: reference2name,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -361,7 +368,7 @@ class _Personal_informationState extends State<Personal_information> {
                   width: mwidth * 0.35,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey, spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -369,11 +376,11 @@ class _Personal_informationState extends State<Personal_information> {
                   child: Padding(
                     padding: EdgeInsets.only(left: mwidth * 0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,
+                      style: const TextStyle(fontSize: 14,
                           fontWeight: FontWeight.w800,
                           fontFamily: "regulartext"),
                       controller: reference2age,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -393,7 +400,7 @@ class _Personal_informationState extends State<Personal_information> {
             SizedBox(
               height: mheight * 0.03,
             ),
-            Text("Utility  document", style: TextStyle(fontSize: 18,
+            const Text("Utility  document", style: TextStyle(fontSize: 18,
                 fontFamily: "regulartext",
                 fontWeight: FontWeight.w800),),
             SizedBox(
@@ -404,7 +411,7 @@ class _Personal_informationState extends State<Personal_information> {
               width: mwidth * 0.8,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(color: Colors.grey, spreadRadius: 1),
                   ],
                   color: Colors.white
@@ -412,10 +419,10 @@ class _Personal_informationState extends State<Personal_information> {
               child: Padding(
                 padding: EdgeInsets.only(left: mwidth * 0.03),
                 child: TextFormField(
-                  style: TextStyle(fontSize: 14,
+                  style: const TextStyle(fontSize: 14,
                       fontWeight: FontWeight.w800,
                       fontFamily: "regulartext"),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
@@ -447,25 +454,38 @@ class _Personal_informationState extends State<Personal_information> {
                     height: mheight * 0.05,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
-                      color: Color(0xff284389),
+                      color: const Color(0xff284389),
                     ),
 
-                    child: TextButton(onPressed: () {
-                      _openFileExplorer();
+                    child: TextButton(onPressed: () async{
+                      FilePickerResult? result = await FilePicker.platform.pickFiles();
+                      if (result != null) {
+                        PlatformFile file = result.files.first;
+                        // Convert the file to base64 string
+                         File filenameread=File(file.path!);
+                       List<int>filebytes=await filenameread.readAsBytes();
+                        base64filename1=base64Encode(filebytes);
+                        print(base64filename1);
+                        setState(() {
+                          fileName1 = file.name;
+                        });
+                      }
                     },
-                      child: Text("Browers", style: TextStyle(fontSize: 12,
+                      child: const Text("Browers", style: TextStyle(fontSize: 12,
                           color: Colors.white,
                           fontWeight: FontWeight.w800,
                           fontFamily: "bopldtext"),),),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: mheight * 0.01, left: mwidth * 0.02),
-                    child: Text("Upload  aadhaar front ", style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        fontFamily: "regulartext",
-                        color: Colors.grey),),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: mheight * 0.01, left: mwidth * 0.02),
+                      child: Text(fileName1.toString(), style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                          fontFamily: "regulartext",
+                          color: Colors.grey),),
+                    ),
                   ),
                 ],
               ),
@@ -487,25 +507,37 @@ class _Personal_informationState extends State<Personal_information> {
                     height: mheight * 0.05,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
-                      color: Color(0xff284389),
+                      color: const Color(0xff284389),
                     ),
-
-                    child: TextButton(onPressed: () {
-                      _openFileExplorer();
+              
+                    child: TextButton(onPressed: ()async {
+                      FilePickerResult? result = await FilePicker.platform.pickFiles();
+                      if (result != null) {
+                        PlatformFile file = result.files.first;
+                        File filename2=File(file.path!);
+                        List<int>filebytes=await filename2.readAsBytes();
+                        base64filename2=base64Encode(filebytes);
+                        print(base64filename2);
+                        setState(() {
+                          fileName2 = file.name;
+                        });
+                      }
                     },
-                      child: Text("Browers", style: TextStyle(fontSize: 12,
+                      child: const Text("Browers", style: TextStyle(fontSize: 12,
                           color: Colors.white,
                           fontWeight: FontWeight.w800,
                           fontFamily: "bopldtext"),),),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: mheight * 0.01, left: mwidth * 0.02),
-                    child: Text("Upload  aadhaar front", style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        fontFamily: "regulartext",
-                        color: Colors.grey),),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: mheight * 0.01, left: mwidth * 0.02),
+                      child: Text(fileName2.toString(), style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                          fontFamily: "regulartext",
+                          color: Colors.grey),),
+                    ),
                   ),
                 ],
               ),
@@ -521,24 +553,25 @@ class _Personal_informationState extends State<Personal_information> {
                   ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)
+                      backgroundColor: const Color(0xff284389)
                   ), onPressed: () {
+
                     // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>), (route) => false);
                   },
-                      child: Text("Previous", style: TextStyle(fontSize: 16,
+                      child: const Text("Previous", style: TextStyle(fontSize: 16,
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
                           fontFamily: "regulartext"),)),
                   ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)
+                      backgroundColor: const Color(0xff284389)
                   ), onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => Loan_eligibility_Approved()), (
+                        builder: (context) => const Loan_eligibility_Approved()), (
                         route) => false);
                   },
-                      child: Text("Sumbit", style: TextStyle(fontSize: 16,
+                      child: const Text("Sumbit", style: TextStyle(fontSize: 16,
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
                           fontFamily: "regulartext"),)),
@@ -556,19 +589,19 @@ class _Personal_informationState extends State<Personal_information> {
     ,
     );
   }
+  // void _openFileExplorer() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles();
+  //
+  //   if (result != null) {
+  //     PlatformFile file = result.files.first;
+  //
+  //     // Use the picked file, such as uploading it to a server
+  //     print('File picked: ${file.name}');
+  //     print('File path: ${file.path}');
+  //
+  //   } else {
+  //     // User canceled the file picking
+  //     print('User canceled file picking');
+  //   }
 }
 
-void _openFileExplorer() async {
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-  if (result != null) {
-    PlatformFile file = result.files.first;
-
-    // Use the picked file, such as uploading it to a server
-    print('File picked: ${file.name}');
-    print('File path: ${file.path}');
-  } else {
-    // User canceled the file picking
-    print('User canceled file picking');
-  }
-}

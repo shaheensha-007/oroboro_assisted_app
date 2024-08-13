@@ -36,7 +36,7 @@ class _drawerState extends State<drawer> {
         child: Column(
             children: [
               SizedBox(
-                height: mheight*0.05,
+                height: mheight*0.1,
               ),
               GestureDetector(
                     onTap: () {
@@ -47,12 +47,12 @@ class _drawerState extends State<drawer> {
                       children: [
                         Padding(
                           padding:EdgeInsets.only(left: mwidth*0.1),
-                          child: Image(image: AssetImage("assets/home icon.png"),color: Colors.black,
+                          child: const Image(image: AssetImage("assets/home icon.png"),color: Colors.black,
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: mheight * 0.01 ,left: mwidth*0.02),
-                          child: Text(
+                          child: const Text(
                             "Home",
                            style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                           ),
@@ -70,15 +70,15 @@ class _drawerState extends State<drawer> {
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
                 child: ExpansionTile(
-                  shape: RoundedRectangleBorder(),
-                  title: Text("Onboarding",
+                  shape: const RoundedRectangleBorder(),
+                  title: const Text("Onboarding",
                   style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                 ),
                   children: [
                     ListTile(
-                      title: Text("Customer Onboarding",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                      title: const Text("Customer Onboarding",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                       onTap: (){
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Customer_onbording_mobile()), (route) => false);
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Customer_onbording_mobile()), (route) => false);
                       },
                     )
                   ],
@@ -94,8 +94,8 @@ class _drawerState extends State<drawer> {
             Padding(
              padding: EdgeInsets.only(left: mwidth * 0.1),
              child: ExpansionTile(
-               shape: RoundedRectangleBorder(),
-               title: Text(
+               shape: const RoundedRectangleBorder(),
+               title: const Text(
                  "Loan",
                  style: TextStyle(
                    fontSize: 15,
@@ -106,33 +106,33 @@ class _drawerState extends State<drawer> {
                children: <Widget>[
                  // Add your expanded content here
                  ListTile(
-                   title: Text("Loan Detalis",  style: TextStyle(
+                   title: const Text("Loan Detalis",  style: TextStyle(
                      fontSize: 15,
                      fontFamily: "headers",
                      fontWeight: FontWeight.w800,
                    ),),
                    onTap: (){
-                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Loan_detalis()), (route) => false);
+                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Loan_detalis()), (route) => false);
                    },
                  ),
                  ListTile(
-                   title: Text("Upload Documents",  style: TextStyle(
+                   title: const Text("Upload Documents",  style: TextStyle(
                      fontSize: 15,
                      fontFamily: "headers",
                      fontWeight: FontWeight.w800,
                    ),),
                    onTap: (){
-                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Upload_document_loan()), (route) => false);
+                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Upload_document_loan()), (route) => false);
                    },
                  ),
                  ListTile(
-                   title: Text("Loan Disbursal",  style: TextStyle(
+                   title: const Text("Loan Disbursal",  style: TextStyle(
                      fontSize: 15,
                      fontFamily: "headers",
                      fontWeight: FontWeight.w800,
                    ),),
                    onTap: (){
-                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Loan_disbursal()), (route) => false);
+                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Loan_disbursal()), (route) => false);
                    },
                  ),
                ],
@@ -151,16 +151,16 @@ class _drawerState extends State<drawer> {
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
                 child: ExpansionTile(
-                  shape: RoundedRectangleBorder(),
-                  title:  Text(
+                  shape: const RoundedRectangleBorder(),
+                  title:  const Text(
                     "EMI Calculator",
                     style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                   ),
                   children: [
                     ListTile(
-                      title: Text("EMI Calculator",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                      title: const Text("EMI Calculator",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                       onTap: (){
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Emi_calculator()), (route) => false);
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Emi_calculator()), (route) => false);
                       },
                     ),
                   ],
@@ -176,16 +176,16 @@ class _drawerState extends State<drawer> {
               Padding(
                 padding:EdgeInsets.only(left: mwidth*0.1),
                 child: ExpansionTile(
-                  shape: RoundedRectangleBorder(),
-                  title: Text(
+                  shape: const RoundedRectangleBorder(),
+                  title: const Text(
                     "Ledger",
                     style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                   ),
                   children: [
                     ListTile(
-                      title: Text("Ledger",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                      title: const Text("Ledger",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                       onTap: (){
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Ledger()), (route) => false);
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Ledger()), (route) => false);
                       },
                     ),
                   ],
@@ -201,16 +201,16 @@ class _drawerState extends State<drawer> {
                  Padding(
                    padding:EdgeInsets.only(left: mwidth*0.1),
                    child: ExpansionTile(
-                     shape: RoundedRectangleBorder(),
-                     title: Text(
+                     shape: const RoundedRectangleBorder(),
+                     title: const Text(
                        "Cash Flow",
                        style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: Text("Cash Flow",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Cash Flow",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                          onTap: (){
-                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Cash_flow()), (route) => false);
+                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Cash_flow()), (route) => false);
                          },
                        ),
                      ],
@@ -226,16 +226,16 @@ class _drawerState extends State<drawer> {
                  Padding(
                    padding:EdgeInsets.only(left: mwidth*0.1),
                    child: ExpansionTile(
-                     shape: RoundedRectangleBorder(),
-                     title: Text(
+                     shape: const RoundedRectangleBorder(),
+                     title: const Text(
                        "Payment",
                        style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: Text("Payment",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Payment",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                          onTap: (){
-                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Payments()), (route) => false);
+                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Payments()), (route) => false);
                          },
                        ),
                      ],
@@ -251,16 +251,16 @@ class _drawerState extends State<drawer> {
                  Padding(
                    padding:EdgeInsets.only(left: mwidth*0.1),
                    child: ExpansionTile(
-                     shape: RoundedRectangleBorder(),
-                     title: Text(
+                     shape: const RoundedRectangleBorder(),
+                     title: const Text(
                        "Schedules",
                        style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: Text("Schedules",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Schedules",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                          onTap: (){
-                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Schedule()), (route) => false);
+                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Schedule()), (route) => false);
                          },
                        ),
                      ],
@@ -276,16 +276,16 @@ class _drawerState extends State<drawer> {
                  Padding(
                    padding:EdgeInsets.only(left: mwidth*0.1),
                    child: ExpansionTile(
-                     shape: RoundedRectangleBorder(),
-                     title: Text(
+                     shape: const RoundedRectangleBorder(),
+                     title: const Text(
                        "Mandate Status",
                        style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: Text("Mandate Status",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Mandate Status",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                          onTap: (){
-                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Mandate_Status()), (route) => false);
+                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Mandate_Status()), (route) => false);
                          },
                        ),
                      ],
@@ -301,16 +301,16 @@ class _drawerState extends State<drawer> {
                 Padding(
                   padding:EdgeInsets.only(left: mwidth*0.1),
                   child: ExpansionTile(
-                    shape: RoundedRectangleBorder(),
-                    title: Text(
+                    shape: const RoundedRectangleBorder(),
+                    title: const Text(
                       "Comments",
                       style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                     ),
                     children: [
                       ListTile(
-                        title: Text("Comments",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                        title: const Text("Comments",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                           onTap: (){
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Lastest_comments()), (route) => false);
+                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Lastest_comments()), (route) => false);
                           },
                       ),
                     ],
@@ -326,16 +326,16 @@ class _drawerState extends State<drawer> {
                  Padding(
                    padding:EdgeInsets.only(left: mwidth*0.1),
                    child: ExpansionTile(
-                     shape: RoundedRectangleBorder(),
-                     title: Text(
+                     shape: const RoundedRectangleBorder(),
+                     title: const Text(
                        "Notification",
                        style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: Text("Notificatoion",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Notificatoion",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                     onTap: (){
-                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Notification1()), (route) => false);
+                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Notification1()), (route) => false);
                     },
                        ),
                      ],
@@ -352,16 +352,16 @@ class _drawerState extends State<drawer> {
                  Padding(
                    padding:EdgeInsets.only(left: mwidth*0.1),
                    child: ExpansionTile(
-                     shape: RoundedRectangleBorder(),
-                     title: Text(
+                     shape: const RoundedRectangleBorder(),
+                     title: const Text(
                        "Search Customer",
                        style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: Text("Search Customer",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Search Customer",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                          onTap: (){
-                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Search_Customers()), (route) => false);
+                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Search_Customers()), (route) => false);
                          },
                        ),
                      ],

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -39,7 +38,7 @@ class _PanverficationState extends State<Panverfication> {
                 SizedBox(
                   height: mheight*0.2,
                 ),
-                Text("PAN Verification",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                const Text("PAN Verification",style: TextStyle(fontSize:18,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                 SizedBox(
                   height: mheight*0.05,
                 ),
@@ -48,7 +47,7 @@ class _PanverficationState extends State<Panverfication> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -56,9 +55,9 @@ class _PanverficationState extends State<Panverfication> {
                   child: Padding(
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                       controller: pannumber,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -77,7 +76,7 @@ class _PanverficationState extends State<Panverfication> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -89,8 +88,8 @@ class _PanverficationState extends State<Panverfication> {
                         Expanded(
                           child: TextFormField(
                             controller: dateInput,
-                            style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                            decoration: InputDecoration(
+                            style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               enabledBorder: InputBorder.none,
                               errorBorder: InputBorder.none,
@@ -122,7 +121,7 @@ class _PanverficationState extends State<Panverfication> {
                           } else
                           {}
 
-                        }, icon: Icon(Icons.calendar_month))
+                        }, icon: const Icon(Icons.calendar_month))
                       ],
                     ),
                   ),
@@ -135,7 +134,7 @@ class _PanverficationState extends State<Panverfication> {
                   width: mwidth*0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(color: Colors.grey,spreadRadius: 1),
                       ],
                       color: Colors.white
@@ -143,9 +142,9 @@ class _PanverficationState extends State<Panverfication> {
                   child: Padding(
                     padding:EdgeInsets.only(left: mwidth*0.03),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                       controller: Address,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
@@ -166,7 +165,7 @@ class _PanverficationState extends State<Panverfication> {
                       width: mwidth*0.35,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.grey,spreadRadius: 1),
                           ],
                           color: Colors.white
@@ -174,9 +173,9 @@ class _PanverficationState extends State<Panverfication> {
                       child: Padding(
                         padding:EdgeInsets.only(left: mwidth*0.03),
                         child: TextFormField(
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                          style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                           controller: city,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -195,13 +194,13 @@ class _PanverficationState extends State<Panverfication> {
                       width: mwidth * 0.35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(color: Colors.grey, spreadRadius: 1),
                         ],
                         color: Colors.white,
                       ),
                       child: DropdownButtonFormField<String>(
-                        icon: Icon(Icons.arrow_drop_down),
+                        icon: const Icon(Icons.arrow_drop_down),
                         value: selectedtype,
                         onChanged: (value) {
                           setState(() {
@@ -211,14 +210,14 @@ class _PanverficationState extends State<Panverfication> {
                         items: stateinindia.map((selectedstate) {
                           return DropdownMenuItem(
                             value: selectedstate,
-                            child: Text(selectedstate,style:TextStyle(
+                            child: Text(selectedstate,style:const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w800,
                               fontFamily: "regulartext",
                             ),),
                           );
                         }).toList(),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(horizontal: 10.0), // Adjust content padding as needed
                           border: InputBorder.none, // Remove the border
                           hintText: "Select State",
@@ -247,7 +246,7 @@ class _PanverficationState extends State<Panverfication> {
                       width: mwidth*0.35,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.grey,spreadRadius: 1),
                           ],
                           color: Colors.white
@@ -255,9 +254,9 @@ class _PanverficationState extends State<Panverfication> {
                       child: Padding(
                         padding:EdgeInsets.only(left: mwidth*0.03),
                         child: TextFormField(
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                          style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                           controller: villagepincode,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -276,7 +275,7 @@ class _PanverficationState extends State<Panverfication> {
                       width: mwidth*0.35,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.grey,spreadRadius: 1),
                           ],
                           color: Colors.white
@@ -284,9 +283,9 @@ class _PanverficationState extends State<Panverfication> {
                       child: Padding(
                         padding:EdgeInsets.only(left: mwidth*0.03),
                         child: TextFormField(
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                          style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                           controller: verificationemail,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -304,13 +303,13 @@ class _PanverficationState extends State<Panverfication> {
                 ),
                 Row(
                   children: [
-                    Checkbox(shape: RoundedRectangleBorder(side:BorderSide(color: Colors.grey)),
+                    Checkbox(shape: const RoundedRectangleBorder(side:BorderSide(color: Colors.grey)),
                         value:CibiDetalischeck, onChanged:(bool? value){
                       setState(() {
                         CibiDetalischeck=value??false;
                       });
                     }),
-                    Text("I  agree to  fetch my Cibil  Detalis",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "boldtext",color: Colors.black),)
+                    const Text("I  agree to  fetch my Cibil  Detalis",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "boldtext",color: Colors.black),)
                   ],
                 ),
                 SizedBox(
@@ -323,18 +322,18 @@ class _PanverficationState extends State<Panverfication> {
                     children: [
                       ElevatedButton(style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          backgroundColor: Color(0xff284389)
+                          backgroundColor: const Color(0xff284389)
                       ),  onPressed: (){
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Customer_onbording_mobile()), (route) => false);
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Customer_onbording_mobile()), (route) => false);
                       },
-                          child:Text("Previous",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                          child:const Text("Previous",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                       ElevatedButton(style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          backgroundColor: Color(0xff284389)
+                          backgroundColor: const Color(0xff284389)
                       ),  onPressed: (){
-                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Aadhaarnumber()), (route) => false);
+                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Aadhaarnumber()), (route) => false);
                       },
-                          child:Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                          child:const Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                     ],
                   ),
                 ),

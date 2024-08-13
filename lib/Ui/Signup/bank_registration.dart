@@ -1,14 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/agent_onbording/enter_pan.dart';
-import 'package:oroboro_assisted_app/modeles/Ifscmodel/IfscModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Blocs/Ifsc_bloc/ifsc_bloc.dart';
-import '../../Blocs/bankregstratin_bloc/bankregstration_bloc.dart';
-import '../../modeles/bank_registrationModel/Bank_registratioModel.dart';
+
+import '../../Blocs/Signupblocs/Ifsc_bloc/ifsc_bloc.dart';
+import '../../Blocs/Signupblocs/bankregstratin_bloc/bankregstration_bloc.dart';
+import '../../modeles/signupModelclass/Ifscmodel/IfscModel.dart';
+import '../../modeles/signupModelclass/bank_registrationModel/Bank_registratioModel.dart';
 import '../Signin/signin_page.dart';
 import 'loan_application_verification.dart';
 
@@ -65,7 +65,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                 ),
                 Padding(
                   padding:EdgeInsets.only(right:mwidth*0.3),
-                  child: Text("Bank Registration",style: TextStyle(fontSize: 20,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                  child: const Text("Bank Registration",style: TextStyle(fontSize: 20,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
                 ),
                 SizedBox(
                   height: mheight*0.1,
@@ -77,7 +77,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                 width: mwidth * 0.8,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(color: Colors.grey, spreadRadius: 1),
                   ],
                   color: Colors.white,
@@ -86,13 +86,13 @@ class _Bank_registrationState extends State<Bank_registration> {
                   padding: EdgeInsets.only(left: mwidth * 0.03),
                   child: DropdownButtonFormField<String>(
                     value: selectedAccountType,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w800,
                       fontFamily: "regulartext",
                       color: Colors.black,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
@@ -135,7 +135,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                       width: mwidth*0.8,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.grey,spreadRadius: 1),
                           ],
                           color: Colors.white
@@ -143,9 +143,13 @@ class _Bank_registrationState extends State<Bank_registration> {
                       child: Padding(
                         padding:EdgeInsets.only(left: mwidth*0.03),
                         child: TextFormField(
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                          style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                           controller: Accountno,
-                          decoration: InputDecoration(
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(17),
+                          ],
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -164,7 +168,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                 BlocListener<IfscBloc, IfscState>(
                   listener: (context, state) {
                     if(state is IfscblocLoding){
-                      CircularProgressIndicator();
+                      const CircularProgressIndicator();
                     }
                     if(state is IfscblocLoaded) {
                       veriflyifsc = BlocProvider
@@ -182,7 +186,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                         width: mwidth*0.8,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(color: Colors.grey,spreadRadius: 1),
                             ],
                             color: Colors.white
@@ -195,8 +199,8 @@ class _Bank_registrationState extends State<Bank_registration> {
                                 child: TextFormField(
                                   controller: ifscno,
                                   validator:validateIfsc,
-                                  style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                                  decoration: InputDecoration(
+                                  style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                                  decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     errorBorder: InputBorder.none,
@@ -210,7 +214,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  backgroundColor: Color(0xff284389)
+                                  backgroundColor: const Color(0xff284389)
                               ),
                                   onPressed: (){
                                     final isvaildifsc=ifscnumberkey.currentState?.validate();
@@ -221,7 +225,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                                         ifscshow=true;
                                       });
                                     }
-                                  }, child: Text("verify",style:TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),))
+                                  }, child: const Text("verify",style:TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),))
                             ],
                           ),
                         ),
@@ -234,7 +238,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                     ? BlocBuilder<IfscBloc, IfscState>(
                     builder: (context, state) {
                       if(state is IfscblocLoding){
-                        CircularProgressIndicator();
+                        const CircularProgressIndicator();
                       } if(state is IfscblocLoaded){
                         veriflyifsc=BlocProvider.of<IfscBloc>(context).isverifiedifsc;
                          BANKNAME=veriflyifsc.result!.bankDetails!.bankName.toString();
@@ -251,14 +255,14 @@ class _Bank_registrationState extends State<Bank_registration> {
                                 width: mwidth*0.8,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    boxShadow: [
+                                    boxShadow: const [
                                       BoxShadow(color: Colors.grey,spreadRadius: 1),
                                     ],
                                     color: Colors.white
                                 ),
                                 child: Padding(
                                   padding:EdgeInsets.only(left: mwidth*0.03,top:mheight*0.02),
-                                  child:Text(BANKNAME,style: TextStyle(
+                                  child:Text(BANKNAME,style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "font1",
@@ -276,7 +280,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                                 width: mwidth*0.8,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    boxShadow: [
+                                    boxShadow: const [
                                       BoxShadow(color: Colors.grey,spreadRadius: 1),
                                     ],
                                     color: Colors.white
@@ -285,7 +289,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                                   padding:EdgeInsets.only(left: mwidth*0.03,top:mheight*0.02),
                                   child:  Text(
                                     branchName,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: "font1",
@@ -297,10 +301,10 @@ class _Bank_registrationState extends State<Bank_registration> {
                           ],
                         );
                       }
-                      return SizedBox();
+                      return const SizedBox();
                     }
                 )
-                    :SizedBox(),
+                    :const SizedBox(),
                 SizedBox(
                   height: mheight*0.03,
                 ),
@@ -313,7 +317,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                       width: mwidth*0.8,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.grey,spreadRadius: 1),
                           ],
                           color: Colors.white
@@ -321,9 +325,9 @@ class _Bank_registrationState extends State<Bank_registration> {
                       child: Padding(
                         padding:EdgeInsets.only(left: mwidth*0.03),
                         child: TextFormField(
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
+                          style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                           controller: accountholders,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -342,7 +346,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                 BlocListener<BankregstrationBloc, BankregstrationState>(
   listener: (context, state) {
     if(state is BankregstrationblocLoading){
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
   if(state is BankregstrationblocError){
     _showErrorSnackBar("internal issue");
@@ -350,7 +354,7 @@ class _Bank_registrationState extends State<Bank_registration> {
   if(state is BankregstrationblocLoaded){
     bankregstrationmodel=BlocProvider.of<BankregstrationBloc>(context).isbankverification;
     if(bankregstrationmodel.result!.activityStatus=="SUCCESS"){
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Loan_application_verification()), (route) => false);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Loan_application_verification()), (route) => false);
     }else{
       String bankregstrationerror=bankregstrationmodel.message.toString();
       _showErrorSnackBar(bankregstrationerror);
@@ -361,7 +365,7 @@ class _Bank_registrationState extends State<Bank_registration> {
   child: Center(
                   child: ElevatedButton(style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Color(0xff284389)
+                      backgroundColor: const Color(0xff284389)
                   ),onPressed: ()async{
                     final SharedPreferences preferences = await SharedPreferences.getInstance();
                     final accountholdervalid=accountholderkey.currentState?.validate();
@@ -370,7 +374,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                           clientId: MainclientId, PAN: Pannumber.text, PartnerCode:preferences.getString("partnercode").toString(), OnboardingFor: "Agent", AcoountNumber:Accountno.text , IFSC: ifscno.text, AccountType: selectedAccountType.toString(), BankName: BANKNAME, BranchName:branchName, AccountHolderName:accountholders.text , ctx: context));
                         accountnumberkey.currentState?.save();
                     }
-                  }, child:Text("Verify Your Bank Account",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                  }, child:const Text("Verify Your Bank Account",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                   ),
 ),
               ],
@@ -382,6 +386,6 @@ class _Bank_registrationState extends State<Bank_registration> {
   }
   void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message,style: TextStyle(fontSize: 12,fontFamily: "font2"),),));
+        .showSnackBar(SnackBar(content: Text(message,style: const TextStyle(fontSize: 12,fontFamily: "font2"),),));
   }
 }
