@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:oroboro_assisted_app/api_client_1.dart';
 import 'package:oroboro_assisted_app/modeles/SigninModel/SignloginModel/SignloginModel.dart';
 
 import '../../../Ui/Signin/signin_page.dart';
@@ -15,19 +16,18 @@ import '../../../api_client.dart';
 
 
 class SigninApi {
-  ApiClient apiClient = ApiClient();
-  String trendingpath = 'Oroboro/Login';
-  Future<SignloginModel> postSignlogindata(String userName,String password,
-      BuildContext context) async {
+  ApiClient_1 apiClient_1 = ApiClient_1();
+  String trendingpath = 'gateway/Login';
+  Future<SignloginModel> postSignlogindata(String userName,String password) async {
     var body = {
-      'ClientId': MainclientId,
+      'ApiUserId': "Test",
       'UserName': userName,
-      'Password': base64.encode(utf8.encode(password))
-
+      'Password': password,
+      "Permissions":true
     };
 
-    Response response = await apiClient.invokeAPI(
-        trendingpath, 'POST_', jsonEncode(body),context);
+    Response response = await apiClient_1.invokeAPI(
+        trendingpath, 'POST_', jsonEncode(body),);
     print(response.body);
     return SignloginModel.fromJson(json.decode(response.body));
   }

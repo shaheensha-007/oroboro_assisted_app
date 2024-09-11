@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:oroboro_assisted_app/Ui/Customer_onbording/aadhar%20upload.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/pan_verification.dart';
 
+import '../apparbar/myappbar.dart';
 import 'aadhaar_otp.dart';
 
 class Aadhaarnumber extends StatefulWidget {
@@ -18,6 +20,19 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
     var mwidth= MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+          title: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:const EdgeInsets.all(5.0),
+                  child: IconButton(onPressed: (){
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Panverfication()), (route) => false);
+                  }, icon:const Icon(Icons.arrow_back_ios_new)),
+                ),
+              ]
+          )
+      ),
       body: Stack(
         children: [
           Padding(

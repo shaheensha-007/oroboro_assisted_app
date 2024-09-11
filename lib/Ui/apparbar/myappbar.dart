@@ -16,12 +16,9 @@ class MyAppbar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding:const EdgeInsets.all(5.0),
-            child: IconButton(onPressed: (){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Mainhome()), (route) => false);
-                  }, icon:const Icon(Icons.arrow_back_ios_new)),
-          ),
+          IconButton(onPressed: (){
+        Navigator.of(context).pop();
+                }, icon:const Icon(Icons.arrow_back_ios_new)),
           const Spacer(),
           Padding(
             padding:EdgeInsets.only(right:mwidth*0.03),
@@ -29,17 +26,6 @@ class MyAppbar extends StatelessWidget {
               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Notification1()), (route) => false);
             }, icon:const Icon(Icons.notifications)),
           ),
-          const Padding(
-            padding:EdgeInsets.all(5.0),
-            child: CircleAvatar(
-              backgroundColor:Colors.green,
-              radius:16,
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 13,
-              ),
-            ),
-          )
         ],
       ),
     );

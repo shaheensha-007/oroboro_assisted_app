@@ -30,6 +30,7 @@ class ApiClient {
             headers: {
               'content-Type': 'application/x-www-form-urlencoded',
               'authorization': 'Bearer $token',
+              'Authorization': 'Basic $token',
             },
             body: body);
 

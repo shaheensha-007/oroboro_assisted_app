@@ -1,5 +1,5 @@
-class CustomeronbordingStatusModel {
-  CustomeronbordingStatusModel({
+class CustomeronbordingstatusModel {
+  CustomeronbordingstatusModel({
       this.transactionId, 
       this.responseCode, 
       this.status, 
@@ -8,7 +8,7 @@ class CustomeronbordingStatusModel {
       this.errorMessage, 
       this.result,});
 
-  CustomeronbordingStatusModel.fromJson(dynamic json) {
+  CustomeronbordingstatusModel.fromJson(dynamic json) {
     transactionId = json['TransactionId'];
     responseCode = json['ResponseCode'];
     status = json['Status'];

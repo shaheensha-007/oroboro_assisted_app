@@ -4,3 +4,6 @@ part of 'restpassword_bloc.dart';
 abstract class RestpasswordState {}
 
 class RestpasswordInitial extends RestpasswordState {}
+class RestpasswordblocLoading extends RestpasswordState{}
+class RestpasswordblocLoaded extends RestpasswordState{}
+class RestpasswordblocError extends RestpasswordState{}

@@ -4,3 +4,6 @@ part of 'customeronbording_bloc.dart';
 abstract class CustomeronbordingState {}
 
 class CustomeronbordingInitial extends CustomeronbordingState {}
+class CustomeronbordingblocLoading extends CustomeronbordingState{}
+class CustomeronbordingblocLoaded extends CustomeronbordingState{}
+class CustomeronbordingblocError extends CustomeronbordingState{}

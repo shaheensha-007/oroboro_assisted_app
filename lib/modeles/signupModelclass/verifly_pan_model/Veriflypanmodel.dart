@@ -1,5 +1,3 @@
-
-
 class VerifypanModel {
   final String version;
   final int statusCode;
@@ -44,68 +42,68 @@ class Result {
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
       activityStatus: json['ActivityStatus'] ?? "",
-      innerResult: json['result'] != null && json['result'] != "" ? InnerResult
-          .fromJson(json['result']) : null,
+      innerResult: json['result'] != null && json['result'] != ""
+          ? InnerResult.fromJson(json['result'])
+          : null,
       nextprocess: json["NextProcess"] ?? "",
       requestId: json['requestId'] ?? "",
       statusCode: json['statusCode'] ?? "",
     );
   }
-
 }
 
 class InnerResult {
   final String name;
-  final String firstName;
-  final String middleName;
-  final String lastName;
-  final String gender;
-  final String aadhaarLinked;
+  // final String firstName;
+  // final String middleName;
+  // final String lastName;
+  // final String gender;
+  // final String aadhaarLinked;
   final String dob;
-  final Address address;
-  final dynamic mobileNo;
-  final dynamic emailId;
-  final String status;
-  final String issueDate;
-  final bool isSalaried;
-  final bool isDirector;
-  final bool isSoleProp;
+  // final Address address;
+  // final dynamic mobileNo;
+  // final dynamic emailId;
+  // final String status;
+  // final String issueDate;
+  // final bool isSalaried;
+  // final bool isDirector;
+  // final bool isSoleProp;
 
   InnerResult({
     required this.name,
-    required this.firstName,
-    required this.middleName,
-    required this.lastName,
-    required this.gender,
-    required this.aadhaarLinked,
+    // required this.firstName,
+    // required this.middleName,
+    // required this.lastName,
+    // required this.gender,
+    // required this.aadhaarLinked,
     required this.dob,
-    required this.address,
-    required this.mobileNo,
-    required this.emailId,
-    required this.status,
-    required this.issueDate,
-    required this.isSalaried,
-    required this.isDirector,
-    required this.isSoleProp,
+    // required this.address,
+    // required this.mobileNo,
+    // required this.emailId,
+    // required this.status,
+    // required this.issueDate,
+    // required this.isSalaried,
+    // required this.isDirector,
+    // required this.isSoleProp,
   });
 
   factory InnerResult.fromJson(Map<String, dynamic> json) {
     return InnerResult(
-      name: json['name'] ?? "",
-      firstName: json['firstName'] ?? "",
-      middleName: json['middleName'] ?? "",
-      lastName: json['lastName'] ?? "",
-      gender: json['gender'] ?? "",
-      aadhaarLinked: json['aadhaarLinked'] ?? "",
-      dob: json['dob'] ?? "",
-      address: Address.fromJson(json['address'] ?? {}),
-      mobileNo: json['mobileNo'] ?? "",
-      emailId: json['emailId'] ?? "",
-      status: json['status'] ?? "",
-      issueDate: json['issueDate'] ?? "",
-      isSalaried: json['isSalaried'] ?? false,
-      isDirector: json['isDirector'] ?? false,
-      isSoleProp: json['isSoleProp'] ?? false,
+      name: json['result']['name'] ?? "",
+      // firstName: json['result']['firstName'] ?? "",
+      // middleName: json['result']['middleName'] ?? "",
+      // lastName: json['result']['lastName'] ?? "",
+      // gender: json['result']['gender'] ?? "",
+      // aadhaarLinked: json['result']['aadhaarLinked'] ?? "",
+      dob: json['result']['dob'] ?? "",
+      // address: Address.fromJson(json['result']['address'] ?? {}),
+      // mobileNo: json['result']['mobileNo'] ?? "",
+      // emailId: json['result']['emailId'] ?? "",
+      // status: json['result']['status'] ?? "",
+      // issueDate: json['result']['issueDate'] ?? "",
+      // isSalaried: json['result']['isSalaried'] ?? false,
+      // isDirector: json['result']['isDirector'] ?? false,
+      // isSoleProp: json['result']['isSoleProp'] ?? false,
     );
   }
 }

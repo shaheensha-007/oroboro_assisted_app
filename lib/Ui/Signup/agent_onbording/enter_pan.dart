@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import 'package:oroboro_assisted_app/Ui/Signin/signin_page.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/Preview_document/Preview_of%20documents.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/bank_registration.dart';
 import 'package:oroboro_assisted_app/Ui/Signup/loan_application_verification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
 import '../../../Blocs/Signupblocs/ Mobileagent_bloc/mobileagent_bloc.dart';
 import '../../../Blocs/Signupblocs/AgentKyc_bloc/agentkyc_bloc.dart';
 import '../../../Blocs/Signupblocs/MobileotpVerify_bloc/mobileotpverify_bloc.dart';
@@ -257,7 +256,7 @@ class _Enter_panState extends State<Enter_pan> {
               },
               child: showItems
                   ? Padding(
-      padding: EdgeInsets.only(right: mwidth * 0.2),
+      padding: EdgeInsets.only(right: mwidth * 0.1),
       child: BlocBuilder<VerifypanBloc, VerifypanState>(
   builder: (context, state) {
     if (state is VerifypanblocLoading) {
@@ -267,22 +266,32 @@ class _Enter_panState extends State<Enter_pan> {
       isverification=BlocProvider.of<VerifypanBloc>(context).isverifypan;
        String verifypanname = isverification.result.innerResult?.name ?? "N/A";
       String verifypanDOB= isverification.result.innerResult?.dob ?? "N/A";
+      if (verifypanDOB != "N/A") {
+        DateTime parsedDate = DateTime.parse(verifypanDOB);
+        String formattedDate = DateFormat('dd-MM-yyyy').format(parsedDate);
+        verifypanDOB = formattedDate;
+      }
       print(verifypanname.toString());
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: mheight * 0.02,
-            ),
+      return Padding(
+        padding:EdgeInsets.only(left: mwidth*0.1),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: mheight * 0.02,
+              ),
 
-            Center(child: Text(verifypanname, style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w200,
-                fontFamily: "regulartext"))),
-            Center(child: Text(verifypanDOB, style: const TextStyle(fontSize: 14,
-                fontWeight: FontWeight.w200,
-                fontFamily: "regulartext"))),
-          ]
+              Text(verifypanname, style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w200,
+                  fontFamily: "regulartext")),
+              Center(
+                child: Text(verifypanDOB, style: const TextStyle(fontSize: 14,
+                    fontWeight: FontWeight.w200,
+                    fontFamily: "regulartext")),
+              ),
+            ]
+        ),
       );
     }if(state is VerifypanblocError){
       return const SizedBox();

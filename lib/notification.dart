@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'Ui/apparbar/myappbar.dart';
+import 'Ui/homepage/Mainhome_page.dart';
 
 
 class Notification1 extends StatefulWidget {
@@ -20,7 +21,17 @@ class _Notification1State extends State<Notification1> {
       appBar: AppBar(
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: const MyAppbar(),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding:const EdgeInsets.all(5.0),
+              child: IconButton(onPressed: (){
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Mainhome()), (route) => false);
+              }, icon:const Icon(Icons.arrow_back_ios_new)),
+            ),
+          ],
+        ),
       ),
       backgroundColor: Colors.white,
       body: Stack(

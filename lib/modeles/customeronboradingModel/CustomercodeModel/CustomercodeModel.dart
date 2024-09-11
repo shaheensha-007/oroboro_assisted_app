@@ -1,5 +1,5 @@
-class CustomercodeModel {
-  CustomercodeModel({
+class CustomercodecreateModel {
+  CustomercodecreateModel({
       this.transactionId, 
       this.responseCode, 
       this.status, 
@@ -8,7 +8,7 @@ class CustomercodeModel {
       this.errorMessage, 
       this.result,});
 
-  CustomercodeModel.fromJson(dynamic json) {
+  CustomercodecreateModel.fromJson(dynamic json) {
     transactionId = json['TransactionId'];
     responseCode = json['ResponseCode'];
     status = json['Status'];
