@@ -1,5 +1,5 @@
-class SignloginModel {
-  SignloginModel({
+class CustomeronbordingStatusModel {
+  CustomeronbordingStatusModel({
       this.transactionId, 
       this.responseCode, 
       this.status, 
@@ -8,7 +8,7 @@ class SignloginModel {
       this.errorMessage, 
       this.result,});
 
-  SignloginModel.fromJson(dynamic json) {
+  CustomeronbordingStatusModel.fromJson(dynamic json) {
     transactionId = json['TransactionId'];
     responseCode = json['ResponseCode'];
     status = json['Status'];
@@ -43,64 +43,40 @@ class SignloginModel {
 
 class Result {
   Result({
-      this.userId, 
-      this.name, 
-      this.permissions,});
+      this.pageName, 
+      this.controllerName, 
+      this.pageId, 
+      this.flowId, 
+      this.pageOrder, 
+      this.pageType, 
+      this.generateLoan,});
 
   Result.fromJson(dynamic json) {
-    userId = json['UserId'];
-    name = json['Name'];
-    if (json['Permissions'] != null) {
-      permissions = [];
-      json['Permissions'].forEach((v) {
-        permissions?.add(Permissions.fromJson(v));
-      });
-    }
-  }
-  String? userId;
-  String? name;
-  List<Permissions>? permissions;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['UserId'] = userId;
-    map['Name'] = name;
-    if (permissions != null) {
-      map['Permissions'] = permissions?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-
-}
-
-class Permissions {
-  Permissions({
-      this.pageId, 
-      this.pageName, 
-      this.navigationHeader, 
-      this.controllerName, 
-      this.methodName,});
-
-  Permissions.fromJson(dynamic json) {
-    pageId = json['PageId'];
     pageName = json['PageName'];
-    navigationHeader = json['NavigationHeader'];
     controllerName = json['ControllerName'];
-    methodName = json['MethodName'];
+    pageId = json['PageId'];
+    flowId = json['FlowId'];
+    pageOrder = json['PageOrder'];
+    pageType = json['PageType'];
+    generateLoan = json['GenerateLoan'];
   }
-  String? pageId;
   String? pageName;
-  String? navigationHeader;
   String? controllerName;
-  String? methodName;
+  String? pageId;
+  String? flowId;
+  int? pageOrder;
+  String? pageType;
+  bool? generateLoan;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['PageId'] = pageId;
     map['PageName'] = pageName;
-    map['NavigationHeader'] = navigationHeader;
     map['ControllerName'] = controllerName;
-    map['MethodName'] = methodName;
+    map['PageId'] = pageId;
+    map['FlowId'] = flowId;
+    map['PageOrder'] = pageOrder;
+    map['PageType'] = pageType;
+    map['GenerateLoan'] = generateLoan;
     return map;
   }
 

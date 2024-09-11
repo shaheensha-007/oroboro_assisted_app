@@ -1,5 +1,5 @@
-class SignloginModel {
-  SignloginModel({
+class CustomercodeModel {
+  CustomercodeModel({
       this.transactionId, 
       this.responseCode, 
       this.status, 
@@ -8,7 +8,7 @@ class SignloginModel {
       this.errorMessage, 
       this.result,});
 
-  SignloginModel.fromJson(dynamic json) {
+  CustomercodeModel.fromJson(dynamic json) {
     transactionId = json['TransactionId'];
     responseCode = json['ResponseCode'];
     status = json['Status'];
@@ -43,64 +43,44 @@ class SignloginModel {
 
 class Result {
   Result({
-      this.userId, 
-      this.name, 
-      this.permissions,});
+      this.customerCodes,});
 
   Result.fromJson(dynamic json) {
-    userId = json['UserId'];
-    name = json['Name'];
-    if (json['Permissions'] != null) {
-      permissions = [];
-      json['Permissions'].forEach((v) {
-        permissions?.add(Permissions.fromJson(v));
+    if (json['CustomerCodes'] != null) {
+      customerCodes = [];
+      json['CustomerCodes'].forEach((v) {
+        customerCodes?.add(CustomerCodes.fromJson(v));
       });
     }
   }
-  String? userId;
-  String? name;
-  List<Permissions>? permissions;
+  List<CustomerCodes>? customerCodes;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['UserId'] = userId;
-    map['Name'] = name;
-    if (permissions != null) {
-      map['Permissions'] = permissions?.map((v) => v.toJson()).toList();
+    if (customerCodes != null) {
+      map['CustomerCodes'] = customerCodes?.map((v) => v.toJson()).toList();
     }
     return map;
   }
 
 }
 
-class Permissions {
-  Permissions({
-      this.pageId, 
-      this.pageName, 
-      this.navigationHeader, 
-      this.controllerName, 
-      this.methodName,});
+class CustomerCodes {
+  CustomerCodes({
+      this.customerCode, 
+      this.status,});
 
-  Permissions.fromJson(dynamic json) {
-    pageId = json['PageId'];
-    pageName = json['PageName'];
-    navigationHeader = json['NavigationHeader'];
-    controllerName = json['ControllerName'];
-    methodName = json['MethodName'];
+  CustomerCodes.fromJson(dynamic json) {
+    customerCode = json['CustomerCode'];
+    status = json['Status'];
   }
-  String? pageId;
-  String? pageName;
-  String? navigationHeader;
-  String? controllerName;
-  String? methodName;
+  String? customerCode;
+  bool? status;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['PageId'] = pageId;
-    map['PageName'] = pageName;
-    map['NavigationHeader'] = navigationHeader;
-    map['ControllerName'] = controllerName;
-    map['MethodName'] = methodName;
+    map['CustomerCode'] = customerCode;
+    map['Status'] = status;
     return map;
   }
 
