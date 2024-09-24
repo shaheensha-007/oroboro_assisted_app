@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Blocs/Signinblocs/Signin_bloc/signin_bloc.dart';
 import '../../Blocs/token_bloc/token_bloc.dart';
+import '../../main.dart';
 import '../../modeles/MerchartTokenModel/MerchartTokenModel.dart';
 import '../Signup/agent_onbording/agent_onbording.dart';
 import '../fotgotpassword/fogotpassword.dart';
@@ -46,8 +47,8 @@ class _Signin_pageState extends State<Signin_page> {
   void initState() {
     BlocProvider.of<MerchartTokenBloc>(context).add(FetchMerchartToken(
         userName: "Test",
-        password:
-            "RkQtQTMtRDMtRjctMDktMTItMzItRjQtNDUtQTMtNjItMTMtQUQtQjItQTMtMDY="));
+        password:tokenpassword
+            ));
     // TODO: implement initState
     super.initState();
   }
@@ -236,11 +237,7 @@ class _Signin_pageState extends State<Signin_page> {
                               child: TextButton(
                                   onPressed: () {
                                     if (remberingcheck == true) {
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Fogotpassword()),
-                                          (route) => false);
+                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Fogotpassword()), (route) => false);
                                     }
                                   },
                                   child: const Text(
@@ -261,27 +258,34 @@ class _Signin_pageState extends State<Signin_page> {
                       BlocListener<SigninBloc, SigninState>(
                         listener: (context, state) async {
                           final preferences =
-                          await SharedPreferences.getInstance();
+                              await SharedPreferences.getInstance();
                           if (state is SigninblocLoading) {
-                            const CircularProgressIndicator();
+                           showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                            );
+                          }else{
+                            isSigninsucess =
+                                BlocProvider.of<SigninBloc>(context).isvalid;
+                            preferences.setString("Userid",
+                                isSigninsucess.result!.userId.toString());
+                            preferences.setString("username",
+                                isSigninsucess.result!.name.toString());
+                            if (isSigninsucess.status.toString() == "Success") {
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                                  builder: (context) => Mainhome()),(route) => false);
+                            } else {
+                              String errormessage =
+                                  isSigninsucess.status.toString();
+                              _showErrorSnackBar(errormessage);
+                            }
+                            // TODO: implement listener
                           }
-                          if (state is SigninblocLoaded) {
-                             isSigninsucess =
-                                 BlocProvider
-                                     .of<SigninBloc>(context)
-                                     .isvalid;
-                             preferences.setString("Userid", isSigninsucess.result!.userId.toString());
-                             preferences.setString("username", isSigninsucess.result!.name.toString());
-                             if(isSigninsucess.status.toString()=="Success"){
-                               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Mainhome()));
-                             }else {
-                               String errormessage=isSigninsucess.status.toString();
-                               _showErrorSnackBar(errormessage);
-                             }
-
-                      // TODO: implement listener
-                      }
-
                         },
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -289,7 +293,10 @@ class _Signin_pageState extends State<Signin_page> {
                                     borderRadius: BorderRadius.circular(5)),
                                 backgroundColor: const Color(0xff284389)),
                             onPressed: () async {
-                                BlocProvider.of<SigninBloc>(context).add(FetchSignin(userName: Signinusername.text, password:Signinpassword.text));
+                              BlocProvider.of<SigninBloc>(context).add(
+                                  FetchSignin(
+                                      userName: Signinusername.text,
+                                      password: Signinpassword.text));
                             },
                             child: const Text(
                               "Sign in",

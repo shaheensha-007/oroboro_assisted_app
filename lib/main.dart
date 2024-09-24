@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/AadhaarSendotp_bloc/aadhaarsendotp_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/CustomerSendotp_bloc/customersendotp_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/CustomerVerifiyotp_bloc/customerverifiyotp_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Customer_Regsitration_bloc/customer_regsitration_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Customercodecreate_bloc/customercodecreate_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Customerupadate_bloc/customerupdate_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Emailupdate_bloc/emailupadate_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Panverification_blocs/panverification_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Upadateaddress_bloc/upadateaddress_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/customeronbording_bloc/customeronbording_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Forgotpassword_bloc/forgotpassword_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Restpassword_bloc/restpassword_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Userdetalis_bloc/userdetalis_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/refershtoken_bloc/refreshtoken_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/token_bloc/token_bloc.dart';
-import 'package:oroboro_assisted_app/Ui/Customer_onbording/Mobileotp.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/aadhaar_otp.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/pan_verification.dart';
 import 'package:oroboro_assisted_app/Ui/Splansh_screen/Splansh_Screen.dart';
 import 'Blocs/Signinblocs/Signin_bloc/signin_bloc.dart';
 import 'Blocs/Signupblocs/ Mobileagent_bloc/mobileagent_bloc.dart';
@@ -23,7 +31,9 @@ import 'Blocs/Signupblocs/previewdocuments_bloc/previewdocument_bloc.dart';
 import 'Blocs/Signupblocs/vetrifypan_bloc/verifypan_bloc.dart';
 
 const String basePath = "https://apidoc.oroboro.in/api/";
-const String basepath_1="https://gateway.oroboro.in/";
+const String basepath_1 = "https://gateway.oroboro.in/";
+const String tokenpassword =
+    "RkQtQTMtRDMtRjctMDktMTItMzItRjQtNDUtQTMtNjItMTMtQUQtQjItQTMtMDY=";
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +48,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => TokenBloc()),
-        BlocProvider(create: (context)=>MerchartTokenBloc()),
+        BlocProvider(create: (context) => MerchartTokenBloc()),
         BlocProvider(create: (context) => RefreshtokenBloc()),
         BlocProvider(create: (context) => VerifypanBloc()),
         BlocProvider(create: (context) => MobileagentBloc()),
@@ -50,12 +60,19 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => IfscBloc()),
         BlocProvider(create: (context) => BankregstrationBloc()),
         BlocProvider(create: (context) => SigninBloc()),
-        BlocProvider(create: (context)=>ForgotpasswordBloc()),
-        BlocProvider(create: (context)=>RestpasswordBloc()),
-        BlocProvider(create: (context)=>CustomercodecreateBloc()),
-        BlocProvider(create: (context)=>CustomerRegsitrationBloc()),
-        BlocProvider(create: (context)=>CustomersendotpBloc()),
-        BlocProvider(create: (context)=>CustomerverifiyotpBloc()),
+        BlocProvider(create: (context) => ForgotpasswordBloc()),
+        BlocProvider(create: (context) => RestpasswordBloc()),
+        BlocProvider(create: (context) => UserdetalisBloc()),
+        BlocProvider(create: (context) => CustomercodecreateBloc()),
+        BlocProvider(create: (context) => CustomerRegsitrationBloc()),
+        BlocProvider(create: (context) => CustomersendotpBloc()),
+        BlocProvider(create: (context) => CustomerverifiyotpBloc()),
+        BlocProvider(create: (context) => CustomeronbordingBloc()),
+        BlocProvider(create: (context) => CustomerupdateBloc()),
+        BlocProvider(create: (context) => PanverificationBloc()),
+        BlocProvider(create: (context)=> EmailupadateBloc()),
+        BlocProvider(create: (context)=>UpadateaddressBloc()),
+        BlocProvider(create: (context)=>AadhaarsendotpBloc()),
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
@@ -64,7 +81,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: const Splash_Screen()),
+          home: const AaadharOtp(Requestid: "")),
     );
   }
 }

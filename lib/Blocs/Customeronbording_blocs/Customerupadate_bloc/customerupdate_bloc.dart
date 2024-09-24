@@ -11,13 +11,13 @@ part 'customerupdate_event.dart';
 part 'customerupdate_state.dart';
 
 class CustomerupdateBloc extends Bloc<CustomerupdateEvent, CustomerupdateState> {
-  late UpadatenextprocessModel isupdateprocess;
+  late UpadatenextprocessModel iscustomerupadate;
   CustomerupdateApi customerupdateApi=CustomerupdateApi();
   CustomerupdateBloc() : super(CustomerupdateInitial()) {
     on<FetchCustomerupdate>((event, emit)async {
       emit(CustomerupdateblocLoading());
       try {
-        isupdateprocess = await customerupdateApi.postupdatestatusdata(
+        iscustomerupadate = await customerupdateApi.postupdatestatusdata(
             event.userid, event.Customercode, event.PartnerCode, event.FlowId,
             event.PageOrder);
         emit(CustomerupadateblocLoaded());

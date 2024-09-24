@@ -17,7 +17,7 @@ class MyAppbar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           IconButton(onPressed: (){
-        Navigator.of(context).pop();
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Mainhome()), (route) => false);
                 }, icon:const Icon(Icons.arrow_back_ios_new)),
           const Spacer(),
           Padding(

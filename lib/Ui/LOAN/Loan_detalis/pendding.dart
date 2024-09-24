@@ -212,282 +212,235 @@ class _PenddingState extends State<Pendding> {
                 )),
           ),
           SizedBox(
-            height: mheight * 0.1,
+            height: mheight * 0.02,
           ),
           Container(
-            height: mheight,
-            width: mwidth,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              color: Color(0xffC9D2EA),
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(left: mwidth * 0.06),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        top: mheight * 0.02,
-                        right: mwidth * 0.06,
-                        left: mwidth * 0.01),
-                    child: Container(
-                      height: mheight * 0.3,
-                      width: mwidth * 0.8,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.grey, spreadRadius: 1),
-                          ],
-                          color: Colors.white),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: mwidth * 0.02, top: mheight * 0.01),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "Date",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                        color: Color(0xff284389),
-                                        fontFamily: "regulartext"),
-                                  ),
-                                  SizedBox(
-                                    width: mwidth * 0.02,
-                                  ),
-                                  const Text(
-                                    "23_09-2000",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily: "regulartext"),
-                                  )
-                                ],
-                              ),
-                              Divider(
-                                color: const Color(0xffC9D2EA),
-                                endIndent: mwidth * 0.03,
-                              ),
-
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "Customer",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w800,
-                                            color: Color(0xff284389),
-                                            fontFamily: "regulartext"),
-                                      ),
-                                      SizedBox(
-                                        width: mwidth * 0.02,
-                                      ),
-                                      const Text(
-                                        "shaheen pk",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w800,
-                                            fontFamily: "regulartext"),
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Padding(
-                                    padding:EdgeInsets.only(right: mwidth*0.04),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "Amount",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
-                                              color: Color(0xff284389),
-                                              fontFamily: "regulartext"),
-                                        ),
-                                        SizedBox(
-                                          width: mwidth * 0.02,
-                                        ),
-                                        const Text(
-                                          "45899",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
-                                              fontFamily: "regulartext"),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Divider(
-                                color: const Color(0xffC9D2EA),
-                                endIndent: mwidth * 0.03,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "Customer",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w800,
-                                            color: Color(0xff284389),
-                                            fontFamily: "regulartext"),
-                                      ),
-                                      SizedBox(
-                                        width: mwidth * 0.02,
-                                      ),
-                                      const Text(
-                                        "shaheen pk",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w800,
-                                            fontFamily: "regulartext"),
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Padding(
-                                    padding:EdgeInsets.only(right: mwidth*0.04),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "Amount",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
-                                              color: Color(0xff284389),
-                                              fontFamily: "regulartext"),
-                                        ),
-                                        SizedBox(
-                                          width: mwidth * 0.02,
-                                        ),
-                                        const Text(
-                                          "45899",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
-                                              fontFamily: "regulartext"),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Divider(
-                                color: const Color(0xffC9D2EA),
-                                endIndent: mwidth * 0.03,
-                              ),
-                              Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "Comments",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                        color: Color(0xff284389),
-                                        fontFamily: "regulartext"),
-                                  ),
-                                  SizedBox(
-                                    width: mwidth * 0.02,
-                                  ),
-                                  const Padding(
-                                    padding:EdgeInsets.only(top:3),
-                                    child: Text(
-                                      "ORO11ORO11C-10102 Disbursed 06/10/2024 17:18:33",
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w200,
-                                          fontFamily: "regulartext"),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Divider(
-                                color: const Color(0xffC9D2EA),
-                                endIndent: mwidth * 0.03,
-                              ),
-                              Center(
-                                child: IconButton(onPressed: (){
-                                  setState(() {
-                                    showButtons=!showButtons;
-                                  });
-                                }, icon: Icon(showButtons ? Icons.arrow_drop_up : Icons.arrow_drop_down)),
-                              ),
-                              if(showButtons)
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: mheight*0.01,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        ElevatedButton(style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                            backgroundColor: const Color(0xff284389)
-                                        ),
-                                            onPressed: (){
-                                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const View_loan()), (route) => false);
-                                            }, child:const Text("View Loan ", style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w800,
-                                                fontFamily: "regulartext",
-                                                color: Colors.white
-                                            ),)),
-                                        SizedBox(
-                                          width: mwidth*0.02,
-                                        ),
-                                        ElevatedButton(style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                            backgroundColor: const Color(0xff284389)
-                                        ),
-                                            onPressed: (){}, child:const Text("Do- Dowloand ", style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w800,
-                                                fontFamily: "regulartext",
-                                                color: Colors.white
-                                            ),)),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: mheight*0.05,
-                                    )
-                                  ],
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
+          height: MediaQuery.of(context).size.height * 0.8,  // Adjust the height
+    width: mwidth,
+    decoration: const BoxDecoration(
+    borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+    color: Color(0xffC9D2EA),
+    ),
+    child: Padding(
+    padding: EdgeInsets.only(left: mwidth * 0.06),
+    child: Column(
+    children: [
+    Expanded(  // Ensures ListView takes available space
+    child: ListView.builder(
+    scrollDirection: Axis.vertical,
+    itemCount: 10,
+    itemBuilder: (BuildContext context, int index) {
+    return Column(
+    children: [
+    SizedBox(height: mheight * 0.03),
+    Padding(
+    padding: EdgeInsets.only(
+    top: mheight * 0.02,
+    right: mwidth * 0.06,
+    left: mwidth * 0.01),
+    child: Container(
+    height: showButtons ? mheight * 0.45 : mheight * 0.3,
+    width: mwidth * 0.8,
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(5),
+    boxShadow: const [
+    BoxShadow(color: Colors.grey, spreadRadius: 1),
+    ],
+    color: Colors.white,
+    ),
+    child: Padding(
+    padding: EdgeInsets.only(left: mwidth * 0.02, top: mheight * 0.01),
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    const Text(
+    "Date",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    color: Color(0xff284389),
+    fontFamily: "regulartext",
+    ),
+    ),
+    SizedBox(width: mwidth * 0.02),
+    const Text(
+    "23_09-2000",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    fontFamily: "regulartext",
+    ),
+    )
+    ],
+    ),
+    Divider(color: const Color(0xffC9D2EA), endIndent: mwidth * 0.03),
+    Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    const Text(
+    "Customer",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    color: Color(0xff284389),
+    fontFamily: "regulartext",
+    ),
+    ),
+    SizedBox(width: mwidth * 0.02),
+    const Text(
+    "shaheen pk",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    fontFamily: "regulartext",
+    ),
+    ),
+    ],
+    ),
+    const Spacer(),
+    Padding(
+    padding: EdgeInsets.only(right: mwidth * 0.04),
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    const Text(
+    "Amount",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    color: Color(0xff284389),
+    fontFamily: "regulartext",
+    ),
+    ),
+    SizedBox(width: mwidth * 0.02),
+    const Text(
+    "45899",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    fontFamily: "regulartext",
+    ),
+    ),
+    ],
+    ),
+    ),
+    ],
+    ),
+    Divider(color: const Color(0xffC9D2EA), endIndent: mwidth * 0.03),
+    Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    const Text(
+    "Comments",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    color: Color(0xff284389),
+    fontFamily: "regulartext",
+    ),
+    ),
+    SizedBox(width: mwidth * 0.02),
+    const Padding(
+    padding: EdgeInsets.only(top: 5),
+    child: Text(
+    "ORO11ORO11C-10102 Disbursed 06/10/2024 17:18:33",
+    style: TextStyle(
+    fontSize: 8,
+    fontWeight: FontWeight.bold,
+    fontFamily: "regulartext",
+    ),
+    ),
+    )
+    ],
+    ),
+    Divider(color: const Color(0xffC9D2EA), endIndent: mwidth * 0.03),
+    Center(
+    child: IconButton(
+    onPressed: () {
+    setState(() {
+    showButtons = !showButtons;
+    });
+    },
+    icon: Icon(
+    showButtons ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+    ),
+    ),
+    ),
+    if (showButtons)
+    Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+    SizedBox(height: mheight * 0.01),
+    Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    ElevatedButton(
+    style: ElevatedButton.styleFrom(
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(5)),
+    backgroundColor: const Color(0xff284389),
+    ),
+    onPressed: () {
+    Navigator.of(context).pushAndRemoveUntil(
+    MaterialPageRoute(
+    builder: (context) => const View_loan()),
+    (route) => false,
+    );
+    },
+    child: const Text(
+    "View Loan ",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    fontFamily: "regulartext",
+    color: Colors.white,
+    ),
+    ),
+    ),
+    SizedBox(width: mwidth * 0.02),
+    ElevatedButton(
+    style: ElevatedButton.styleFrom(
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(5)),
+    backgroundColor: const Color(0xff284389),
+    ),
+    onPressed: () {},
+    child: const Text(
+    "Download",
+    style: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w800,
+    fontFamily: "regulartext",
+    color: Colors.white,
+    ),
+    ),
+    ),
+    ],
+    ),
+    ],
+    ),
+    ],
+    ),
+    ),
+    ),
+    ),
+    ],
+    );
+    },
+    ),
+    ),
+    ],
+    ),
+    ),
+    )
+    ],
       ),
     );
   }

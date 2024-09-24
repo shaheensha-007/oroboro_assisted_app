@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:oroboro_assisted_app/Ui/Customer_onbording/personal%20information.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import 'aadhar upload.dart';
 import 'addhaar number.dart';
 
 class AaadharOtp extends StatefulWidget {
-  const AaadharOtp({super.key});
-
+  const AaadharOtp({super.key, required this.Requestid});
+final String Requestid;
   @override
   State<AaadharOtp> createState() => _AaadharOtpState();
 }
 TextEditingController aadhaarOtp=TextEditingController();
+bool Aadhaarshow=false;
 class _AaadharOtpState extends State<AaadharOtp> {
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,11 @@ class _AaadharOtpState extends State<AaadharOtp> {
                         pinTheme: PinTheme(shape: PinCodeFieldShape.underline,inactiveColor: const Color(0xffC9D2EA),fieldWidth: mwidth*0.15,borderRadius: BorderRadius.circular(5)),
                         appContext: context,onSubmitted: (value){
                       },onCompleted: (vale){
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Personal_information()), (route) => false);
+                          setState(() {
+                              Aadhaarshow = true;
+                             // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Personal_information()), (route) => false);
+                          });
+
                       },
                         length: 4,
                       ),
@@ -72,14 +78,37 @@ class _AaadharOtpState extends State<AaadharOtp> {
                    height: mheight*0.03,
                  ),
                   Padding(
-                    padding:EdgeInsets.only(left: mwidth*0.2),
+                    padding: EdgeInsets.only(right: mwidth*0.05),
                     child: Column(
+                     mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Didn’t you  receive any code?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),),
-                        TextButton(onPressed: (){}, child: const Text("Resend New Code",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext",color: Color(0xffFF7C00)),))
-                ],
-              ),
-            )
+                        TextButton(onPressed: (){
+
+                        }, child: const Text("Resend New Code",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext",color: Color(0xffFF7C00)),)),
+                      SizedBox(
+                        height: mheight*0.01,
+                      ),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (Widget child, Animation<double> animation) {
+                        return SizeTransition(
+                          sizeFactor: animation,
+                          axisAlignment: 1.0,
+                          child: child,
+                        );
+                      },
+                      child:Aadhaarshow?
+                      Center(child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Aadhaarupload()), (route) => false);
+                          },
+                          child: Text("Aadhaar  not linked with Mobile number ?",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "regulartext",color: Color(0xffFC9738)))),
+                      ):SizedBox(),
+                    ),
+                                    ],
+                                  ),
+                  )
           ],
         ),
             )

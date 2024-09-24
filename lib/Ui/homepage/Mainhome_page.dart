@@ -8,6 +8,7 @@ import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oroboro_assisted_app/Ui/Signin/signin_page.dart';
 import '../../Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
+import '../../main.dart';
 import '../../notification.dart';
 import '../AlertDialog/Restpassword.dart';
 import '../Customer_onbording/Customer_onbording_mobile.dart';
@@ -39,8 +40,8 @@ class _MainhomeState extends State<Mainhome> {
   void initState() {
     BlocProvider.of<MerchartTokenBloc>(context).add(FetchMerchartToken(
         userName: "Test",
-        password:
-        "RkQtQTMtRDMtRjctMDktMTItMzItRjQtNDUtQTMtNjItMTMtQUQtQjItQTMtMDY="));
+        password:tokenpassword
+    ));
     // TODO: implement initState
     super.initState();
   }

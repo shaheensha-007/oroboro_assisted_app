@@ -6,6 +6,8 @@ import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/CustomerSendo
 import 'package:oroboro_assisted_app/modeles/customeronboradingModel/CustomersendotpModel/CustomersendotpModel.dart';
 import 'package:oroboro_assisted_app/modeles/customeronboradingModel/customer_regsitrationModel/Customer_regsitrationModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
+import '../../main.dart';
 import '../../modeles/customeronboradingModel/CustomercodeModel/CustomercodeModel.dart';
 import '../apparbar/myappbar.dart';
 import 'Mobileotp.dart';
@@ -21,6 +23,15 @@ late Customer_regsitrationModel isCustomerregistration;
 late CustomersendotpModel isCustomersendotp;
 TextEditingController onbordingmobile=TextEditingController();
 class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
+  @override
+  void initState() {
+    BlocProvider.of<MerchartTokenBloc>(context).add(FetchMerchartToken(
+        userName: "Test",
+        password:tokenpassword
+    ));
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     TextStyle defaultStyle = const TextStyle(color: Colors.black, fontSize: 12.0);
@@ -92,11 +103,21 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                     child: BlocListener<CustomersendotpBloc, CustomersendotpState>(
   listener: (context, state) async{
     if(state is CustomersendotpblocLoading){
-      CircularProgressIndicator();
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+    }else{
+      Navigator.of(context).pop();
     }
     if(state is  CustomersendotpblocLoaded){
+
       isCustomersendotp=BlocProvider.of<CustomersendotpBloc>(context).isCustomersendotp;
-      CircularProgressIndicator();
       if(isCustomersendotp.status.toString()=="Success"){
         final preferences = await SharedPreferences.getInstance();
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Mobileotp()), (route) => false);
@@ -111,6 +132,7 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
                         backgroundColor: const Color(0xff284389)
                     ),onPressed: ()async{
     final preferences = await SharedPreferences.getInstance();
+    preferences.setString("onbordingmobile", onbordingmobile.text);
     BlocProvider.of<CustomersendotpBloc>(context).add(FetchCustomersendotp(userId:preferences.getString("Userid").toString(), mobilenumber:onbordingmobile.text ));
                     }, child:const Text("Send OTP",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
 ),
@@ -162,5 +184,9 @@ class _Customer_onbording_mobileState extends State<Customer_onbording_mobile> {
       ),
     ));
   }
-
+@override
+  void dispose() {
+    onbordingmobile.clear();
+    super.dispose();
+  }
 }
