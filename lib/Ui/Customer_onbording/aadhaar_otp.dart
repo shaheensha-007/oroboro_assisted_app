@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oroboro_assisted_app/Ui/Customer_onbording/personal%20information.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Blocs/Customeronbording_blocs/Aadhaarotpverification_bloc/aadhaarotpverification_bloc.dart';
+import '../../Blocs/Customeronbording_blocs/Customerupadate_bloc/customerupdate_bloc.dart';
+import '../../Blocs/Customeronbording_blocs/customeronbording_bloc/customeronbording_bloc.dart';
+import '../../Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
+import '../../main.dart';
+import '../../modeles/customeronboradingModel/AadhaarOtpVerificationModel/AadhaarOtpVerificationModel.dart';
+import '../../modeles/customeronboradingModel/Customer_onbordingStatusModel/CustomeronbordingStatusModel.dart';
+import 'Mobileotp.dart';
 import 'aadhar upload.dart';
 import 'addhaar number.dart';
 
@@ -11,9 +21,20 @@ final String Requestid;
   @override
   State<AaadharOtp> createState() => _AaadharOtpState();
 }
+late AadhaarOtpVerificationModel isotpaadhaarverification;
 TextEditingController aadhaarOtp=TextEditingController();
 bool Aadhaarshow=false;
+bool nextaadhaar=false;
+String? Flowid;
+String? Pageorder;
 class _AaadharOtpState extends State<AaadharOtp> {
+  @override
+  void initState() {
+    BlocProvider.of<MerchartTokenBloc>(context)
+        .add(FetchMerchartToken(userName: "Test", password: tokenpassword));
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var mheight= MediaQuery.of(context).size.height;
@@ -56,22 +77,47 @@ class _AaadharOtpState extends State<AaadharOtp> {
                     height: mheight*0.05,
                   ),
                   SizedBox(
-                    width: mwidth*0.7,
+                    width: mwidth*0.8,
                     child: Padding(
-                      padding: EdgeInsets.only(left: mwidth*0.05),
-                      child: PinCodeTextField(
-                        controller: aadhaarOtp,
-                        pinTheme: PinTheme(shape: PinCodeFieldShape.underline,inactiveColor: const Color(0xffC9D2EA),fieldWidth: mwidth*0.15,borderRadius: BorderRadius.circular(5)),
-                        appContext: context,onSubmitted: (value){
-                      },onCompleted: (vale){
-                          setState(() {
-                              Aadhaarshow = true;
-                             // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Personal_information()), (route) => false);
-                          });
-
-                      },
-                        length: 4,
-                      ),
+                      padding: EdgeInsets.only(left: mwidth*0.03),
+                      child: BlocListener<AadhaarotpverificationBloc, AadhaarotpverificationState>(
+  listener: (context, state) {
+    if(state is AadhaarotpverificationblocLoading){
+      CircularProgressIndicator();
+    }
+    if(state is AadhaarotpvetrificationblocLoaded){
+      isotpaadhaarverification=BlocProvider.of<AadhaarotpverificationBloc>(context).isAadhaarotpverification;
+      if(isotpaadhaarverification.status.toString()=="Success"){
+        setState(() {
+          nextaadhaar=true;
+        });
+        // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Personal_information()), (route) => false);
+      }else{
+        _showErrorSnackBar(isotpaadhaarverification.errorMessage.toString());
+        setState(() {
+          Aadhaarshow = true;
+        });
+      }
+    }
+    // TODO: implement listener
+  },
+  child: Expanded(
+    child: PinCodeTextField(
+                          controller: aadhaarOtp,
+                          pinTheme: PinTheme(shape: PinCodeFieldShape.underline,inactiveColor: const Color(0xffC9D2EA),fieldWidth: mwidth*0.08,borderRadius: BorderRadius.circular(5)),
+                          appContext: context,onSubmitted: (value){
+                        },onCompleted: (vale)async{
+                           final preferences = await SharedPreferences.getInstance();
+                            BlocProvider.of<AadhaarotpverificationBloc>(context).add(FetchAadhaarotpverification(
+                                userId:preferences.getString("Userid").toString() ,
+                                Customercode: preferences.getString("CustomerCode").toString(),
+                                Aadhaarotp:aadhaarOtp.text ,
+                                Requestid: widget.Requestid));
+                        },
+                          length: 6,
+                        ),
+  ),
+),
                     ),
                   ),
                  SizedBox(
@@ -106,9 +152,74 @@ class _AaadharOtpState extends State<AaadharOtp> {
                           child: Text("Aadhaar  not linked with Mobile number ?",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w800,fontFamily: "regulartext",color: Color(0xffFC9738)))),
                       ):SizedBox(),
                     ),
+                        SizedBox(
+                          height: mheight*0.25,
+                        ),
+                        nextaadhaar
+                            ?
+                        Padding(
+                          padding:EdgeInsets.only(right: mwidth*0.05),
+                          child:Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              BlocListener<CustomeronbordingBloc, CustomeronbordingState>(
+  listener: (context, state)async {
+    final preferences = await SharedPreferences.getInstance();
+    if(state is CustomeronbordingblocLoading){
+      CircularProgressIndicator();
+    } if(state is CustomeronbordingblocLoaded){
+      iscustomerstatuts=BlocProvider.of<CustomeronbordingBloc>(context).isCustomeronbording;
+      if(iscustomerstatuts.status.toString()=="Success"){
+        Flowid=iscustomerstatuts.result!.flowId.toString();
+        Pageorder=iscustomerstatuts.result!.pageOrder.toString();
+        BlocProvider.of<CustomerupdateBloc>(context).add(FetchCustomerupdate(
+            userid:preferences.getString("Userid").toString(),
+            Customercode: preferences.getString("CustomerCode").toString(),
+            PartnerCode: preferences.getString("partnercode").toString(),
+            FlowId: Flowid.toString(),
+            PageOrder: Pageorder.toString()));
+      }else
+        _showErrorSnackBar(iscustomerstatuts.errorMessage.toString());
+    }
+    // TODO: implement listener
+  },
+  child: BlocListener<CustomerupdateBloc, CustomerupdateState>(
+  listener: (context, state) {
+    if(state is CustomerupdateblocLoading){
+      CircularProgressIndicator();
+    }
+    if(state is CustomerupadateblocLoaded){
+      isupadatenextprocess=BlocProvider.of<CustomerupdateBloc>(context).iscustomerupadate;
+      if(isupadatenextprocess.status.toString()=="Success"){
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Personal_information()), (route) => false).then((value) => setState(() {
+          Flowid=null;
+          Pageorder=null;
+          nextaadhaar=false;
+        }));
+      }
+    }
+    // TODO: implement listener
+  },
+  child: TextButton(onPressed: ()async{
+    final preferences = await SharedPreferences.getInstance();
+    BlocProvider.of<CustomeronbordingBloc>(context).add(FetchCustomeronbording(
+        userid:preferences.getString("Userid").toString() , 
+        Customercode: preferences.getString("CustomerCode").toString()
+    ));
+
+                              }, child:Text(
+                                "Next>>>",
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xff284389)),
+                              ),
+                              ),
+),
+),
                                     ],
                                   ),
+                  ):SizedBox(),
+                            ]
                   )
+      )
           ],
         ),
             )
@@ -116,5 +227,14 @@ class _AaadharOtpState extends State<AaadharOtp> {
         ),
       )
     );
+
+  }
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        message,
+        style: const TextStyle(fontSize: 12, fontFamily: "font2"),
+      ),
+    ));
   }
 }

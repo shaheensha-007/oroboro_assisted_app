@@ -3,8 +3,11 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:oroboro_assisted_app/Ui/Customer_onbording/personal%20information.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Aadhaaruploadfile_bloc/aadhaaruploadfiles_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../modeles/customeronboradingModel/AadhaaruploadfilesModel/AadhaaruploadfilesModel.dart';
 import 'addhaar number.dart';
 
 class Aadhaarupload extends StatefulWidget {
@@ -17,6 +20,7 @@ String?namefile1;
 String? namefile2;
 String? base64code1;
 String? base64code2;
+late AadhaaruploadfilesModel isuploadAadhaarfiles;
 class _AadhaaruploadState extends State<Aadhaarupload> {
   @override
   Widget build(BuildContext context) {
@@ -128,7 +132,6 @@ class _AadhaaruploadState extends State<Aadhaarupload> {
                     FilePickerResult? result = await FilePicker.platform.pickFiles();
                     if (result != null) {
                       PlatformFile file = result.files.first;
-                      // Convert the file to base64 string
                       File filenameread=File(file.path!);
                       List<int>filebytes=await filenameread.readAsBytes();
                       base64code2=base64Encode(filebytes);
@@ -161,16 +164,97 @@ class _AadhaaruploadState extends State<Aadhaarupload> {
             height: mheight*0.05,
           ),
           Center(
-            child: ElevatedButton(style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                backgroundColor: const Color(0xff284389)
-            ),  onPressed: (){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Personal_information()), (route) => false);
-            },
-                child:const Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
-          ),
+            child: BlocListener<AadhaaruploadfilesBloc, AadhaaruploadfilesState>(
+              listener: (context, state) async {
+                final preferences = await SharedPreferences.getInstance();
 
-      ]
+                // Show loading indicator when the state is loading
+                if (state is AadhaaruploadfilesblocLoading) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false, // Prevents dismissing the dialog manually
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
+                }
+
+                // When the state is loaded, remove the loading dialog
+                if (state is AadhaaruploadfilesblocLoaded) {
+                  Navigator.of(context).pop(); // Dismiss the loading dialog
+                  isuploadAadhaarfiles = BlocProvider.of<AadhaaruploadfilesBloc>(context).isaadhaaruploadfiles;
+
+                  if (isuploadAadhaarfiles.status.toString() == "Success") {
+                    // Optionally handle success case here, such as showing a success message
+                  } else {
+                    // Handle error or failure state here if needed
+                  }
+                }
+
+                // Handle error state
+                if (state is AadhaaruploadfilesblocError) {
+                  Navigator.of(context).pop(); // Dismiss the loading dialog if an error occurs
+                  // Optionally, show an error message using a SnackBar or Dialog
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Error'),
+                        content: Text("An error occurred during the upload process."),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the error dialog
+                            },
+                            child: Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  backgroundColor: const Color(0xff284389),
+                ),
+                onPressed: () async {
+                  final preferences = await SharedPreferences.getInstance();
+
+                  // First API Call
+                  BlocProvider.of<AadhaaruploadfilesBloc>(context).add(FetchAadhaaruploadfile(
+                    userId: preferences.getString("Userid").toString(),
+                    IdentityType: "CUSTOMERCODE",
+                    IdentityValue: preferences.getString("CustomerCode").toString(),
+                    DocID_Value: aadhaarnumber.text,
+                    DocType: "Aadhaar_Front",
+                    DocBase64: base64code1.toString(),
+                  ));
+
+                  // Small delay or logic to ensure state updates before making the second call
+                  await Future.delayed(Duration(milliseconds: 500));
+
+                  // Second API Call
+                  BlocProvider.of<AadhaaruploadfilesBloc>(context).add(FetchAadhaaruploadfile(
+                    userId: preferences.getString("Userid").toString(),
+                    IdentityType: "CUSTOMERCODE",
+                    IdentityValue: preferences.getString("CustomerCode").toString(),
+                    DocID_Value: aadhaarnumber.text,
+                    DocType: "Aadhaar_Back",
+                    DocBase64: base64code2.toString(),
+                  ));
+                },
+                child: const Text(
+                  "Submit",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white, fontFamily: "regulartext"),
+                ),
+              ),
+            ),
+          )
+        ]
       )
       )
         ]

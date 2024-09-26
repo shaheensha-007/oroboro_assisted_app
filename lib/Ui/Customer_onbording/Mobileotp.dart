@@ -33,6 +33,7 @@ late CustomeronbordingstatusModel iscustomerstatuts;
 late UpadatenextprocessModel isupadatenextprocess;
 late UserdetalisModel isuserdetalis;
 bool nextnavgation=false;
+bool isLoading = false;
 String? customercodeLook;
 String? Customercoderegistration;
 String? Partnercode;

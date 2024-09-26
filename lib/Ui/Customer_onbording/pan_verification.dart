@@ -51,7 +51,6 @@ class _PanverficationState extends State<Panverfication> {
   void initState() {
     BlocProvider.of<MerchartTokenBloc>(context)
         .add(FetchMerchartToken(userName: "Test", password: tokenpassword));
-      print("mohammmed shaheen  ${Flowid}son od the asharaf pk${Pageorder}");
     // TODO: implement initState
     super.initState();
   }
