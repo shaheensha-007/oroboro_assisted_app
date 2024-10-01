@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/addhaar%20number.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Blocs/Customeronbording_blocs/personalinformation_bloc/Monthincome_bloc/monthincome_bloc.dart';
@@ -629,7 +630,7 @@ class _Personal_informationState extends State<Personal_information> {
                         backgroundColor: const Color(0xff284389)
                     ), onPressed: () {
 
-                      // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>), (route) => false);
+                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Aadhaarnumber()), (route) => false);
                     },
                         child: const Text("Previous", style: TextStyle(fontSize: 16,
                             fontWeight: FontWeight.w800,

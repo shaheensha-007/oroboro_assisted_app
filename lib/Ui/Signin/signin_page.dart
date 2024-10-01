@@ -126,6 +126,9 @@ class _Signin_pageState extends State<Signin_page> {
                         child: Padding(
                           padding: EdgeInsets.only(left: mwidth * 0.03),
                           child: TextFormField(
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(10)
+                            ],
                             validator: validateEmail,
                             style: const TextStyle(
                                 fontSize: 14,
@@ -172,6 +175,9 @@ class _Signin_pageState extends State<Signin_page> {
                                       fontWeight: FontWeight.w800,
                                       fontFamily: "regulartext"),
                                   controller: Signinpassword,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(8)
+                                  ],
                                   autofillHints: const [AutofillHints.password],
                                   obscureText: !_isPasswordVisible,
                                   decoration: const InputDecoration(
@@ -257,10 +263,10 @@ class _Signin_pageState extends State<Signin_page> {
                       ),
                       BlocListener<SigninBloc, SigninState>(
                         listener: (context, state) async {
-                          final preferences =
-                              await SharedPreferences.getInstance();
+                          final preferences = await SharedPreferences.getInstance();
+
                           if (state is SigninblocLoading) {
-                           showDialog(
+                            showDialog(
                               context: context,
                               barrierDismissible: false,
                               builder: (BuildContext context) {
@@ -269,43 +275,57 @@ class _Signin_pageState extends State<Signin_page> {
                                 );
                               },
                             );
-                          }else{
-                            isSigninsucess =
-                                BlocProvider.of<SigninBloc>(context).isvalid;
-                            preferences.setString("Userid",
-                                isSigninsucess.result!.userId.toString());
-                            preferences.setString("username",
-                                isSigninsucess.result!.name.toString());
-                            if (isSigninsucess.status.toString() == "Success") {
-                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                                  builder: (context) => Mainhome()),(route) => false);
+                          } else {
+                            Navigator.of(context).pop();
+
+                            isSigninsucess = BlocProvider.of<SigninBloc>(context).isvalid;
+
+                            if (isSigninsucess.result != null) {
+                              if (isSigninsucess.result!.userId != null) {
+                                preferences.setString("Userid", isSigninsucess.result!.userId.toString());
+                              } else {
+                                print("Error: userId is null");
+                              }
+                              if (isSigninsucess.result!.name != null) {
+                                preferences.setString("username", isSigninsucess.result!.name.toString());
+                              } else {
+                                print("Error: username is null");
+                              }
                             } else {
-                              String errormessage =
-                                  isSigninsucess.status.toString();
+                              print("Error: result is null");
+                            }
+
+                            if (isSigninsucess.status.toString() == "Success") {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (context) => Mainhome()),
+                                      (route) => false
+                              );
+                            } else {
+                              String errormessage = isSigninsucess.status.toString();
                               _showErrorSnackBar(errormessage);
                             }
-                            // TODO: implement listener
                           }
                         },
                         child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                backgroundColor: const Color(0xff284389)),
-                            onPressed: () async {
-                              BlocProvider.of<SigninBloc>(context).add(
-                                  FetchSignin(
-                                      userName: Signinusername.text,
-                                      password: Signinpassword.text));
-                            },
-                            child: const Text(
-                              "Sign in",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white,
-                                  fontFamily: "regulartext"),
-                            )),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                            backgroundColor: const Color(0xff284389),
+                          ),
+                          onPressed: () async {
+                            BlocProvider.of<SigninBloc>(context).add(
+                                FetchSignin(userName: Signinusername.text, password: Signinpassword.text)
+                            );
+                          },
+                          child: const Text(
+                            "Sign in",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                                fontFamily: "regulartext"
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: mheight * 0.05,

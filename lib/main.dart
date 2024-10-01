@@ -11,6 +11,7 @@ import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Customerupada
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Emailupdate_bloc/emailupadate_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Panverification_blocs/panverification_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Upadateaddress_bloc/upadateaddress_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/bank_verification_bloc/ifsc_verification_bloc/ifscverification_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/customeronbording_bloc/customeronbording_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/personalinformation_bloc/Monthincome_bloc/monthincome_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Forgotpassword_bloc/forgotpassword_bloc.dart';
@@ -20,9 +21,11 @@ import 'package:oroboro_assisted_app/Blocs/Userdetalis_bloc/userdetalis_bloc.dar
 import 'package:oroboro_assisted_app/Blocs/refershtoken_bloc/refreshtoken_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/token_bloc/token_bloc.dart';
 import 'package:oroboro_assisted_app/Ui/Customer_onbording/aadhaar_otp.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/bank_detalis.dart';
 import 'package:oroboro_assisted_app/Ui/Customer_onbording/pan_verification.dart';
 import 'package:oroboro_assisted_app/Ui/Customer_onbording/personal%20information.dart';
 import 'package:oroboro_assisted_app/Ui/Splansh_screen/Splansh_Screen.dart';
+import 'package:oroboro_assisted_app/modeles/signupModelclass/Ifscmodel/IfscModel.dart';
 import 'Blocs/Signinblocs/Signin_bloc/signin_bloc.dart';
 import 'Blocs/Signupblocs/ Mobileagent_bloc/mobileagent_bloc.dart';
 import 'Blocs/Signupblocs/AgentKyc_bloc/agentkyc_bloc.dart';
@@ -80,6 +83,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=>AadhaarotpverificationBloc()),
         BlocProvider(create: (context)=>AadhaaruploadfilesBloc()),
         BlocProvider(create: (context)=>MonthincomeBloc()),
+        BlocProvider(create: (context)=>IfscverificationBloc())
 
 
       ],
@@ -90,7 +94,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: const Splash_Screen()),
+          home: const Bank_details()),
     );
   }
 }

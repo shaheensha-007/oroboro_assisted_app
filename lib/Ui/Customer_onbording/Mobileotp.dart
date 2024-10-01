@@ -5,7 +5,11 @@ import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/CustomerSendo
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Customer_Regsitration_bloc/customer_regsitration_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Customerupadate_bloc/customerupdate_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/customeronbording_bloc/customeronbording_bloc.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/addhaar%20number.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/bank_detalis.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/loan_eligiblity_%20Approved.dart';
 import 'package:oroboro_assisted_app/Ui/Customer_onbording/pan_verification.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/personal%20information.dart';
 import 'package:oroboro_assisted_app/modeles/UserdetalisModel/UserdetalisModel.dart';
 import 'package:oroboro_assisted_app/modeles/customeronboradingModel/Customer_onbordingStatusModel/CustomeronbordingStatusModel.dart';
 import 'package:oroboro_assisted_app/modeles/customeronboradingModel/CustomercodeModel/CustomercodeModel.dart';
@@ -32,6 +36,7 @@ late Customer_regsitrationModel isCustomerregistration;
 late CustomeronbordingstatusModel iscustomerstatuts;
 late UpadatenextprocessModel isupadatenextprocess;
 late UserdetalisModel isuserdetalis;
+late CustomeronbordingstatusModel ismutiplestatus;
 bool nextnavgation=false;
 bool isLoading = false;
 String? customercodeLook;
@@ -39,8 +44,15 @@ String? Customercoderegistration;
 String? Partnercode;
 String? Flowid;
 String? Pageorder;
+String? pagename;
 TextEditingController onbordingotp=TextEditingController();
 class _MobileotpState extends State<Mobileotp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    onbordingotp=TextEditingController();
+  }
   @override
   Widget build(BuildContext context) {
     var mheight= MediaQuery.of(context).size.height;
@@ -156,157 +168,125 @@ class _MobileotpState extends State<Mobileotp> {
                     nextnavgation
                         ?
                     Padding(
-                      padding:EdgeInsets.only(right: mwidth*0.1),
-                      child:Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          BlocListener<CustomerRegsitrationBloc, CustomerRegsitrationState>(
-                            listener: (context, state) async {
-                              if (state is CustomerRegsitrationblocLoading) {
-                                CircularProgressIndicator();
-                              }
-                              if (state is CustomerRegsitrationblocLoaded) {
-                                isCustomerregistration = BlocProvider.of<CustomerRegsitrationBloc>(context).iscustomerregsitration;
-                                if (isCustomerregistration.status.toString() == "Success") {
-                                  Customercoderegistration = isCustomerregistration.result!.customerCode.toString();
-                                } else {
-                                  _showErrorSnackBar(isCustomerregistration.errorMessage.toString());
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mobileotp()));
-                                  return; // Stop further execution on failure
-                                }
-                              }
-                            },
-                            child: BlocListener<CustomeronbordingBloc, CustomeronbordingState>(
+                        padding:EdgeInsets.only(right: mwidth*0.1),
+                        child:Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            BlocListener<CustomerRegsitrationBloc, CustomerRegsitrationState>(
                               listener: (context, state) async {
-                                if (state is CustomeronbordingblocLoading) {
+                                if (state is CustomerRegsitrationblocLoading) {
                                   CircularProgressIndicator();
                                 }
-                                if (state is CustomeronbordingblocLoaded) {
-                                  iscustomerstatuts = BlocProvider.of<CustomeronbordingBloc>(context).isCustomeronbording;
-                                  if (iscustomerstatuts.status.toString() == "Success") {
-                                    Pageorder = iscustomerstatuts.result!.pageOrder.toString();
-                                    Flowid = iscustomerstatuts.result!.flowId.toString();
+                                if (state is CustomerRegsitrationblocLoaded) {
+
+                                  isCustomerregistration = BlocProvider.of<CustomerRegsitrationBloc>(context).iscustomerregsitration;
+                                  if (isCustomerregistration.status.toString() == "Success") {
+                                    Customercoderegistration = isCustomerregistration.result!.customerCode.toString();
                                   } else {
-                                    _showErrorSnackBar(iscustomerstatuts.errorMessage.toString());
+                                    _showErrorSnackBar(isCustomerregistration.errorMessage.toString());
                                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mobileotp()));
                                     return; // Stop further execution on failure
                                   }
                                 }
                               },
-                              child: BlocListener<CustomerupdateBloc, CustomerupdateState>(
+                              child: BlocListener<CustomeronbordingBloc, CustomeronbordingState>(
                                 listener: (context, state) async {
-                                  if (state is CustomerupdateblocLoading) {
+                                  if (state is CustomeronbordingblocLoading) {
                                     CircularProgressIndicator();
                                   }
-                                  if (state is CustomerupadateblocLoaded) {
-                                    isupadatenextprocess = BlocProvider.of<CustomerupdateBloc>(context).iscustomerupadate;
-                                    if (isupadatenextprocess.status.toString() == "Success") {
-                                      // Success, continue the flow
+                                  if (state is CustomeronbordingblocLoaded) {
+                                    iscustomerstatuts = BlocProvider.of<CustomeronbordingBloc>(context).isCustomeronbording;
+                                    if (iscustomerstatuts.status.toString() == "Success") {
+                                      Pageorder = iscustomerstatuts.result!.pageOrder.toString();
+                                      Flowid = iscustomerstatuts.result!.flowId.toString();
+                                      pagename=iscustomerstatuts.result!.pageName.toString();
                                     } else {
-                                      _showErrorSnackBar(isupadatenextprocess.errorMessage.toString());
+                                      _showErrorSnackBar(iscustomerstatuts.errorMessage.toString());
                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mobileotp()));
                                       return; // Stop further execution on failure
                                     }
                                   }
                                 },
-                                child: TextButton(
-                                  onPressed: () async {
-                                    final preferences = await SharedPreferences.getInstance();
-                                    bool apiErrorOccurred = false; // Flag to track errors
-
-                                    try {
-                                      if (customercodeLook != null) {
-                                        // Customer Onboarding Bloc
-                                        try {
-                                          await Future.delayed(const Duration(seconds: 2));
-                                          BlocProvider.of<CustomeronbordingBloc>(context).add(
-                                            FetchCustomeronbording(
-                                              userid: preferences.getString("Userid").toString(),
-                                              Customercode: customercodeLook.toString(),
-                                            ),
-                                          );
-                                        } catch (e) {
-                                          _showErrorSnackBar(e.toString());
-                                          apiErrorOccurred = true; // Error encountered
-                                          return; // Stop execution on error
-                                        }
-
-                                        // Customer Update Bloc
-                                        if (!apiErrorOccurred) {
-                                          try {
-                                            await Future.delayed(const Duration(seconds: 2));
-                                            BlocProvider.of<CustomerupdateBloc>(context).add(
-                                              FetchCustomerupdate(
-                                                userid: preferences.getString("Userid").toString(),
-                                                Customercode: customercodeLook.toString(),
-                                                PartnerCode: Partnercode.toString(),
-                                                FlowId: Flowid.toString(),
-                                                PageOrder: Pageorder.toString(),
-                                              ),
-                                            );
-                                          } catch (e) {
-                                            _showErrorSnackBar(e.toString());
-                                            apiErrorOccurred = true;
-                                            return; // Stop execution on error
-                                          }
-                                        }
-
-                                        // Final call if all succeed
-                                        if (!apiErrorOccurred) {
-                                          await Future.delayed(const Duration(seconds: 5));
-                                          BlocProvider.of<CustomeronbordingBloc>(context).add(
-                                            FetchCustomeronbording(
-                                              userid: preferences.getString("Userid").toString(),
-                                              Customercode: customercodeLook.toString(),
-                                            ),
-                                          );
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Panverfication()));
-                                        }
-
+                                child: BlocListener<CustomerupdateBloc, CustomerupdateState>(
+                                  listener: (context, state) async {
+                                    if (state is CustomerupdateblocLoading) {
+                                      CircularProgressIndicator();
+                                    }
+                                    if (state is CustomerupadateblocLoaded) {
+                                      isupadatenextprocess = BlocProvider.of<CustomerupdateBloc>(context).iscustomerupadate;
+                                      if (isupadatenextprocess.status.toString() == "Success") {
+                                        // Success, continue the flow
                                       } else {
-                                        // Customer Registration Bloc
-                                        try {
-                                          await Future.delayed(const Duration(seconds: 2));
-                                          BlocProvider.of<CustomerRegsitrationBloc>(context).add(
-                                            FetchCustomerregistration(
-                                              userId: preferences.getString("Userid").toString(),
-                                              data: preferences.getString("onbordingmobile").toString(),
-                                            ),
-                                          );
-                                        } catch (e) {
-                                          _showErrorSnackBar(e.toString());
-                                          apiErrorOccurred = true;
-                                          return; // Stop execution on error
-                                        }
-
-                                        // Customer Onboarding Bloc
-                                        if (!apiErrorOccurred) {
+                                        _showErrorSnackBar(isupadatenextprocess.errorMessage.toString());
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mobileotp()));
+                                        return; // Stop further execution on failure
+                                      }
+                                    }
+                                  },
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      final preferences = await SharedPreferences.getInstance();
+                                      bool apiErrorOccurred = false; // Flag to track errors
+                                       setState(() {
+                                         isLoading=true;
+                                       });
+                                      try {
+                                        if (customercodeLook != null) {
+                                          // Customer Onboarding Bloc
                                           try {
                                             await Future.delayed(const Duration(seconds: 2));
                                             BlocProvider.of<CustomeronbordingBloc>(context).add(
                                               FetchCustomeronbording(
                                                 userid: preferences.getString("Userid").toString(),
-                                                Customercode: Customercoderegistration.toString(),
+                                                Customercode: customercodeLook.toString(),
                                               ),
                                             );
                                           } catch (e) {
                                             _showErrorSnackBar(e.toString());
-                                            apiErrorOccurred = true;
+                                            apiErrorOccurred = true; // Error encountered
                                             return; // Stop execution on error
                                           }
-                                        }
 
-                                        // Customer Update Bloc
-                                        if (!apiErrorOccurred) {
+                                          // Customer Update Bloc
+                                          if (!apiErrorOccurred) {
+                                            try {
+                                              await Future.delayed(const Duration(seconds: 2));
+                                              BlocProvider.of<CustomerupdateBloc>(context).add(
+                                                FetchCustomerupdate(
+                                                  userid: preferences.getString("Userid").toString(),
+                                                  Customercode: customercodeLook.toString(),
+                                                  PartnerCode: Partnercode.toString(),
+                                                  FlowId: Flowid.toString(),
+                                                  PageOrder: Pageorder.toString(),
+                                                ),
+                                              );
+                                            } catch (e) {
+                                              _showErrorSnackBar(e.toString());
+                                              apiErrorOccurred = true;
+                                              return; // Stop execution on error
+                                            }
+                                          }
+
+                                          // Final call if all succeed
+                                          if (!apiErrorOccurred) {
+                                            await Future.delayed(const Duration(seconds: 5));
+                                            BlocProvider.of<CustomeronbordingBloc>(context).add(
+                                              FetchCustomeronbording(
+                                                userid: preferences.getString("Userid").toString(),
+                                                Customercode: customercodeLook.toString(),
+                                              ),
+                                            );
+
+                                          }
+
+                                        } else {
+                                          // Customer Registration Bloc
                                           try {
                                             await Future.delayed(const Duration(seconds: 2));
-                                            BlocProvider.of<CustomerupdateBloc>(context).add(
-                                              FetchCustomerupdate(
-                                                userid: preferences.getString("Userid").toString(),
-                                                Customercode: Customercoderegistration.toString(),
-                                                PartnerCode: Partnercode.toString(),
-                                                FlowId: Flowid.toString(),
-                                                PageOrder: Pageorder.toString(),
+                                            BlocProvider.of<CustomerRegsitrationBloc>(context).add(
+                                              FetchCustomerregistration(
+                                                userId: preferences.getString("Userid").toString(),
+                                                data: preferences.getString("onbordingmobile").toString(),
                                               ),
                                             );
                                           } catch (e) {
@@ -314,42 +294,106 @@ class _MobileotpState extends State<Mobileotp> {
                                             apiErrorOccurred = true;
                                             return; // Stop execution on error
                                           }
+
+                                          // Customer Onboarding Bloc
+                                          if (!apiErrorOccurred) {
+                                            try {
+                                              await Future.delayed(const Duration(seconds: 2));
+                                              BlocProvider.of<CustomeronbordingBloc>(context).add(
+                                                FetchCustomeronbording(
+                                                  userid: preferences.getString("Userid").toString(),
+                                                  Customercode: Customercoderegistration.toString(),
+                                                ),
+                                              );
+                                            } catch (e) {
+                                              _showErrorSnackBar(e.toString());
+                                              apiErrorOccurred = true;
+                                              return; // Stop execution on error
+                                            }
+                                          }
+
+                                          // Customer Update Bloc
+                                          if (!apiErrorOccurred) {
+                                            try {
+                                              await Future.delayed(const Duration(seconds: 2));
+                                              BlocProvider.of<CustomerupdateBloc>(context).add(
+                                                FetchCustomerupdate(
+                                                  userid: preferences.getString("Userid").toString(),
+                                                  Customercode: Customercoderegistration.toString(),
+                                                  PartnerCode: Partnercode.toString(),
+                                                  FlowId: Flowid.toString(),
+                                                  PageOrder: Pageorder.toString(),
+                                                ),
+                                              );
+                                            } catch (e) {
+                                              _showErrorSnackBar(e.toString());
+                                              apiErrorOccurred = true;
+                                              return; // Stop execution on error
+                                            }
+                                          }
                                         }
-                                      }
 
-                                      // Save SharedPreferences if no errors
-                                      if (!apiErrorOccurred) {
-                                        await Future.delayed(const Duration(seconds: 5));
-                                        if (customercodeLook != null && Customercoderegistration != null) {
-                                          preferences.setString("CustomerCode", customercodeLook.toString());
-                                        } else if (customercodeLook != null) {
-                                          preferences.setString("CustomerCode", customercodeLook.toString());
-                                        } else if (Customercoderegistration != null) {
-                                          preferences.setString("CustomerCode", Customercoderegistration.toString());
+                                        // Save SharedPreferences if no errors
+                                        if (!apiErrorOccurred) {
+                                          await Future.delayed(
+                                              const Duration(seconds: 5));
+                                          if (customercodeLook != null &&
+                                              Customercoderegistration !=
+                                                  null) {
+                                            preferences.setString(
+                                                "CustomerCode",
+                                                customercodeLook.toString());
+                                          } else if (customercodeLook != null) {
+                                            preferences.setString(
+                                                "CustomerCode",
+                                                customercodeLook.toString());
+                                          } else if (Customercoderegistration !=
+                                              null) {
+                                            preferences.setString(
+                                                "CustomerCode",
+                                                Customercoderegistration
+                                                    .toString());
+                                          }
+
+                                          switch (pagename) {
+                                            case"CustomerRegistration":
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Panverfication())).then((value) => setState(() {
+                                                onbordingotp.dispose();
+                                              }));
+                                              break;
+                                            case"AadhaarIdentityAuthentication" :
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Aadhaarnumber()));
+                                              break;
+                                            case"BusinessRegistration" :
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Personal_information()));
+                                              break;
+                                            case"KYC_REGISTRATION":
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Loan_eligibility_Approved()));
+                                               break;
+                                            case"FinancialAnalysis":
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Bank_details()));
+                                              break;
+                                            case "ReviewPortal":
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Loan_eligibility_Approved()));
+                                          }
                                         }
-
-                                        // Navigate if all succeed
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Panverfication())).then((value) => setState(() {
-                                          Flowid=null;
-                                          Pageorder =null;
-                                        })
-                                        );
+                                      } catch (error) {
+                                        setState(() {
+                                          isLoading=false;
+                                        });
+                                        _showErrorSnackBar(error.toString());
                                       }
-
-                                    } catch (error) {
-                                      _showErrorSnackBar(error.toString());
-                                    }
-                                  },
-                                  child: Text(
-                                    "Next>>>",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xff284389)),
+                                    },
+                                    child: Text(
+                                      "Next>>>",
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xff284389)),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
-                      )
+                            )
+                          ],
+                        )
                     ):SizedBox(),
                   ],
                 ),
@@ -368,5 +412,10 @@ class _MobileotpState extends State<Mobileotp> {
       ),
     ));
   }
-
+@override
+  void dispose() {
+  onbordingotp.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
 }

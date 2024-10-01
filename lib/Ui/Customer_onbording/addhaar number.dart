@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oroboro_assisted_app/Ui/Customer_onbording/aadhar%20upload.dart';
 import 'package:oroboro_assisted_app/Ui/Customer_onbording/pan_verification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +28,7 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
           title: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -79,14 +79,15 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
                         if(value!.isEmpty){
                           return 'Please enter  Aadhhaar number';
                         }
-                       // if(!RegExp(r'^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$').hasMatch(value)){
-                       //   return 'Please enter a valid  Aadhaar number';
-                       // }
+                       if(!RegExp(r'^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$').hasMatch(value)){
+                         return 'Please enter a valid  Aadhaar number';
+                       }
                       },
                       style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                       controller: aadhaarnumber,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(15)
                       ],
                       decoration: const InputDecoration(
@@ -97,6 +98,9 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
                         hintStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
                         errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
                       ),
+                      onChanged: (text){
+
+                      },
                     ),
                   ),
                 ),
@@ -174,4 +178,10 @@ void _showErrorSnackBar(String message) {
     ),
   ));
 }
+@override
+  void dispose() {
+  aadhaarnumber.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
 }

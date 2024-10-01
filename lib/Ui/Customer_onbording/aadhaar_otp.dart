@@ -25,8 +25,8 @@ late AadhaarOtpVerificationModel isotpaadhaarverification;
 TextEditingController aadhaarOtp=TextEditingController();
 bool Aadhaarshow=false;
 bool nextaadhaar=false;
-String? Flowid;
-String? Pageorder;
+String? Flowid2;
+String? Pageorder2;
 class _AaadharOtpState extends State<AaadharOtp> {
   @override
   void initState() {
