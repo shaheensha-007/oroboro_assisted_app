@@ -52,7 +52,7 @@ class _Personal_informationState extends State<Personal_information> {
   @override
   void initState() {
     BlocProvider.of<MerchartTokenBloc>(context)
-        .add(FetchMerchartToken(userName: "Test", password: tokenpassword));
+        .add(FetchMerchartToken(userName: "Test", password: tokenpassword,ctx: context));
     // TODO: implement initState
     super.initState();
   }
@@ -650,7 +650,7 @@ class _Personal_informationState extends State<Personal_information> {
                                 EmploymentStatus: stringemploymentstatus
                                     .toString(),
                                 Income: montlyincome.text,
-                                MonthlyEMIAmount: montlyincome.text
+                                MonthlyEMIAmount: montlyincome.text, ctx: context
                             ));
                       }else{
                         _showErrorSnackBar("Something is Error");

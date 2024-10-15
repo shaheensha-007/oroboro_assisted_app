@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/AadhaarotpverificationApi/AadhaarotpverificationApi.dart';
 
@@ -17,7 +18,7 @@ class AadhaarotpverificationBloc extends Bloc<AadhaarotpverificationEvent, Aadha
     on<FetchAadhaarotpverification>((event, emit) async{
       emit(AadhaarotpverificationblocLoading());
       try{
-        isAadhaarotpverification=await aadhaarotpverificationApi.postAadhaarotpverificatondata(event.userId,event.Customercode, event.Aadhaarotp, event.Requestid);
+        isAadhaarotpverification=await aadhaarotpverificationApi.postAadhaarotpverificatondata(event.userId,event.Customercode, event.Aadhaarotp, event.Requestid,event.ctx);
         emit(AadhaarotpvetrificationblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message: e.toString());

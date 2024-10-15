@@ -7,10 +7,12 @@ class FetchAadhaarotpverification extends AadhaarotpverificationEvent{
   final String Customercode;
   final String Aadhaarotp;
   final String Requestid;
+  final BuildContext ctx;
   FetchAadhaarotpverification({
     required this.userId,
     required this.Customercode,
     required this.Aadhaarotp,
     required this.Requestid,
+    required this.ctx
 });
 }

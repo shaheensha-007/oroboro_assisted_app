@@ -187,7 +187,8 @@ class _MyDialogState extends State<MyDialog> {
                 BlocProvider.of<RestpasswordBloc>(context).add(
                     FetchRestpassword(
                         userId:UserID,
-                        password: ConfirmpasswordController.text));
+                        password: ConfirmpasswordController.text, ctx: context,
+                    ));
                 // _showErrorText(context, 'Passwords is matched.');
               }
           },
@@ -206,7 +207,7 @@ class _MyDialogState extends State<MyDialog> {
             ),
             child: const Center(
               child: Text(
-                "Send",
+                "Submit",
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,

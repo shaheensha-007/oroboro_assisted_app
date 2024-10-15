@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/CustomerupdateApi/CustomerupadateApi.dart';
 
@@ -19,7 +20,7 @@ class CustomerupdateBloc extends Bloc<CustomerupdateEvent, CustomerupdateState> 
       try {
         iscustomerupadate = await customerupdateApi.postupdatestatusdata(
             event.userid, event.Customercode, event.PartnerCode, event.FlowId,
-            event.PageOrder);
+            event.PageOrder,event.ctx);
         emit(CustomerupadateblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

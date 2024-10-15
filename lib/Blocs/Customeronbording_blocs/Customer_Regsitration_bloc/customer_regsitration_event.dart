@@ -5,5 +5,6 @@ abstract class CustomerRegsitrationEvent {}
 class FetchCustomerregistration extends CustomerRegsitrationEvent{
    final String userId;
    final String data;
-   FetchCustomerregistration({required this.userId,required this.data});
+   final BuildContext ctx;
+   FetchCustomerregistration({required this.userId,required this.data,required this.ctx});
 }

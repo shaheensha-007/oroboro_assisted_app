@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
+import 'package:oroboro_assisted_app/Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api_expecption.dart';
 import 'main.dart';
 
 class ApiClient_1 {
-  Future<Response> invokeAPI(String path, String method, Object? body, {String? auth}) async {
+  Future<Response> invokeAPI(String path, String method, Object? body, BuildContext context, {String? auth}) async {
     final preferences = await SharedPreferences.getInstance();
 
     final token = preferences.getString('jwttoken');
@@ -19,15 +22,15 @@ class ApiClient_1 {
 
     final nullableHeaderParams = (headerParams.isEmpty) ? null : headerParams;
     print(body);
+
     switch (method) {
       case "POST":
         response = await post(Uri.parse(url),
             headers: {
               'content-Type': 'application/x-www-form-urlencoded',
-              'authorization':auth?? 'Bearer $token',
+              'authorization': auth ?? 'Bearer $token',
             },
             body: body);
-
         break;
       case "PUT":
         response = await put(Uri.parse(url),
@@ -69,7 +72,6 @@ class ApiClient_1 {
             'Content-Type': 'application/json'
           },
         );
-
         break;
       case "PATCH":
         response = await patch(
@@ -99,15 +101,19 @@ class ApiClient_1 {
 
     print('status of $path =>' + (response.statusCode).toString());
     print(response.body);
-    if (response.statusCode >= 400) {
-      log(path +
-          ' : ' +
-          response.statusCode.toString() +
-          ' : ' +
-          response.body);
 
+    // Check for status codes 400 and 401
+    if (response.statusCode == 400 || response.statusCode == 401) {
+
+        BlocProvider.of<MerchartTokenBloc>(context).add(
+          FetchMerchartToken(userName: "Test", password:
+          "RkQtQTMtRDMtRjctMDktMTItMzItRjQtNDUtQTMtNjItMTMtQUQtQjItQTMtMDY=",ctx: context),
+        );
+
+      log(path + ' : ' + response.statusCode.toString() + ' : ' + response.body);
       throw ApiException(_decodeBodyBytes(response), response.statusCode);
     }
+
     return response;
   }
 

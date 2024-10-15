@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,7 +88,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                   child: DropdownButtonFormField<String>(
                     value: selectedAccountType,
                     style: const TextStyle(
-                      fontSize: 10,
+                      fontSize: 12,
                       fontWeight: FontWeight.w800,
                       fontFamily: "regulartext",
                       color: Colors.black,
@@ -98,12 +99,12 @@ class _Bank_registrationState extends State<Bank_registration> {
                       errorBorder: InputBorder.none,
                       hintText: "__Choose the AccountType__",
                       hintStyle: TextStyle(
-                        fontSize: 10,
+                        fontSize: 12,
                         fontWeight: FontWeight.w200,
                         fontFamily: "regulartext",
                       ),
                       errorStyle: TextStyle(
-                        fontSize: 10,
+                        fontSize: 12,
                         fontWeight: FontWeight.w200,
                         fontFamily: "regulartext",
                       ),
@@ -197,35 +198,53 @@ class _Bank_registrationState extends State<Bank_registration> {
                             children: [
                               Expanded(
                                 child: TextFormField(
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(11),
+                                  ],
                                   controller: ifscno,
-                                  validator:validateIfsc,
-                                  style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                                  decoration: const InputDecoration(
+                                  validator: validateIfsc,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: "regulartext",
+                                  ),
+                                  decoration: InputDecoration( // Removed const here
                                     border: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     errorBorder: InputBorder.none,
                                     hintText: "IFSC NO.",
-                                    hintStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                                    errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
+                                    hintStyle: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w200,
+                                      fontFamily: "regulartext",
+                                    ),
+                                    errorStyle: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w200,
+                                      fontFamily: "regulartext",
+                                    ),
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        final isValidIfsc = ifscnumberkey.currentState?.validate();
+                                        if (isValidIfsc == true) {
+                                          BlocProvider.of<IfscBloc>(context).add(
+                                            FetchIfsc(
+                                              clientId: MainclientId,
+                                              IFSC: ifscno.text,
+                                              ctx: context,
+                                            ),
+                                          );
+                                          ifscnumberkey.currentState?.save();
+                                          setState(() {
+                                            ifscshow = true;
+                                          });
+                                        }
+                                      },
+                                      icon: const Icon(Icons.check), // Make this const since the icon itself is a constant
+                                    ),
                                   ),
                                 ),
                               ),
-                              ElevatedButton(style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  backgroundColor: const Color(0xff284389)
-                              ),
-                                  onPressed: (){
-                                    final isvaildifsc=ifscnumberkey.currentState?.validate();
-                                    if(isvaildifsc==true){
-                                      BlocProvider.of<IfscBloc>(context).add(FetchIfsc(clientId: MainclientId, IFSC:ifscno.text , ctx: context));
-                                      ifscnumberkey.currentState?.save();
-                                      setState(() {
-                                        ifscshow=true;
-                                      });
-                                    }
-                                  }, child: const Text("verify",style:TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),))
                             ],
                           ),
                         ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/AadhaarsendOtpApi/AadhaarsendApi.dart';
 import 'package:oroboro_assisted_app/widgets/tostmessage.dart';
@@ -17,7 +18,7 @@ class AadhaarsendotpBloc extends Bloc<AadhaarsendotpEvent, AadhaarsendotpState> 
     on<FetchAadhaarsendotp>((event, emit) async {
       emit(AadhaarSendotpblocLoading());
       try{
-        isaadhaarsendotp=await aadhaarsendotpApi.postAadhaarsendOtpdata(event.userId, event.Customercode, event.Aadhaar);
+        isaadhaarsendotp=await aadhaarsendotpApi.postAadhaarsendOtpdata(event.userId, event.Customercode, event.Aadhaar, event.ctx);
         emit(AadhaarSendOtpblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message: e.toString());

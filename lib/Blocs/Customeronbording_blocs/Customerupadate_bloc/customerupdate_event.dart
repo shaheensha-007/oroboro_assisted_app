@@ -8,11 +8,13 @@ class FetchCustomerupdate extends CustomerupdateEvent{
   final String PartnerCode;
   final String FlowId;
   final String PageOrder;
+  final BuildContext ctx;
   FetchCustomerupdate({
    required this.userid,
    required this.Customercode,
    required this.PartnerCode,
    required this.FlowId,
-   required this.PageOrder
+   required this.PageOrder,
+   required this.ctx
 });
 }

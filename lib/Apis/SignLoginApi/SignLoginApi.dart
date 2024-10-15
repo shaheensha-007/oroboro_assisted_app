@@ -18,7 +18,7 @@ import '../../../api_client.dart';
 class SigninApi {
   ApiClient_1 apiClient_1 = ApiClient_1();
   String trendingpath = 'gateway/Login';
-  Future<SignloginModel> postSignlogindata(String userName,String password) async {
+  Future<SignloginModel> postSignlogindata(String userName,String password,BuildContext context) async {
     var body = {
       'ApiUserId': "Test",
       'UserName': userName,
@@ -27,7 +27,7 @@ class SigninApi {
     };
 
     Response response = await apiClient_1.invokeAPI(
-        trendingpath, 'POST_', jsonEncode(body),);
+        trendingpath, 'POST_', jsonEncode(body),context);
     print(response.body);
     return SignloginModel.fromJson(json.decode(response.body));
   }

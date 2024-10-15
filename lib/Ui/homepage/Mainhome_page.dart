@@ -40,7 +40,8 @@ class _MainhomeState extends State<Mainhome> {
   void initState() {
     BlocProvider.of<MerchartTokenBloc>(context).add(FetchMerchartToken(
         userName: "Test",
-        password:tokenpassword
+        password:tokenpassword,
+      ctx: context
     ));
     // TODO: implement initState
     super.initState();
@@ -99,7 +100,7 @@ class _MainhomeState extends State<Mainhome> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Restpasssword",
+                                    "Change Passsword",
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w800,

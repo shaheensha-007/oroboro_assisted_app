@@ -1,12 +1,12 @@
 class CustomersendotpModel {
   CustomersendotpModel({
-      this.transactionId, 
-      this.responseCode, 
-      this.status, 
-      this.responseStatus, 
-      this.responseMessage, 
-      this.errorMessage, 
-      this.result,});
+    this.transactionId,
+    this.responseCode,
+    this.status,
+    this.responseStatus,
+    this.responseMessage,
+    this.errorMessage,
+    this.result,});
 
   CustomersendotpModel.fromJson(dynamic json) {
     transactionId = json['TransactionId'];

@@ -333,7 +333,7 @@ class _drawerState extends State<drawer> {
                      ),
                      children: [
                        ListTile(
-                         title: const Text("Notificatoion",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Notification",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
                     onTap: (){
                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Notification1()), (route) => false);
                     },

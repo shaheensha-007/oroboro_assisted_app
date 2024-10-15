@@ -5,5 +5,6 @@ abstract class MerchartTokenEvent {}
 class FetchMerchartToken extends MerchartTokenEvent{
   final String userName;
   final String password;
-  FetchMerchartToken({required this.userName,required this.password});
+  final BuildContext ctx;
+  FetchMerchartToken({required this.userName,required this.password,required this.ctx});
 }

@@ -31,7 +31,7 @@ class _AaadharOtpState extends State<AaadharOtp> {
   @override
   void initState() {
     BlocProvider.of<MerchartTokenBloc>(context)
-        .add(FetchMerchartToken(userName: "Test", password: tokenpassword));
+        .add(FetchMerchartToken(userName: "Test", password: tokenpassword,ctx: context));
     // TODO: implement initState
     super.initState();
   }
@@ -112,7 +112,7 @@ class _AaadharOtpState extends State<AaadharOtp> {
                                 userId:preferences.getString("Userid").toString() ,
                                 Customercode: preferences.getString("CustomerCode").toString(),
                                 Aadhaarotp:aadhaarOtp.text ,
-                                Requestid: widget.Requestid));
+                                Requestid: widget.Requestid, ctx: context));
                         },
                           length: 6,
                         ),
@@ -177,7 +177,7 @@ class _AaadharOtpState extends State<AaadharOtp> {
             Customercode: preferences.getString("CustomerCode").toString(),
             PartnerCode: preferences.getString("partnercode").toString(),
             FlowId: Flowid.toString(),
-            PageOrder: Pageorder.toString()));
+            PageOrder: Pageorder.toString(), ctx: context));
       }else
         _showErrorSnackBar(iscustomerstatuts.errorMessage.toString());
     }
@@ -204,7 +204,7 @@ class _AaadharOtpState extends State<AaadharOtp> {
     final preferences = await SharedPreferences.getInstance();
     BlocProvider.of<CustomeronbordingBloc>(context).add(FetchCustomeronbording(
         userid:preferences.getString("Userid").toString() , 
-        Customercode: preferences.getString("CustomerCode").toString()
+        Customercode: preferences.getString("CustomerCode").toString(), ctx: context
     ));
 
                               }, child:Text(

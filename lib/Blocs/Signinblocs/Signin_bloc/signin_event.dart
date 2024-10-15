@@ -5,5 +5,6 @@ abstract class SigninEvent {}
 class FetchSignin extends SigninEvent{
   final String userName;
   final String password;
-  FetchSignin({required this.userName,required this.password});
+  final BuildContext ctx;
+  FetchSignin({required this.userName,required this.password,required this.ctx});
 }

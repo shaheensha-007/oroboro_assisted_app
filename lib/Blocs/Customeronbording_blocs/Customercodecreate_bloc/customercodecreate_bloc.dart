@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/CustomercodeApi/CustomercodeApi.dart';
 
@@ -17,7 +18,7 @@ class CustomercodecreateBloc extends Bloc<CustomercodecreateEvent, Customercodec
     on<FetchCustomercodecreate>((event, emit) async{
       emit(CustomercodecreateblocLoading());
       try{
-        iscreatecustomercode=await customercodecreateApi.postCustomercodecreatedata(event.userId, event.data);
+        iscreatecustomercode=await customercodecreateApi.postCustomercodecreatedata(event.userId, event.data, event.ctx);
         emit(CustomercodecreateblocLoaded());
       }catch (e){
         ToastMessage().toastmessage(message:e.toString());

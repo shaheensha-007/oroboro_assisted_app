@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:oroboro_assisted_app/api_client_1.dart';
 import 'package:oroboro_assisted_app/modeles/FogotpasswordModel/ForgotpasswordModel.dart';
@@ -9,7 +10,7 @@ import '../../../modeles/customeronboradingModel/CustomercodeModel/CustomercodeM
 class CustomercodecreateApi {
   ApiClient_1 apiClient_1 = ApiClient_1();
   String trendingpath = 'gateway/Customer/CodeLookUp';
-  Future<CustomercodecreateModel> postCustomercodecreatedata(String userid,String data) async {
+  Future<CustomercodecreateModel> postCustomercodecreatedata(String userid,String data,BuildContext context) async {
     var body = {
       'ApiUserId': "Test",
       'UserId': userid,
@@ -19,7 +20,7 @@ class CustomercodecreateApi {
     };
 
     Response response = await apiClient_1.invokeAPI(
-      trendingpath, 'POST_', jsonEncode(body),);
+      trendingpath, 'POST_', jsonEncode(body),context);
     print(response.body);
     return CustomercodecreateModel.fromJson(json.decode(response.body));
   }

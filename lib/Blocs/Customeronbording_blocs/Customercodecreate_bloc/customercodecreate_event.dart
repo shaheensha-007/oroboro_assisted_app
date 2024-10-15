@@ -5,5 +5,6 @@ abstract class CustomercodecreateEvent {}
 class FetchCustomercodecreate extends CustomercodecreateEvent{
     final String userId;
   final String data;
-  FetchCustomercodecreate({required this.userId,required this.data});
+    final BuildContext ctx;
+  FetchCustomercodecreate({required this.userId,required this.data,required this.ctx});
 }

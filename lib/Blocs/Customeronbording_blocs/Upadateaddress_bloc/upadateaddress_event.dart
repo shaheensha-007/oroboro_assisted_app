@@ -12,6 +12,7 @@ class FetchUpadteaddress extends UpadateaddressEvent{
   final String State;
   final String Pincode;
   final String District;
+  final BuildContext ctx;
   FetchUpadteaddress({
     required this.userid,
     required this.Customercode,
@@ -21,6 +22,7 @@ class FetchUpadteaddress extends UpadateaddressEvent{
     required this.City,
     required this.State,
     required this.Pincode,
-    required  this.District
+    required  this.District,
+    required this.ctx
 });
 }

@@ -8,6 +8,7 @@ class FetchMonthincome extends MonthincomeEvent{
   final String EmploymentStatus;
   final String Income;
   final String MonthlyEMIAmount;
+  final BuildContext ctx;
 
   FetchMonthincome({
    required this.userId,
@@ -15,6 +16,7 @@ class FetchMonthincome extends MonthincomeEvent{
    required this.EmploymentStatus,
    required this.Income,
    required this.MonthlyEMIAmount,
+   required this.ctx
 });
 
 }

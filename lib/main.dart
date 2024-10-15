@@ -20,12 +20,7 @@ import 'package:oroboro_assisted_app/Blocs/Restpassword_bloc/restpassword_bloc.d
 import 'package:oroboro_assisted_app/Blocs/Userdetalis_bloc/userdetalis_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/refershtoken_bloc/refreshtoken_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/token_bloc/token_bloc.dart';
-import 'package:oroboro_assisted_app/Ui/Customer_onbording/aadhaar_otp.dart';
-import 'package:oroboro_assisted_app/Ui/Customer_onbording/bank_detalis.dart';
-import 'package:oroboro_assisted_app/Ui/Customer_onbording/pan_verification.dart';
-import 'package:oroboro_assisted_app/Ui/Customer_onbording/personal%20information.dart';
 import 'package:oroboro_assisted_app/Ui/Splansh_screen/Splansh_Screen.dart';
-import 'package:oroboro_assisted_app/modeles/signupModelclass/Ifscmodel/IfscModel.dart';
 import 'Blocs/Signinblocs/Signin_bloc/signin_bloc.dart';
 import 'Blocs/Signupblocs/ Mobileagent_bloc/mobileagent_bloc.dart';
 import 'Blocs/Signupblocs/AgentKyc_bloc/agentkyc_bloc.dart';
@@ -36,6 +31,7 @@ import 'Blocs/Signupblocs/MobileotpVerify_bloc/mobileotpverify_bloc.dart';
 import 'Blocs/Signupblocs/bankregstratin_bloc/bankregstration_bloc.dart';
 import 'Blocs/Signupblocs/previewdocuments_bloc/previewdocument_bloc.dart';
 import 'Blocs/Signupblocs/vetrifypan_bloc/verifypan_bloc.dart';
+import 'Ui/Customer_onbording/Loan_rejected_approved.dart';
 
 const String basePath = "https://apidoc.oroboro.in/api/";
 const String basepath_1 = "https://gateway.oroboro.in/";
@@ -94,7 +90,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: const Bank_details()),
+          home: const Splash_Screen()),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/personalinformationApis/MonthincomeApi/MonthincomeApi.dart';
 
@@ -17,7 +18,7 @@ class MonthincomeBloc extends Bloc<MonthincomeEvent, MonthincomeState> {
     on<FetchMonthincome>((event, emit)async {
       emit(MonthincomeblocLoading());
       try{
-        ismonthlyincome=await monthincomeApi.postMonthincomedata(event.userId, event.Customercode, event.EmploymentStatus, event.Income, event.MonthlyEMIAmount);
+        ismonthlyincome=await monthincomeApi.postMonthincomedata(event.userId, event.Customercode, event.EmploymentStatus, event.Income, event.MonthlyEMIAmount,event.ctx);
         emit(MonthincomeblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message: e.toString());

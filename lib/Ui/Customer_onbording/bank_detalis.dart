@@ -25,7 +25,7 @@ class _Bank_detailsState extends State<Bank_details> {
   @override
   void initState() {
     BlocProvider.of<MerchartTokenBloc>(context)
-        .add(FetchMerchartToken(userName: "Test", password: tokenpassword));
+        .add(FetchMerchartToken(userName: "Test", password: tokenpassword,ctx: context));
     // TODO: implement initState
     super.initState();
   }
@@ -132,7 +132,13 @@ class _Bank_detailsState extends State<Bank_details> {
                             errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
                           ),
                           onChanged: (text){
-                            String ifscvalid=
+                            String ifscvalid=text.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+                            IfscController.value=TextEditingValue(
+                              text: ifscvalid,
+                              selection: TextSelection.fromPosition(
+                              TextPosition(offset: ifscvalid.length)
+                              )
+                            );
                           },
                         ),
                       ),
@@ -222,7 +228,7 @@ class _Bank_detailsState extends State<Bank_details> {
                           ),  onPressed: ()async{
                     final preferences = await SharedPreferences.getInstance();
                     if(bankdetaliskey.currentState!.validate()){
-                      BlocProvider.of<IfscverificationBloc>(context).add(FetchIfscverification(userId:preferences.getString("Userid").toString(),ifsccode: IfscController.text));
+                      BlocProvider.of<IfscverificationBloc>(context).add(FetchIfscverification(userId:preferences.getString("Userid").toString(),ifsccode: IfscController.text, ctx: context));
                     }
         
                           },

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/bank_verificationApi/bankupdateApi/bankupdateApi.dart';
 import 'package:oroboro_assisted_app/widgets/tostmessage.dart';
@@ -17,7 +18,7 @@ class BankupdateBloc extends Bloc<BankupdateEvent, BankupdateState> {
     on<FetchBankupdate>((event, emit) async{
       emit(BankupdateblocLoading());
       try{
-        isbankupadte=await bankupdateApi.postBankupdatedata(event.userId, event.Customercode, event.Accountnumber, event.Accounttype, event.ifsccode);
+        isbankupadte=await bankupdateApi.postBankupdatedata(event.userId, event.Customercode, event.Accountnumber, event.Accounttype, event.ifsccode,event.ctx);
         emit(BankupdateblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message: e.toString());

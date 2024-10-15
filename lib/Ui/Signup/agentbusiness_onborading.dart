@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'Draw_in_signature.dart';
 
@@ -6,271 +8,428 @@ class Agent_business_onboarding extends StatefulWidget {
   const Agent_business_onboarding({super.key});
 
   @override
-  State<Agent_business_onboarding> createState() => _Agent_business_onboardingState();
+  State<Agent_business_onboarding> createState() =>
+      _Agent_business_onboardingState();
 }
-TextEditingController gstnumber=TextEditingController();
-TextEditingController ownername=TextEditingController();
-TextEditingController shopname=TextEditingController();
-TextEditingController tannumber=TextEditingController();
 
-bool ownernameshow=false;
-bool shopnameshow=false;
-bool tannumbershow=false;
-final gstkey = GlobalKey<FormState>();
-final ownernamekey=GlobalKey<FormState>();
-final shopnamekey=GlobalKey<FormState>();
-final tannumberkey=GlobalKey<FormState>();
+TextEditingController gstnumber = TextEditingController();
+TextEditingController ownername = TextEditingController();
+TextEditingController shopname = TextEditingController();
+TextEditingController tannumber = TextEditingController();
+bool gstSmallButton = false;
+bool ownersmallbutton = false;
+bool shopsmallbutton = false;
+bool tansmallbutton = false;
+bool ownernameshow = false;
+bool shopnameshow = false;
+bool tannumbershow = false;
+bool bussinessnbigbutton = false;
+final GlobalKey<FormState> businessregistrationkey = GlobalKey<FormState>();
+
 class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
+  String gstPattern =
+      r'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$';
 
-  String? validateGST(value) {
-    // Define a regular expression for GST format
-    RegExp gstRegex = RegExp(r'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$');
-
-    if (!gstRegex.hasMatch(value)) {
-      return 'Invalid GST format. It should be like "12ABCDE1234F1Z5"';
+  String? validateGST(String gstNumber) {
+    RegExp regExp = RegExp(gstPattern);
+    if (gstNumber.isEmpty) {
+      return 'GST number is required';
+    } else if (!regExp.hasMatch(gstNumber)) {
+      return 'Invalid GST number format';
     }
-
-    return null; // Return null if the format is valid
-  }/// validation of Gst number
-
-  String? _validateTAN(data) {
-    if (data == null || data.isEmpty) {
-      return 'Please enter a TAN';
-    }
-
-    // Regex for TAN format: NGPO02911G
-    final regex = RegExp(r'^[A-Z]{4}[0-9]{5}[A-Z]$');
-
-    if (!regex.hasMatch(data)) {
-      return 'Invalid TAN format. Should be in NGPO02911G format';
-    }
-
-    return null;
+    return null; // Return null if GST number is valid
   }
+
+  /// validation of Gst number
+
+  String? validateTAN(String value) {
+    // Regex pattern for TAN
+    String pattern = r'^[A-Z]{4}[0-9]{5}[A-Z]{1}$';
+    RegExp regExp = RegExp(pattern);
+
+    if (value.isEmpty) {
+      return 'TAN is required';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Invalid TAN format';
+    }
+    return null; // Return null if validation is successful
+  }
+
   /// validation of tan numbers
   @override
   Widget build(BuildContext context) {
-    var mheight= MediaQuery.of(context).size.height;
-    var mwidth= MediaQuery.of(context).size.width;
+    var mheight = MediaQuery.of(context).size.height;
+    var mwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Column(
-              children: [
-                SizedBox(
-                  height: mheight * 0.1,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: mwidth * 0.2),
-                  child: const Text(
-                    "Let’s Start Your\nAgent  Business  Journey",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "boldtext",
-                      fontWeight: FontWeight.w800,
+            Form(
+              key: businessregistrationkey,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: mheight * 0.1,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: mwidth * 0.2),
+                    child: const Text(
+                      "Let’s Start Your\nAgent  Business  Journey",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "boldtext",
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: mheight * 0.05,
-                ),
-                Form(
-                  key: gstkey,
-                  child: Container(
-                    height: mheight*0.06,
-                    width: mwidth*0.8,
+                  SizedBox(
+                    height: mheight * 0.05,
+                  ),
+                  Container(
+                    height: mheight * 0.06,
+                    width: mwidth * 0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         boxShadow: const [
-                          BoxShadow(color: Colors.grey,spreadRadius: 1),
+                          BoxShadow(color: Colors.grey, spreadRadius: 1),
                         ],
-                        color: Colors.white
-                    ),
+                        color: Colors.white),
                     child: Padding(
-                      padding:EdgeInsets.only(left: mwidth*0.03),
+                      padding: EdgeInsets.only(left: mwidth * 0.03),
                       child: TextFormField(
-                             validator:validateGST,
-                            style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                            controller: gstnumber,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              hintText: "GST",
-                              hintStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                              errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
+                        validator: (value) => validateGST(value ?? ''),
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(15),
+                        ],
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: "regulartext",
+                        ),
+                        controller: gstnumber,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          hintText: "GST",
+                          hintStyle: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w200,
+                            fontFamily: "regulartext",
+                          ),
+                          errorStyle: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w200,
+                            fontFamily: "regulartext",
+                          ),
+                          // Button inside the text form field when length is 15
+                          suffixIcon: gstSmallButton
+                              ? IconButton(
+                                  icon: const Icon(Icons.check),
+                                  onPressed: () {
+                                    // Perform GST validation when the button is clicked
+                                    if (validateGST(gstnumber.text) == null) {
+                                      // GST number is valid
+                                      setState(() {
+                                        ownernameshow = true;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        ownernameshow = false;
+                                      });
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Invalid GST number format!'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                )
+                              : null,
+                        ),
+                        onChanged: (value) {
+                          // Enable the button when the length of GST number reaches 15
+                          if (value.length == 15) {
+                            setState(() {
+                              gstSmallButton = true;
+                            });
+                          } else {
+                            setState(() {
+                              gstSmallButton = false;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: mheight * 0.03,
+                  ),
+                  ownernameshow
+                      ? Container(
+                          height: mheight * 0.06,
+                          width: mwidth * 0.8,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: const [
+                                BoxShadow(color: Colors.grey, spreadRadius: 1),
+                              ],
+                              color: Colors.white),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: mwidth * 0.03),
+                            child: TextFormField(
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: "regulartext"),
+                              controller: ownername,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                hintText: "Shop owner name",
+                                hintStyle: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w200,
+                                    fontFamily: "regulartext"),
+                                errorStyle: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w200,
+                                    fontFamily: "regulartext"),
+                                // Display the suffix icon only when ownersmallbutton is true
+                                suffixIcon: ownersmallbutton
+                                    ? IconButton(
+                                        icon: const Icon(Icons.check),
+                                        onPressed: () {
+                                          setState(() {
+                                            shopnameshow =
+                                                true; // Move to the next step
+                                          });
+                                        },
+                                      )
+                                    : null,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  // Set ownersmallbutton to true when the input is not empty
+                                  ownersmallbutton = value.isNotEmpty;
+                                });
+                              },
                             ),
-                            onEditingComplete: (){
-                              final isgstvalid=gstkey.currentState?.validate();
-                              if(isgstvalid==true){
-                               setState(() {
-                                 ownernameshow=true;
-                               });
-                                gstkey.currentState?.save();
+                          ),
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: mheight * 0.03,
+                  ),
+                  shopnameshow
+                      ? Container(
+                          height: mheight * 0.06,
+                          width: mwidth * 0.8,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(color: Colors.grey, spreadRadius: 1),
+                            ],
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: mwidth * 0.03),
+                            child: TextFormField(
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "regulartext",
+                              ),
+                              controller: shopname,
+                              // Remove const from the InputDecoration
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                hintText: "Shop name",
+                                hintStyle: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "regulartext",
+                                ),
+                                errorStyle: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "regulartext",
+                                ),
+                                // Display suffixIcon when shopsmallbutton is true
+                                suffixIcon: shopsmallbutton
+                                    ? IconButton(
+                                        icon: const Icon(Icons.check),
+                                        onPressed: () {
+                                          setState(() {
+                                            tannumbershow = true;
+                                          });
+                                        },
+                                      )
+                                    : null,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  // Set shopsmallbutton to true when the input is not empty
+                                  shopsmallbutton = value.isNotEmpty;
+                                });
+                              },
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: mheight * 0.03,
+                  ),
+                  tannumbershow
+                      ? Container(
+                          height: mheight * 0.06,
+                          width: mwidth * 0.8,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: const [
+                                BoxShadow(color: Colors.grey, spreadRadius: 1),
+                              ],
+                              color: Colors.white),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: mwidth * 0.03),
+                            child: TextFormField(
+                              controller: tannumber,
+                              validator: (value) => validateTAN(value ?? ''),
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(10)
+                              ],
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "regulartext",
+                              ),
+                              decoration: InputDecoration(
+                                // Remove const here
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                hintText: "TAN",
+                                hintStyle: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "regulartext",
+                                ),
+                                errorStyle: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w200,
+                                  fontFamily: "regulartext",
+                                ),
+                                suffixIcon: tansmallbutton
+                                    ? IconButton(
+                                        icon: const Icon(Icons.check),
+                                        onPressed: () {
+                                          if (validateTAN(tannumber.text) ==
+                                              null) {
+                                            setState(() {
+                                              bussinessnbigbutton = true;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              bussinessnbigbutton = false;
+                                            });
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    'Invalid TAN number format!'),
+                                                backgroundColor: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      )
+                                    : null,
+                              ),
+                              onChanged: (value) {
+                                if (value.length == 10) {
+                                  setState(() {
+                                    tansmallbutton = true;
+                                  });
+                                } else {
+                                  setState(() {
+                                    tansmallbutton = false;
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                  SizedBox(
+                    height: mheight * 0.05,
+                  ),
+                  Center(
+                    child: bussinessnbigbutton
+                        ? ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                backgroundColor: const Color(0xff284389)),
+                            onPressed: () {
+                              final isvalidtan = businessregistrationkey
+                                  .currentState
+                                  ?.validate();
+                              if (isvalidtan == true) {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Draw_in_signature()),
+                                    (route) => false);
+                                businessregistrationkey.currentState?.save();
                               }
                             },
-                          ),
-                    ),
+                            child: const Text(
+                              "Submit",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                  fontFamily: "regulartext"),
+                            ))
+                        : const SizedBox(),
                   ),
-                ),
-                SizedBox(
-                  height: mheight*0.03,
-                ),
-        
-                ownernameshow
-                ?
-                Form(
-                  key:ownernamekey,
-                  child: Container(
-                    height: mheight*0.06,
-                    width: mwidth*0.8,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: const [
-                          BoxShadow(color: Colors.grey,spreadRadius: 1),
-                        ],
-                        color: Colors.white
-                    ),
-                    child: Padding(
-                      padding:EdgeInsets.only(left: mwidth*0.03),
-                      child: TextFormField(
-                        onEditingComplete: (){
-                          final isvalidowner=ownernamekey.currentState?.validate();
-                          if(isvalidowner==true){
-                            setState(() {
-                              shopnameshow=true;
-                            });
-                            ownernamekey.currentState?.save();
-                          }
-                        },
-                        style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                        controller: ownername,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          hintText: "Shop owner name",
-                          hintStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                          errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-                :const SizedBox(),
-                SizedBox(
-                  height: mheight*0.03,
-                ),
-                shopnameshow
-                ?Form(
-                  key:shopnamekey,
-                  child: Container(
-                    height: mheight*0.06,
-                    width: mwidth*0.8,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: const [
-                          BoxShadow(color: Colors.grey,spreadRadius: 1),
-                        ],
-                        color: Colors.white
-                    ),
-                    child: Padding(
-                      padding:EdgeInsets.only(left: mwidth*0.03),
-                      child: TextFormField(
-                        onEditingComplete: (){
-                          final isvalidshopname=shopnamekey.currentState?.validate();
-                          if(isvalidshopname==true){
-                            setState(() {
-                              tannumbershow=true;
-                            });
-                            shopnamekey.currentState?.save();
-                          }
-                        },
-                        style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                        controller: shopname,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          hintText: "Shop name",
-                          hintStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                          errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-                :const SizedBox(),
-        
-                SizedBox(
-                  height: mheight*0.03,
-                ),
-                tannumbershow
-                ? Form(
-                  key:tannumberkey,
-                  child: Container(
-                    height: mheight*0.06,
-                    width: mwidth*0.8,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: const [
-                          BoxShadow(color: Colors.grey,spreadRadius: 1),
-                        ],
-                        color: Colors.white
-                    ),
-                    child: Padding(
-                      padding:EdgeInsets.only(left: mwidth*0.03),
-                      child: TextFormField(
-                        controller: tannumber,
-                        style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          hintText: "TAN",
-                          hintStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                          errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w200,fontFamily: "regulartext"),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-                :const SizedBox(),
-        
-                SizedBox(
-                  height: mheight*0.05,
-                ),
-                Center(
-                  child: ElevatedButton(style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: const Color(0xff284389)
-                  ),onPressed: (){
-                  final isvalidtan= tannumberkey.currentState?.validate();
-                  if(isvalidtan==true) {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) =>
-                            const Draw_in_signature()), (route) => false);
-                    tannumberkey.currentState?.save();
-                  }
-                  }, child:const Text("Submit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),
       ),
     );
   }
+
   @override
   void dispose() {
-   setState(() {
-     ownernameshow=false;
-     shopnameshow=false;
-     tannumbershow=false;
-   });
+    setState(() {
+      ownernameshow = false;
+      shopnameshow = false;
+      tannumbershow = false;
+      gstSmallButton = false;
+      ownersmallbutton = false;
+      shopsmallbutton = false;
+      tansmallbutton = false;
+      bussinessnbigbutton = false;
+    });
     // TODO: implement dispose
     super.dispose();
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message,
+          style: const TextStyle(fontSize: 12, fontFamily: "font2")),
+      duration: Duration(milliseconds: 2000),
+    ));
   }
 }

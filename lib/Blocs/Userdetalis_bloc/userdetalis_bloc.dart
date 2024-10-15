@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/userdetalisApi/UserdetalisApi.dart';
 
@@ -17,7 +18,7 @@ class UserdetalisBloc extends Bloc<UserdetalisEvent, UserdetalisState> {
     on<FetchUserdetalis>((event, emit)async {
       emit(UserdetalisblocLoading());
       try{
-        isuser=await userdetalisApi.postuserdetalisdata(event.userId, event.Identity);
+        isuser=await userdetalisApi.postuserdetalisdata(event.userId, event.Identity,event.ctx);
         emit(UserdetalisblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

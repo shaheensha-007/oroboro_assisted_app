@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
 import '../../../Apis/CustomeronbordingApies/PanverificationApi/PanverificationApi.dart';
@@ -17,7 +18,7 @@ class PanverificationBloc extends Bloc<PanverificationEvent, PanverificationStat
     on<FetchPanverification>((event, emit) async{
       emit(PanverificationblocLoading());
       try{
-        iscustomerverification=await panverificationApi.postPanverificationdata(event.userid,event.Customercode, event.PAN);
+        iscustomerverification=await panverificationApi.postPanverificationdata(event.userid,event.Customercode, event.PAN,event.ctx);
         emit(PanverificationblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

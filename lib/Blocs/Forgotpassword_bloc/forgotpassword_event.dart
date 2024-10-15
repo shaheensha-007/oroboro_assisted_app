@@ -5,5 +5,6 @@ abstract class ForgotpasswordEvent {}
 class FetchForgotpassword extends ForgotpasswordEvent{
   final String Username;
   final String Mobilenumber;
-  FetchForgotpassword({required this.Username,required this.Mobilenumber});
+  final BuildContext ctx;
+  FetchForgotpassword({required this.Username,required this.Mobilenumber,required this.ctx});
 }

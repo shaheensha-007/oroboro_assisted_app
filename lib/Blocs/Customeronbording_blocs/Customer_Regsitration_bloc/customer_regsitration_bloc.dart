@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/Customer_regsitrationApi/Customer_regsitrationApi.dart';
 
@@ -17,7 +18,7 @@ class CustomerRegsitrationBloc extends Bloc<CustomerRegsitrationEvent, CustomerR
     on<FetchCustomerregistration>((event, emit) async{
       emit(CustomerRegsitrationblocLoading());
       try{
-        iscustomerregsitration=await customerregsitrationApi.postCustomerregsitrtiondata(event.userId, event.data);
+        iscustomerregsitration=await customerregsitrationApi.postCustomerregsitrtiondata(event.userId, event.data,event.ctx);
         emit(CustomerRegsitrationblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

@@ -18,7 +18,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       final preferences = await SharedPreferences.getInstance();
       emit(SigninblocLoading());
       try{
-        isvalid=await signinApi.postSignlogindata(event.userName, event.password);
+        isvalid=await signinApi.postSignlogindata(event.userName, event.password,event.ctx);
        preferences.setString("userId", isvalid.result!.userId.toString());
         emit(SigninblocLoaded());
       }

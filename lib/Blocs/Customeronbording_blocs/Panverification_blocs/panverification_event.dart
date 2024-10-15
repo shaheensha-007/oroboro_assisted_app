@@ -6,9 +6,11 @@ class FetchPanverification extends PanverificationEvent{
   final String userid;
   final String Customercode;
   final String PAN;
+  final BuildContext ctx;
   FetchPanverification({
     required this.userid,
     required this.Customercode,
     required this.PAN,
+    required this.ctx
 });
 }

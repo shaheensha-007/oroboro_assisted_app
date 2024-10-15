@@ -79,9 +79,9 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
                         if(value!.isEmpty){
                           return 'Please enter  Aadhhaar number';
                         }
-                       if(!RegExp(r'^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$').hasMatch(value)){
-                         return 'Please enter a valid  Aadhaar number';
-                       }
+                       // if(!RegExp(r'^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$').hasMatch(value)){
+                       //   return 'Please enter a valid  Aadhaar number';
+                       // }
                       },
                       style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w800,fontFamily: "regulartext"),
                       controller: aadhaarnumber,
@@ -155,7 +155,7 @@ class _AadhaarnumberState extends State<Aadhaarnumber> {
                       final preferences = await SharedPreferences.getInstance();
                      BlocProvider.of<AadhaarsendotpBloc>(context).add(FetchAadhaarsendotp(userId: preferences.getString("Userid").toString(), Customercode: preferences
                          .getString("CustomerCode")
-                         .toString(), Aadhaar: aadhaarnumber.text)
+                         .toString(), Aadhaar: aadhaarnumber.text, ctx: context)
                      );
                     }
                   }, child:const Text("Send OTP",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),

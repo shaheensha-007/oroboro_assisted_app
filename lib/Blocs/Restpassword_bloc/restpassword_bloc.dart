@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/RestPasswordApi/RestpasswordApi.dart';
 
@@ -18,7 +19,7 @@ class RestpasswordBloc extends Bloc<RestpasswordEvent, RestpasswordState> {
       emit(RestpasswordblocLoading());
       try {
         isrestpassword = await restPasswordApi.postRestpassworddata(
-            event.userId, event.password);
+            event.userId, event.password,event.ctx);
         emit(RestpasswordblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

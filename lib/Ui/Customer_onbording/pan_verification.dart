@@ -49,7 +49,7 @@ class _PanverficationState extends State<Panverfication> {
   @override
   void initState() {
     BlocProvider.of<MerchartTokenBloc>(context)
-        .add(FetchMerchartToken(userName: "Test", password: tokenpassword));
+        .add(FetchMerchartToken(userName: "Test", password: tokenpassword,ctx: context));
     // TODO: implement initState
     super.initState();
 
@@ -695,206 +695,193 @@ class _PanverficationState extends State<Panverfication> {
                                     fontFamily: "regulartext"),
                               )),
                           BlocListener<PanverificationBloc, PanverificationState>(
-  listener: (context, state) async{
-    final preferences = await SharedPreferences.getInstance();
-    if (state is PanverificationblocLoading) {
-      CircularProgressIndicator();
-    }
-    else if (mounted) {
-      Navigator.of(context).pop();
-    }
-    if (state is PanverificationblocLoaded) {
-      verificationpan = BlocProvider.of<PanverificationBloc>(context).iscustomerverification;
-      if (verificationpan.status.toString() == "Success") {
-      } else {
-        _showErrorSnackBar(
-            verificationpan.errorMessage.toString());
-      }
-    }
-    // TODO: implement listener
-  },
-  child: BlocListener<EmailupadateBloc, EmailupadateState>(
-  listener: (context, state) async{
-    final preferences = await SharedPreferences.getInstance();
-    if (state is EmailupadateblocLoading) {
-      CircularProgressIndicator();
-    }else if (mounted) {
-      // Ensure context is valid before dismissing the dialog
-      Navigator.of(context).pop();
-    }
-    if (state is EmailupadateblocLoaded) {
-      isEmailupadate =
-          BlocProvider.of<EmailupadateBloc>(context)
-              .isemailupadate;
-      if (isEmailupadate.status.toString() == "Success") {
-      }else {
-        _showErrorSnackBar(
-            isEmailupadate.errorMessage.toString());
-      }
-    }
-    // TODO: implement listener
-  },
-  child: BlocListener<UpadateaddressBloc, UpadateaddressState>(
-  listener: (context, state) async{
-    final preferences = await SharedPreferences.getInstance();
-    if(state is UpadateaddressblocLoading){
-      CircularProgressIndicator();
-    }else if (mounted) {
-      // Ensure context is valid before dismissing the dialog
-      Navigator.of(context).pop();
-    }
-    if(state is UpadateaddressblocLoaded) {
-      isaddressupadate = BlocProvider
-          .of<UpadateaddressBloc>(context)
-          .isupadateaddress;
-      if (isaddressupadate.status.toString()== "Success") {
-      } else {
-        _showErrorSnackBar(
-            isaddressupadate.errorMessage.toString());
-      }
-    }
-    // TODO: implement listener
-  },
-  child: BlocListener<CustomeronbordingBloc, CustomeronbordingState>(
-  listener: (context, state) {
-    if(state is CustomeronbordingblocLoading){
-      CircularProgressIndicator();
-    }
-    if(state is CustomeronbordingblocLoaded){
-      iscustomerstatuts=BlocProvider.of<CustomeronbordingBloc>(context).isCustomeronbording;
-      if(iscustomerstatuts.status.toString()=="Success"){
-        Pageorder1= iscustomerstatuts.result?.pageOrder.toString();
-        Flowid1=iscustomerstatuts.result?.flowId.toString();
-        
-      }else {
-        _showErrorSnackBar(
-            iscustomerstatuts.errorMessage.toString());
-      }
-       
-    }
-    // TODO: implement listener
-  },
-  child: BlocListener<CustomerupdateBloc, CustomerupdateState>(
-  listener: (context, state) {
-    if(state is CustomerupdateblocLoading){
-      CircularProgressIndicator();
-    }
-    if(state is CustomerupadateblocLoaded){
-      isupadatenextprocess=BlocProvider.of<CustomerupdateBloc>(context).iscustomerupadate;
-      if(isupadatenextprocess.result.toString()=="Success"){
-      }
-      else {
-        _showErrorSnackBar(
-        isupadatenextprocess.errorMessage.toString());
-      }
-    }
-    // TODO: implement listener
-  },
-  child: ElevatedButton(
-                                                        style: ElevatedButton.styleFrom(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius.circular(5)),
-                                                            backgroundColor: const Color(0xff284389)),
-                                                        onPressed: () async {
-                                                          final preferences = await SharedPreferences.getInstance();
-                                                          if (panverifcationkey.currentState!.validate()) {
-                                                            try{
-                                                              await Future.delayed(Duration(seconds: 1));
-                                                              BlocProvider.of<PanverificationBloc>(context).add(FetchPanverification(
-                                                                  userid:preferences.getString("Userid").toString(),
-                                                                  Customercode: preferences.getString("CustomerCode").toString(),
-                                                                  PAN:pannumber.text));
-                                                            }catch(e){
-                                                              _showErrorSnackBar(e.toString());
-                                                              try{
-                                                                await Future.delayed(Duration(seconds: 1));
-                                                                BlocProvider.of<EmailupadateBloc>(context).add(FetchEmailupadate(
-                                                                    userid: preferences.getString("Userid").toString(),
-                                                                    Customercode: preferences.getString("CustomerCode").toString(),
-                                                                    Emailid:verificationemail.text));
-                                                              }catch(e){
-                                                                _showErrorSnackBar(e.toString());
-                                                              }
-                                                            }
-                                                            try{
-                                                              await Future.delayed(Duration(seconds: 1));
-                                                              BlocProvider.of<UpadateaddressBloc>(context).add(FetchUpadteaddress(
-                                                                  userid:preferences.getString("Userid").toString() ,
-                                                                  Customercode: preferences.getString("CustomerCode").toString(),
-                                                                  Address1: Address1contoller.text,
-                                                                  Address2: Address2contoller.text,
-                                                                  Address3: Address3controller.text,
-                                                                  City: citycontroller.text,
-                                                                  State: statecontroller.text,
-                                                                  Pincode: villagepincode.text,
-                                                                  District: districtcontroller.text
-                                                              ));
-                                                            }catch(e){
-                                                              _showErrorSnackBar(e.toString());
-                                                            }
-                                                            try{
-                                                              await Future.delayed(Duration(seconds: 1));
-                                                              BlocProvider.of<CustomeronbordingBloc>(context).add(
-                                                                FetchCustomeronbording(
-                                                                  userid: preferences.getString("Userid").toString(),
-                                                                  Customercode: preferences.getString("CustomerCode").toString(),
-                                                                ),
-                                                              );
-                                                            }catch(e){
-                                                              _showErrorSnackBar(e.toString());
-                                                            }
-                                                            try{
-                                                              await Future.delayed(Duration(seconds: 1));
-                                                              BlocProvider.of<CustomerupdateBloc>(context).add(
-                                                                FetchCustomerupdate(
-                                                                  userid: preferences.getString("Userid").toString(),
-                                                                  Customercode: preferences.getString("CustomerCode").toString(),
-                                                                  PartnerCode:preferences.getString("partnercode").toString(),
-                                                                  FlowId: Flowid1.toString(),
-                                                                  PageOrder: Pageorder1.toString(),
-                                                                ),
-                                                              );
-                                                            }catch(e){
-                                                              _showErrorSnackBar(e.toString());
-                                                            }
-                                                            try{
-                                                              await Future.delayed(Duration(seconds: 1));
-                                                              BlocProvider.of<CustomeronbordingBloc>(context).add(
-                                                                FetchCustomeronbording(
-                                                                  userid: preferences.getString("Userid").toString(),
-                                                                  Customercode: preferences.getString("CustomerCode").toString(),
-                                                                ),
-                                                              );
-                                                            }
-                                                            catch(e){
-                                                              _showErrorSnackBar(e.toString());
-                                                            }
-                                                            if(mounted) {
-                                                              Navigator.of(
-                                                                  context).push(
-                                                                  MaterialPageRoute(
-                                                                      builder: (
-                                                                          context) =>
-                                                                          Aadhaarnumber()));
-                                                            }
-                                                          }else{
-                                                            _showErrorSnackBar("no values this case");
-                                                          }
+                              listener: (context, state) {
+                                if (state is PanverificationblocLoading) {
+                                  CircularProgressIndicator();
+                                }
+                                if (state is PanverificationblocLoaded) {
+                                  verificationpan = BlocProvider.of<PanverificationBloc>(context).iscustomerverification;
+                                  if (verificationpan.status.toString() == "Success") {
+                                  } else {
+                                    _showErrorSnackBar(
+                                        verificationpan.errorMessage.toString());
+                                  }
+                                }
+                                // TODO: implement listener
+                              },
+                              child: BlocListener<EmailupadateBloc, EmailupadateState>(
+                                listener: (context, state) {
+                                  if (state is EmailupadateblocLoading) {
+                                    CircularProgressIndicator();
+                                  }
+                                  if (state is EmailupadateblocLoaded) {
+                                    isEmailupadate =
+                                        BlocProvider.of<EmailupadateBloc>(context)
+                                            .isemailupadate;
+                                    if (isEmailupadate.status.toString() == "Success") {
+                                    }else {
+                                      _showErrorSnackBar(
+                                          isEmailupadate.errorMessage.toString());
+                                    }
+                                  }
+                                  // TODO: implement listener
+                                },
+                                child: BlocListener<UpadateaddressBloc, UpadateaddressState>(
+                                  listener: (context, state){
+                                    if(state is UpadateaddressblocLoading){
+                                      CircularProgressIndicator();
+                                    }
+                                    if(state is UpadateaddressblocLoaded) {
+                                      isaddressupadate = BlocProvider
+                                          .of<UpadateaddressBloc>(context)
+                                          .isupadateaddress;
+                                      if (isaddressupadate.status.toString()== "Success") {
+                                      } else {
+                                        _showErrorSnackBar(
+                                            isaddressupadate.errorMessage.toString());
+                                      }
+                                    }
+                                    // TODO: implement listener
+                                  },
+                                  child: BlocListener<CustomeronbordingBloc, CustomeronbordingState>(
+                                    listener: (context, state) {
+                                      if(state is CustomeronbordingblocLoading){
+                                        CircularProgressIndicator();
+                                      }
+                                      if(state is CustomeronbordingblocLoaded){
+                                        iscustomerstatuts=BlocProvider.of<CustomeronbordingBloc>(context).isCustomeronbording;
+                                        if(iscustomerstatuts.status.toString()=="Success"){
+                                          Pageorder1= iscustomerstatuts.result?.pageOrder.toString();
+                                          Flowid1=iscustomerstatuts.result?.flowId.toString();
 
-                                                        },
-                                                        child: const Text(
-                                                          "Sumbit",
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight: FontWeight.w800,
-                                                              color: Colors.white,
-                                                              fontFamily: "regulartext"),
-                                                        ),
-  ),
-),
-),
-),
-)),
+                                        }else {
+                                          _showErrorSnackBar(
+                                              iscustomerstatuts.errorMessage.toString());
+                                        }
+
+                                      }
+                                      // TODO: implement listener
+                                    },
+                                    child: BlocListener<CustomerupdateBloc, CustomerupdateState>(
+                                      listener: (context, state) {
+                                        if(state is CustomerupdateblocLoading){
+                                          CircularProgressIndicator();
+                                        }
+                                        if(state is CustomerupadateblocLoaded){
+                                          isupadatenextprocess=BlocProvider.of<CustomerupdateBloc>(context).iscustomerupadate;
+                                          if(isupadatenextprocess.result.toString()=="Success"){
+                                          }
+                                          else {
+                                            _showErrorSnackBar(
+                                                isupadatenextprocess.errorMessage.toString());
+                                          }
+                                        }
+                                        // TODO: implement listener
+                                      },
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(5)),
+                                            backgroundColor: const Color(0xff284389)),
+                                        onPressed: () async {
+                                          final preferences = await SharedPreferences.getInstance();
+                                          if (panverifcationkey.currentState!.validate()) {
+                                            try{
+                                              await Future.delayed(Duration(seconds: 1));
+                                              BlocProvider.of<PanverificationBloc>(context).add(FetchPanverification(
+                                                  userid:preferences.getString("Userid").toString(),
+                                                  Customercode: preferences.getString("CustomerCode").toString(),
+                                                  PAN:pannumber.text, ctx:context));
+                                            }catch(e){
+                                              _showErrorSnackBar(e.toString());
+                                              try{
+                                                await Future.delayed(Duration(seconds: 1));
+                                                BlocProvider.of<EmailupadateBloc>(context).add(FetchEmailupadate(
+                                                    userid: preferences.getString("Userid").toString(),
+                                                    Customercode: preferences.getString("CustomerCode").toString(),
+                                                    Emailid:verificationemail.text, ctx: context));
+                                              }catch(e){
+                                                _showErrorSnackBar(e.toString());
+                                              }
+                                            }
+                                            try{
+                                              await Future.delayed(Duration(seconds: 1));
+                                              BlocProvider.of<UpadateaddressBloc>(context).add(FetchUpadteaddress(
+                                                  userid:preferences.getString("Userid").toString() ,
+                                                  Customercode: preferences.getString("CustomerCode").toString(),
+                                                  Address1: Address1contoller.text,
+                                                  Address2: Address2contoller.text,
+                                                  Address3: Address3controller.text,
+                                                  City: citycontroller.text,
+                                                  State: statecontroller.text,
+                                                  Pincode: villagepincode.text,
+                                                  District: districtcontroller.text, ctx: context
+                                              ));
+                                            }catch(e){
+                                              _showErrorSnackBar(e.toString());
+                                            }
+                                            try{
+                                              await Future.delayed(Duration(seconds: 1));
+                                              BlocProvider.of<CustomeronbordingBloc>(context).add(
+                                                FetchCustomeronbording(
+                                                  userid: preferences.getString("Userid").toString(),
+                                                  Customercode: preferences.getString("CustomerCode").toString(), ctx: context,
+                                                ),
+                                              );
+                                            }catch(e){
+                                              _showErrorSnackBar(e.toString());
+                                            }
+                                            try{
+                                              await Future.delayed(Duration(seconds: 1));
+                                              BlocProvider.of<CustomerupdateBloc>(context).add(
+                                                FetchCustomerupdate(
+                                                  userid: preferences.getString("Userid").toString(),
+                                                  Customercode: preferences.getString("CustomerCode").toString(),
+                                                  PartnerCode:preferences.getString("partnercode").toString(),
+                                                  FlowId: Flowid1.toString(),
+                                                  PageOrder: Pageorder1.toString(), ctx: context,
+                                                ),
+                                              );
+                                            }catch(e){
+                                              _showErrorSnackBar(e.toString());
+                                            }
+                                            try{
+                                              await Future.delayed(Duration(seconds: 1));
+                                              BlocProvider.of<CustomeronbordingBloc>(context).add(
+                                                FetchCustomeronbording(
+                                                  userid: preferences.getString("Userid").toString(),
+                                                  Customercode: preferences.getString("CustomerCode").toString(), ctx: context,
+                                                ),
+                                              );
+                                            }
+                                            catch(e){
+                                              _showErrorSnackBar(e.toString());
+                                            }
+                                              Navigator.of(
+                                                  context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (
+                                                          context) =>
+                                                          Aadhaarnumber()));
+
+                                          }else{
+                                            _showErrorSnackBar("no values this case");
+                                          }
+
+                                        },
+                                        child: const Text(
+                                          "Sumbit",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.white,
+                                              fontFamily: "regulartext"),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
                         ],
                       ),
                     ),

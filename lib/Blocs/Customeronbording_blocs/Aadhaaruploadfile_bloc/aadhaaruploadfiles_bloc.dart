@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/AadhaaruploadfilesApi/AadhaaruploadfilesApi.dart';
 
@@ -17,7 +18,7 @@ class AadhaaruploadfilesBloc extends Bloc<AadhaaruploadfilesEvent, Aadhaarupload
     on<FetchAadhaaruploadfile>((event, emit)async {
       emit(AadhaaruploadfilesblocLoading());
       try{
-        isaadhaaruploadfiles=await aadhaaruploadfilesApi.postAadhaaruploadfilesdata(event.userId, event.IdentityType, event.IdentityValue,event.DocID_Value, event.DocType, event.DocBase64);
+        isaadhaaruploadfiles=await aadhaaruploadfilesApi.postAadhaaruploadfilesdata(event.userId, event.IdentityType, event.IdentityValue,event.DocID_Value, event.DocType, event.DocBase64,event.ctx);
         emit(AadhaaruploadfilesblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message: e.toString());

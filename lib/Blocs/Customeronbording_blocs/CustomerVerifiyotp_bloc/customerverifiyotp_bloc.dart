@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/CustomerverifiyotpApi/CustomerverifiyApi.dart';
 
@@ -17,7 +18,7 @@ class CustomerverifiyotpBloc extends Bloc<CustomerverifiyotpEvent, Customerverif
     on<FetchCustomerVerifiyotp>((event, emit)async {
       emit(CustomerverifiyotpblocLoading());
       try{
-        iscustomerverifiyotp=await customerverifiyotpApi.postCustomerVerifiyotpdata(event.userId, event.mobilenumber, event.Mobilenumberotp);
+        iscustomerverifiyotp=await customerverifiyotpApi.postCustomerVerifiyotpdata(event.userId, event.mobilenumber, event.Mobilenumberotp,event.ctx);
         emit(CustomerverifiyotpblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

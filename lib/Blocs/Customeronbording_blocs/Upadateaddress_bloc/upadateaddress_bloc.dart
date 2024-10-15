@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/upadateaddressApi/UpadateaddressApi.dart';
 
@@ -26,7 +27,8 @@ class UpadateaddressBloc extends Bloc<UpadateaddressEvent, UpadateaddressState> 
             event.City,
             event.State,
             event.Pincode,
-            event.District);
+            event.District,
+        event.ctx);
         emit(UpadateaddressblocLoading());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

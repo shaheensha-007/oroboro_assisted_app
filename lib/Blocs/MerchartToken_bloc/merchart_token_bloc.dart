@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/MerchartTokenApi/MerchartTokenApi.dart';
 
@@ -17,7 +18,7 @@ class MerchartTokenBloc extends Bloc<MerchartTokenEvent, MerchartTokenState> {
     on<FetchMerchartToken>((event, emit)async {
       emit(MerchartTokenblocLoading());
       try{
-        mercharttokenmodel=(await mercharttokenApi.simpletoken(event.userName, event.password))!;
+        mercharttokenmodel=(await mercharttokenApi.simpletoken(event.userName, event.password,event.ctx))!;
         emit(MerchartTokenblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

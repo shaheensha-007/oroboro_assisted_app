@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
 import 'package:oroboro_assisted_app/Ui/homepage/Mainhome_page.dart';
@@ -24,33 +25,58 @@ class Signin_page extends StatefulWidget {
 
 late SignloginModel isSigninsucess;
 late MerchartTokenModel ismercharttoken;
-bool remberingcheck = false;
+bool isNewUser = false;
 bool _isPasswordVisible = false;
+bool isLoading = false;
 final GlobalKey<FormState> signinFormKey = GlobalKey<FormState>();
 TextEditingController Signinusername = TextEditingController();
 TextEditingController Signinpassword = TextEditingController();
 
 class _Signin_pageState extends State<Signin_page> {
-  String validateEmail(String? name) {
-    if (name!.isEmpty) {
-      return 'Name is must not e empty';
-    }
-    String pattern = '([a-zA-Z])';
-    RegExp regExp = RegExp(pattern);
-    if (!regExp.hasMatch(name)) {
-      return 'invalid name';
-    }
-    return '';
-  }
+  // String validateEmail(String? name) {
+  //   if (name!.isEmpty) {
+  //     return 'Username must not be empty';
+  //   }
+  //   String pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$';
+  //   RegExp regExp = RegExp(pattern);
+  //   if (!regExp.hasMatch(name)) {
+  //     return 'you must contain only uppercase,lowercase and numbers';
+  //   }
+  //   return 'invalid name';
+  // }
 
   @override
   void initState() {
-    BlocProvider.of<MerchartTokenBloc>(context).add(FetchMerchartToken(
-        userName: "Test",
-        password:tokenpassword
-            ));
+    BlocProvider.of<MerchartTokenBloc>(context)
+        .add(FetchMerchartToken(userName: "Test", password: tokenpassword,ctx: context));
     // TODO: implement initState
     super.initState();
+    _loadUserCredentials();
+  }
+
+  void _loadUserCredentials() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (preferences.containsKey("rememberMe") &&
+        preferences.getBool("rememberMe") == true) {
+      setState(() {
+        Signinusername.text = preferences.getString("savedUsername") ?? "";
+        Signinpassword.text = preferences.getString("savedPassword") ?? "";
+        isNewUser = true;
+      });
+    }
+  }
+
+  void _saveUserCredentials() async {
+    final preferences = await SharedPreferences.getInstance();
+    if (isNewUser) {
+      preferences.setBool("rememberMe", true);
+      preferences.setString("savedUsername", Signinusername.text);
+      preferences.setString("savedPassword", Signinpassword.text);
+    } else {
+      preferences.setBool("rememberMe", false);
+      preferences.remove("savedUsername");
+      preferences.remove("savedPassword");
+    }
   }
 
   @override
@@ -63,11 +89,17 @@ class _Signin_pageState extends State<Signin_page> {
           child: BlocListener<MerchartTokenBloc, MerchartTokenState>(
             listener: (context, state) async {
               if (state is MerchartTokenblocLoading) {
-                const CircularProgressIndicator();
+               setState(() {
+                  isLoading = true;
+               });
               }
               if (state is MerchartTokenblocLoaded) {
+
                 ismercharttoken = BlocProvider.of<MerchartTokenBloc>(context)
                     .mercharttokenmodel;
+                setState(() {
+                  isLoading = false;
+                });
                 final preferences = await SharedPreferences.getInstance();
 
                 String jwttoken = ismercharttoken.jwtToken.toString();
@@ -114,102 +146,123 @@ class _Signin_pageState extends State<Signin_page> {
                       SizedBox(
                         height: mheight * 0.05,
                       ),
-                      Container(
-                        height: mheight * 0.06,
-                        width: mwidth * 0.8,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: const [
-                              BoxShadow(color: Colors.grey, spreadRadius: 1),
-                            ],
-                            color: Colors.white),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: mwidth * 0.03),
-                          child: TextFormField(
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(10)
-                            ],
-                            validator: validateEmail,
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: "regulartext"),
-                            controller: Signinusername,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              hintText: "Username",
-                              hintStyle: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w200,
-                                  fontFamily: "regulartext"),
-                              errorStyle: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w200,
-                                  fontFamily: "regulartext"),
+                      AutofillGroup(
+                        child: Column(children: [
+                          Container(
+                            height: mheight * 0.06,
+                            width: mwidth * 0.8,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.grey, spreadRadius: 1),
+                                ],
+                                color: Colors.white),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: mwidth * 0.03),
+                              child: TextFormField(
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(10)
+                                ],
+                                validator: (value){
+                                  if(value!.isEmpty){
+                                    return'Username must not be empty';
+                                  }
+                                  if(!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$').hasMatch(value)){
+                                    return'you must contain only uppercase,lowercase and numbers';
+                                  }
+                                },
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: "regulartext"),
+                                controller: Signinusername,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  hintText: "Username",
+                                  hintStyle: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w200,
+                                      fontFamily: "regulartext"),
+                                  errorStyle: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w200,
+                                      fontFamily: "regulartext"),
+                                ),
+                                autofillHints: [AutofillHints.username],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: mheight * 0.04,
-                      ),
-                      Container(
-                        height: mheight * 0.06,
-                        width: mwidth * 0.8,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: const [
-                              BoxShadow(color: Colors.grey, spreadRadius: 1),
-                            ],
-                            color: Colors.white),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: mwidth * 0.03),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "regulartext"),
-                                  controller: Signinpassword,
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(8)
-                                  ],
-                                  autofillHints: const [AutofillHints.password],
-                                  obscureText: !_isPasswordVisible,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    hintText: "Password",
-                                    hintStyle: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w200,
-                                        fontFamily: "regulartext"),
-                                    errorStyle: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w200,
-                                        fontFamily: "regulartext"),
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                icon: Icon(_isPasswordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isPasswordVisible =
-                                        !_isPasswordVisible; // Toggle password visibility
-                                  });
-                                },
-                              )
-                            ],
+                          SizedBox(
+                            height: mheight * 0.04,
                           ),
-                        ),
+                          Container(
+                            height: mheight * 0.06,
+                            width: mwidth * 0.8,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.grey, spreadRadius: 1),
+                                ],
+                                color: Colors.white),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: mwidth * 0.03),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      validator: (value){
+                                        if(value!.isEmpty){
+                                          return 'please enter your password';
+                                        }
+                                      },
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w800,
+                                          fontFamily: "regulartext"),
+                                      controller: Signinpassword,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(8)
+                                      ],
+                                      autofillHints: const [
+                                        AutofillHints.password
+                                      ],
+                                      obscureText: !_isPasswordVisible,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        hintText: "Password",
+                                        hintStyle: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w200,
+                                            fontFamily: "regulartext"),
+                                        errorStyle: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w200,
+                                            fontFamily: "regulartext"),
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(_isPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isPasswordVisible =
+                                            !_isPasswordVisible; // Toggle password visibility
+                                      });
+                                    },
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ]),
                       ),
                       SizedBox(
                         height: mheight * 0.02,
@@ -221,12 +274,12 @@ class _Signin_pageState extends State<Signin_page> {
                             Transform.scale(
                               scale: 1,
                               child: Checkbox(
-                                  value: remberingcheck,
+                                  value: isNewUser,
                                   shape: const RoundedRectangleBorder(
                                       side: BorderSide(color: Colors.grey)),
-                                  onChanged: (bool? value) {
+                                  onChanged: (bool? newvalue) {
                                     setState(() {
-                                      remberingcheck = value ?? false;
+                                      isNewUser = newvalue ?? false;
                                     });
                                   }),
                             ),
@@ -242,9 +295,11 @@ class _Signin_pageState extends State<Signin_page> {
                               padding: EdgeInsets.only(right: mwidth * 0.08),
                               child: TextButton(
                                   onPressed: () {
-                                    if (remberingcheck == true) {
-                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Fogotpassword()), (route) => false);
-                                    }
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Fogotpassword()),
+                                        (route) => false);
                                   },
                                   child: const Text(
                                     "Forgot Password?",
@@ -263,7 +318,8 @@ class _Signin_pageState extends State<Signin_page> {
                       ),
                       BlocListener<SigninBloc, SigninState>(
                         listener: (context, state) async {
-                          final preferences = await SharedPreferences.getInstance();
+                          final preferences =
+                              await SharedPreferences.getInstance();
 
                           if (state is SigninblocLoading) {
                             showDialog(
@@ -278,16 +334,20 @@ class _Signin_pageState extends State<Signin_page> {
                           } else {
                             Navigator.of(context).pop();
 
-                            isSigninsucess = BlocProvider.of<SigninBloc>(context).isvalid;
+                            isSigninsucess =
+                                BlocProvider.of<SigninBloc>(context).isvalid;
 
                             if (isSigninsucess.result != null) {
                               if (isSigninsucess.result!.userId != null) {
-                                preferences.setString("Userid", isSigninsucess.result!.userId.toString());
+                                preferences.setString("Userid",
+                                    isSigninsucess.result!.userId.toString());
                               } else {
                                 print("Error: userId is null");
                               }
                               if (isSigninsucess.result!.name != null) {
-                                preferences.setString("username", isSigninsucess.result!.name.toString());
+                                preferences.setString("username",
+                                    isSigninsucess.result!.name.toString());
+                                _saveUserCredentials();
                               } else {
                                 print("Error: username is null");
                               }
@@ -297,24 +357,32 @@ class _Signin_pageState extends State<Signin_page> {
 
                             if (isSigninsucess.status.toString() == "Success") {
                               Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(builder: (context) => Mainhome()),
-                                      (route) => false
-                              );
+                                  MaterialPageRoute(
+                                      builder: (context) => Mainhome()),
+                                  (route) => false);
                             } else {
-                              String errormessage = isSigninsucess.status.toString();
+                              String errormessage =
+                                  isSigninsucess.status.toString();
                               _showErrorSnackBar(errormessage);
                             }
                           }
                         },
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
                             backgroundColor: const Color(0xff284389),
                           ),
                           onPressed: () async {
-                            BlocProvider.of<SigninBloc>(context).add(
-                                FetchSignin(userName: Signinusername.text, password: Signinpassword.text)
-                            );
+                            final signprocess = signinFormKey.currentState!
+                                .validate();
+                            if (signprocess) {
+                              BlocProvider.of<SigninBloc>(context).add(
+                                  FetchSignin(
+                                      userName: Signinusername.text,
+                                      password: Signinpassword.text, ctx: context));
+                            }
+                            signinFormKey.currentState!.save();
                           },
                           child: const Text(
                             "Sign in",
@@ -322,8 +390,7 @@ class _Signin_pageState extends State<Signin_page> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
-                                fontFamily: "regulartext"
-                            ),
+                                fontFamily: "regulartext"),
                           ),
                         ),
                       ),
@@ -535,7 +602,7 @@ class _Signin_pageState extends State<Signin_page> {
 
   @override
   void dispose() {
-    remberingcheck = false;
+    isNewUser = false;
     Signinusername.clear();
     Signinpassword.clear();
     // TODO: implement dispose
@@ -544,10 +611,9 @@ class _Signin_pageState extends State<Signin_page> {
 
   void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        message,
-        style: const TextStyle(fontSize: 12, fontFamily: "font2"),
-      ),
+      content: Text(message,
+          style: const TextStyle(fontSize: 12, fontFamily: "font2")),
+      duration: Duration(milliseconds: 2000),
     ));
   }
 }

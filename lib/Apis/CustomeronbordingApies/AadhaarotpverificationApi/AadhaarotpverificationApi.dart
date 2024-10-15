@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
 
@@ -10,7 +11,7 @@ import '../../../modeles/customeronboradingModel/AadhaarOtpVerificationModel/Aad
 class AadhaarotpverificationApi {
   ApiClient_1 apiClient_1 = ApiClient_1();
   String trendingpath = 'gateway/LOS/AadhaarOTPVerification';
-  Future<AadhaarOtpVerificationModel> postAadhaarotpverificatondata(String userid,String customercode,String aadhaarotp,String requestid) async {
+  Future<AadhaarOtpVerificationModel> postAadhaarotpverificatondata(String userid,String customercode,String aadhaarotp,String requestid,BuildContext context) async {
     var body = {
       'ApiUserId': "Test",
       'UserId': userid,
@@ -21,7 +22,7 @@ class AadhaarotpverificationApi {
     };
 
     Response response = await apiClient_1.invokeAPI(
-      trendingpath, 'POST_', jsonEncode(body),);
+      trendingpath, 'POST_', jsonEncode(body),context);
     print(response.body);
     return AadhaarOtpVerificationModel.fromJson(json.decode(response.body));
   }

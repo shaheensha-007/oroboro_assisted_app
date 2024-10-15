@@ -231,7 +231,7 @@ class _AadhaaruploadState extends State<Aadhaarupload> {
                     IdentityValue: preferences.getString("CustomerCode").toString(),
                     DocID_Value: aadhaarnumber.text,
                     DocType: "Aadhaar_Front",
-                    DocBase64: base64code1.toString(),
+                    DocBase64: base64code1.toString(), ctx: context,
                   ));
 
                   // Small delay or logic to ensure state updates before making the second call
@@ -244,7 +244,7 @@ class _AadhaaruploadState extends State<Aadhaarupload> {
                     IdentityValue: preferences.getString("CustomerCode").toString(),
                     DocID_Value: aadhaarnumber.text,
                     DocType: "Aadhaar_Back",
-                    DocBase64: base64code2.toString(),
+                    DocBase64: base64code2.toString(), ctx: context,
                   ));
                 },
                 child: const Text(

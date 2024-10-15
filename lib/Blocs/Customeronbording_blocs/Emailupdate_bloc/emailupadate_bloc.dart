@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/EmailupadateApi/EmailupadateApi.dart';
 
@@ -17,7 +18,7 @@ class EmailupadateBloc extends Bloc<EmailupadateEvent, EmailupadateState> {
     on<FetchEmailupadate>((event, emit) async{
       emit(EmailupadateblocLoading());
       try{
-        isemailupadate=await emailupadateApi.postEmailupadatedata(event.userid, event.Customercode, event.Emailid);
+        isemailupadate=await emailupadateApi.postEmailupadatedata(event.userid, event.Customercode, event.Emailid,event.ctx);
         emit(EmailupadateblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());

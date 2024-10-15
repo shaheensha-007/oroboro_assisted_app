@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
 
@@ -10,7 +12,7 @@ import '../../../modeles/customeronboradingModel/AadhaarsendOtpModel/Aadhaarsend
 class AadhaarsendotpApi {
   ApiClient_1 apiClient_1 = ApiClient_1();
   String trendingpath = 'gateway/LOS/SendAadhaarOTP';
-  Future<AadhaarsendotpModel> postAadhaarsendOtpdata(String userid,String customercode,String aadhaarno) async {
+  Future<AadhaarsendotpModel> postAadhaarsendOtpdata(String userid,String customercode,String aadhaarno,BuildContext context) async {
     var body = {
       'ApiUserId': "Test",
       'UserId': userid,
@@ -20,7 +22,7 @@ class AadhaarsendotpApi {
     };
 
     Response response = await apiClient_1.invokeAPI(
-      trendingpath, 'POST_', jsonEncode(body),);
+      trendingpath, 'POST_', jsonEncode(body),context);
     print(response.body);
     return AadhaarsendotpModel.fromJson(json.decode(response.body));
   }

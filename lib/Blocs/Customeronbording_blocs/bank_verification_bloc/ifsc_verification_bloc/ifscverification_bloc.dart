@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:oroboro_assisted_app/Apis/CustomeronbordingApies/bank_verificationApi/IfscverificationApi/IfscverificationApi.dart';
 import 'package:oroboro_assisted_app/widgets/tostmessage.dart';
@@ -17,7 +18,7 @@ class IfscverificationBloc extends Bloc<IfscverificationEvent, IfscverificationS
     on<FetchIfscverification>((event, emit)async {
       emit(IfscVerificationblocLoading());
       try{
-        isifsccode=await ifscVerificationApi.postifscverifacationdata(event.userId, event.ifsccode);
+        isifsccode=await ifscVerificationApi.postifscverifacationdata(event.userId, event.ifsccode,event.ctx);
         emit(IfscVerificationblocLoaded());
       }catch(e){
         ToastMessage().toastmessage(message: e.toString());

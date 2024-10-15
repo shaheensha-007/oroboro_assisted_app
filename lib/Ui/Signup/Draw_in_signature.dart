@@ -114,6 +114,7 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
     // TODO: implement listener
   },
   child: Signature(
+
                                     controller: _controller,
                                     backgroundColor: Colors.white10,
                                     height: mheight * 0.4,
@@ -139,33 +140,34 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                       backgroundColor: const Color(0xff284389)
                   ), onPressed: ()async{
-      final Uint8List? signatureBytes =
-      await _controller.toPngBytes();
+                    final Uint8List? signatureBytes = await _controller.toPngBytes();
 
-      // Encode bytes to base64
-      if (signatureBytes != null) {
-      setState(() {
-      base64Signature =
-      base64Encode(signatureBytes);
-      });
-      final SharedPreferences preferences = await SharedPreferences
-          .getInstance();
-      BlocProvider.of<AgentbusinessBloc>(context).add(FetchAgentbusiness(
-      clientId: MainclientId,
-      PAN: Pannumber.text,
-      PartnerCode: preferences.getString("partnercode").toString(),
-      OnboardingFor: "Agent",
-      GSTNUMBER: gstnumber.text,
-      REGISTRATIONTYPE: "GST",
-      AGENTNAME: ownername.text,
-      BRANDNAME: shopname.text,
-      TANNUMBER: tannumber.text,
-      TELEPHONE: preferences.getString("MOBILENUMBER").toString(),
-      SIGNATURE: base64Signature!,
-      LATITUDE: lat,
-      LONGITUDE: long,
-      ctx: context));
-      }
+                    // Check if the signature is empty
+                    if (signatureBytes == null || signatureBytes.isEmpty) {
+                      _showErrorSnackBar("Please draw your signature before submitting.");
+                      return;
+                    }
+                    setState(() {
+                      base64Signature = base64Encode(signatureBytes);
+                    });
+
+                    final SharedPreferences preferences = await SharedPreferences.getInstance();
+                    BlocProvider.of<AgentbusinessBloc>(context).add(FetchAgentbusiness(
+                        clientId: MainclientId,
+                        PAN: Pannumber.text,
+                        PartnerCode: preferences.getString("partnercode").toString(),
+                        OnboardingFor: "Agent",
+                        GSTNUMBER: gstnumber.text,
+                        REGISTRATIONTYPE: "GST",
+                        AGENTNAME: ownername.text,
+                        BRANDNAME: shopname.text,
+                        TANNUMBER: tannumber.text,
+                        TELEPHONE: preferences.getString("MOBILENUMBER").toString(),
+                        SIGNATURE: base64Signature!,
+                        LATITUDE: lat,
+                        LONGITUDE: long,
+                        ctx: context
+                    ));
       },child:const Text("Sumbit",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
                   ]
               ),
@@ -188,6 +190,7 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
      shopname.clear();
      ownername.clear();
      tannumber.clear();
+
    });
     // TODO: implement dispose
     super.dispose();
