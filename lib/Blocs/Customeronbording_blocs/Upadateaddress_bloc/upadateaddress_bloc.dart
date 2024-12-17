@@ -11,16 +11,18 @@ import '../../../widgets/tostmessage.dart';
 part 'upadateaddress_event.dart';
 part 'upadateaddress_state.dart';
 
-class UpadateaddressBloc extends Bloc<UpadateaddressEvent, UpadateaddressState> {
+class UpadateaddressBloc
+    extends Bloc<UpadateaddressEvent, UpadateaddressState> {
   late UpadateaddressModel isupadateaddress;
-  UpadateaddressApi upadateaddressApi=UpadateaddressApi();
+  UpadateaddressApi upadateaddressApi = UpadateaddressApi();
   UpadateaddressBloc() : super(UpadateaddressInitial()) {
-    on<FetchUpadteaddress>((event, emit)async {
+    on<FetchUpadteaddress>((event, emit) async {
       emit(UpadateaddressblocLoading());
       try {
         isupadateaddress = await upadateaddressApi.postUpadateaddressdata(
             event.userid,
             event.Customercode,
+            event.applicationId,
             event.Address1,
             event.Address2,
             event.Address3,
@@ -28,11 +30,11 @@ class UpadateaddressBloc extends Bloc<UpadateaddressEvent, UpadateaddressState> 
             event.State,
             event.Pincode,
             event.District,
-        event.ctx);
-        emit(UpadateaddressblocLoading());
-      }catch(e){
-        ToastMessage().toastmessage(message:e.toString());
-        emit(UpadateaddressblocError());
+            event.ctx);
+        emit(UpadateaddressblocLoaded(upadateaddressModel: isupadateaddress));
+      } catch (e) {
+        ToastMessage().toastmessage(message: e.toString());
+        emit(UpadateaddressblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

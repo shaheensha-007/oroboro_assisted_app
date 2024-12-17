@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oroboro_assisted_app/widgets/responsive_size.dart';
 
 import 'Customer_onbording_mobile.dart';
 
@@ -24,19 +25,21 @@ class _Loan_rejected_approvedState extends State<Loan_rejected_approved> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: mheight*0.05,
+                   height: 150.rh(context),
                   ),
-                  const Image(image: AssetImage("assets/Not approved case.png")),
+                   Image(image: AssetImage("assets/Not approved case.png"),
+                     height: 200.rh(context),
+                   ),
                   SizedBox(
-                    height: mheight*0.05,
+                    height: 50.rh(context),
                   ),
-                  const Text("Loan Eligibility Not Approved ", style: TextStyle(fontSize: 20,fontFamily: "boldtext",fontWeight: FontWeight.w800),),
+                  Text("Loan Eligibility Not Approved ", style: TextStyle(fontSize: 28.rf(context),fontFamily: "boldtext"),),
                   SizedBox(
-                    height: mheight*0.05,
+                    height: 50.rh(context),
                   ),
                   Container(
-                    height: mheight*0.15,
-                    width: mwidth*0.8,
+                      height: 50.rh(context),
+                      width: 300.rw(context),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         boxShadow: const [
@@ -51,7 +54,7 @@ class _Loan_rejected_approvedState extends State<Loan_rejected_approved> {
                     ),
                   ),
                   SizedBox(
-                    height: mheight*0.1,
+                    height: 50.rh(context),
                   ),
                   Center(
                     child: ElevatedButton(style: ElevatedButton.styleFrom(
@@ -59,7 +62,7 @@ class _Loan_rejected_approvedState extends State<Loan_rejected_approved> {
                         backgroundColor: const Color(0xff41A545)
                     ),onPressed: (){
                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Customer_onbording_mobile()), (route) => false);
-                    }, child:const Text("Go to Sign In",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Colors.white,fontFamily: "regulartext"),)),
+                    }, child: Text("Go to Sign In",style: TextStyle(fontSize: 20.rf(context),color: Colors.white,fontFamily: "boldtext"),)),
                   ),
                 ],
               ),

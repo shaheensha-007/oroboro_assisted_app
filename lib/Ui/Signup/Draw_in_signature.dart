@@ -103,11 +103,23 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
       Agentbusiness=BlocProvider.of<AgentbusinessBloc>(context).isagentbusiness;
       print(Agentbusiness);
       if(Agentbusiness.result!.activityStatus=="SUCCESS"){
+        final errormessage=Agentbusiness.message.toString();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errormessage),
+            backgroundColor: Colors.green,
+          ),
+        );
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Preview_of_documents()), (route) => false);
       }
       else{
         final errormessage=Agentbusiness.message.toString();
-        _showErrorSnackBar(errormessage);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errormessage),
+            backgroundColor: Colors.red,
+          ),
+        );
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Agent_business_onboarding()), (route) => false);
       }
     }
@@ -179,8 +191,65 @@ class _Draw_in_signatureState extends State<Draw_in_signature> {
     );
   }
   void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message,style: const TextStyle(fontSize: 12,fontFamily: "font2"),),));
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white, // Set the background color
+          contentPadding: EdgeInsets.zero, // Remove default padding
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), // Customize corner radius
+          ),
+          content: Container(
+            constraints: BoxConstraints(
+              maxWidth: 300, // Set the maximum width
+              minHeight: 150, // Set the minimum height
+            ),
+            padding: const EdgeInsets.all(16), // Padding for content
+            color: Colors.blueGrey[50], // Set the container's background color
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  message,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: "font2",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: const Color(0xff284389),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: const Text("OK", style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: "regulartext",
+                      color: Colors.white,
+                    ),), // Button text
+                  ),
+                ), // Add spacing between text and button
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
   @override
   void dispose() {

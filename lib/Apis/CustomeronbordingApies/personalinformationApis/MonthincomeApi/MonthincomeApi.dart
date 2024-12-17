@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -25,8 +26,20 @@ class MonthincomeApi {
 
     Response response = await apiClient_1.invokeAPI(
       trendingpath, 'POST_', jsonEncode(body),context);
-    print(response.body);
-    return MonthincomeModel.fromJson(json.decode(response.body));
+  try{
+    final responseFromAPi = MonthincomeModel.fromJson(
+        json.decode(response.body));
+    log(responseFromAPi.toJson().toString(),
+        name: "gateway/LOS/UpdateFinancialDetails");
+    if (responseFromAPi.status?.toLowerCase() == "failed") {
+      throw Exception(responseFromAPi.errorMessage);
+    }
+    return responseFromAPi;
+  }
+  catch (e) {
+    log(e.toString(), name: "gateway/LOS/UpdateFinancialDetails Error");
+    throw Exception(e.toString());
+  }
   }
 
 }

@@ -118,10 +118,22 @@ class _Preview_of_documentsState extends State<Preview_of_documents> {
     if(state is EsignblocLoaded){
       esignagreementprocess=BlocProvider.of<EsignBloc>(context).isvalidesign;
       if(esignagreementprocess.result!.activityStatus=="SUCCESS"){
+        final esignmessage=esignagreementprocess.message.toString();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(esignmessage),
+            backgroundColor: Colors.green,
+          ),
+        );
        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Bank_registration()), (route) => false);
       }else{
         final esignmessage=esignagreementprocess.message.toString();
-        _showErrorSnackBar(esignmessage);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(esignmessage),
+            backgroundColor: Colors.red,
+          ),
+        );
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Preview_of_documents()), (route) => false);
       }
     }

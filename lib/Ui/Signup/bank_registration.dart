@@ -148,7 +148,7 @@ class _Bank_registrationState extends State<Bank_registration> {
                           controller: Accountno,
                           keyboardType: TextInputType.number,
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(17),
+                            LengthLimitingTextInputFormatter(20),
                           ],
                           decoration: const InputDecoration(
                             border: InputBorder.none,
@@ -373,10 +373,22 @@ class _Bank_registrationState extends State<Bank_registration> {
   if(state is BankregstrationblocLoaded){
     bankregstrationmodel=BlocProvider.of<BankregstrationBloc>(context).isbankverification;
     if(bankregstrationmodel.result!.activityStatus=="SUCCESS"){
+      final bankregstrationerror=bankregstrationmodel.message.toString();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(bankregstrationerror),
+          backgroundColor: Colors.green,
+        ),
+      );
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Loan_application_verification()), (route) => false);
     }else{
-      String bankregstrationerror=bankregstrationmodel.message.toString();
-      _showErrorSnackBar(bankregstrationerror);
+      final bankregstrationerror=bankregstrationmodel.message.toString();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(bankregstrationerror),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
     // TODO: implement listener

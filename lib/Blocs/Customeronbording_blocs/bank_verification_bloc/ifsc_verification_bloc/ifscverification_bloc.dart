@@ -19,10 +19,10 @@ class IfscverificationBloc extends Bloc<IfscverificationEvent, IfscverificationS
       emit(IfscVerificationblocLoading());
       try{
         isifsccode=await ifscVerificationApi.postifscverifacationdata(event.userId, event.ifsccode,event.ctx);
-        emit(IfscVerificationblocLoaded());
+        emit(IfscVerificationblocLoaded(ifscverificationModel: isifsccode));
       }catch(e){
         ToastMessage().toastmessage(message: e.toString());
-        emit(IfscVerificatonblocError());
+        emit(IfscVerificatonblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

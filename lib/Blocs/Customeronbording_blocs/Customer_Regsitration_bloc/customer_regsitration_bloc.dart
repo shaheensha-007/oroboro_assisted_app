@@ -12,17 +12,16 @@ part 'customer_regsitration_event.dart';
 part 'customer_regsitration_state.dart';
 
 class CustomerRegsitrationBloc extends Bloc<CustomerRegsitrationEvent, CustomerRegsitrationState> {
-  late Customer_regsitrationModel iscustomerregsitration;
   CustomerregsitrationApi customerregsitrationApi=CustomerregsitrationApi();
   CustomerRegsitrationBloc() : super(CustomerRegsitrationInitial()) {
     on<FetchCustomerregistration>((event, emit) async{
       emit(CustomerRegsitrationblocLoading());
       try{
-        iscustomerregsitration=await customerregsitrationApi.postCustomerregsitrtiondata(event.userId, event.data,event.ctx);
-        emit(CustomerRegsitrationblocLoaded());
+       final customerRegistrationStatus=await customerregsitrationApi.postCustomerregsitrtiondata(event.userId, event.data,event.ctx);
+        emit(CustomerRegsitrationblocLoaded(customerRegistrationStatus: customerRegistrationStatus));
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());
-        emit(CustomerRegsitrationblocError());
+        emit(CustomerRegsitrationblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

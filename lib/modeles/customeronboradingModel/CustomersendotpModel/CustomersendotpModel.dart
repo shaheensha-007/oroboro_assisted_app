@@ -6,7 +6,8 @@ class CustomersendotpModel {
     this.responseStatus,
     this.responseMessage,
     this.errorMessage,
-    this.result,});
+    this.result,
+  });
 
   CustomersendotpModel.fromJson(dynamic json) {
     transactionId = json['TransactionId'];
@@ -36,5 +37,4 @@ class CustomersendotpModel {
     map['Result'] = result;
     return map;
   }
-
 }

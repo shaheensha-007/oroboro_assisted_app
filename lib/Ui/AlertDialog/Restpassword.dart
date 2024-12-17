@@ -162,18 +162,16 @@ class _MyDialogState extends State<MyDialog> {
       CircularProgressIndicator();
     }
     if (state is RestpasswordblocLoaded) {
-      final restpasswordvalid =
-          BlocProvider.of<RestpasswordBloc>(context).isrestpassword;
+      final restpasswordvalid =state.restpasswordModel;
       if (restpasswordvalid.status.toString()=="Success") {
-        _showErrorText(context, '${restpasswordvalid.responseMessage.toString()}');
+        _showErrorSnackBar(restpasswordvalid.responseMessage.toString());
          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Mainhome()));
-      } else {
-        _showErrorText(context, '${restpasswordvalid.responseMessage.toString()}');
-      }
-      if (state is RestpasswordblocError) {
-        _showErrorText(context, 'Internal issue.');
       }
     }
+      if (state is RestpasswordblocError) {
+        _showErrorSnackBar(state.invalidmessage);
+
+      }
     // TODO: implement listener
     // TODO: implement listener
   },
@@ -223,21 +221,66 @@ class _MyDialogState extends State<MyDialog> {
     );
   }
 
-  void _showErrorText(BuildContext context, String errorMessage) {
+  void _showErrorSnackBar(String message) {
     showDialog(
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.white,
-          content: Text(errorMessage),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Close'),
+          backgroundColor: Colors.white, // Set the background color
+          contentPadding: EdgeInsets.zero, // Remove default padding
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), // Customize corner radius
+          ),
+          content: Container(
+            constraints: BoxConstraints(
+              maxWidth: 300, // Set the maximum width
+              minHeight: 150, // Set the minimum height
             ),
-          ],
+            padding: const EdgeInsets.all(16), // Padding for content
+            color: Colors.blueGrey[50], // Set the container's background color
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  message,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: "font2",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: const Color(0xff284389),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: const Text(
+                      "OK",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: "regulartext",
+                        color: Colors.white,
+                      ),
+                    ), // Button text
+                  ),
+                ), // Add spacing between text and button
+              ],
+            ),
+          ),
         );
       },
     );

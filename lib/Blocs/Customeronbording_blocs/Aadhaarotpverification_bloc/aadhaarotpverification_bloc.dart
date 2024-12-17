@@ -11,18 +11,27 @@ import '../../../widgets/tostmessage.dart';
 part 'aadhaarotpverification_event.dart';
 part 'aadhaarotpverification_state.dart';
 
-class AadhaarotpverificationBloc extends Bloc<AadhaarotpverificationEvent, AadhaarotpverificationState> {
+class AadhaarotpverificationBloc
+    extends Bloc<AadhaarotpverificationEvent, AadhaarotpverificationState> {
   late AadhaarOtpVerificationModel isAadhaarotpverification;
-  AadhaarotpverificationApi aadhaarotpverificationApi=AadhaarotpverificationApi();
+  AadhaarotpverificationApi aadhaarotpverificationApi =
+      AadhaarotpverificationApi();
   AadhaarotpverificationBloc() : super(AadhaarotpverificationInitial()) {
-    on<FetchAadhaarotpverification>((event, emit) async{
+    on<FetchAadhaarotpverification>((event, emit) async {
       emit(AadhaarotpverificationblocLoading());
-      try{
-        isAadhaarotpverification=await aadhaarotpverificationApi.postAadhaarotpverificatondata(event.userId,event.Customercode, event.Aadhaarotp, event.Requestid,event.ctx);
-        emit(AadhaarotpvetrificationblocLoaded());
-      }catch(e){
+      try {
+        isAadhaarotpverification =
+            await aadhaarotpverificationApi.postAadhaarotpverificatondata(
+                event.userId,
+                event.Customercode,
+                event.Aadhaarotp,
+                event.Requestid,
+                event.applicationId,
+                event.ctx);
+        emit(AadhaarotpvetrificationblocLoaded(aadhaarOtpVerificationModel: isAadhaarotpverification));
+      } catch (e) {
         ToastMessage().toastmessage(message: e.toString());
-        emit(AadhaarotpverificationblocError());
+        emit(AadhaarotpverificationblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

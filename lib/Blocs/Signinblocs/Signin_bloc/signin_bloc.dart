@@ -11,22 +11,21 @@ part 'signin_event.dart';
 part 'signin_state.dart';
 
 class SigninBloc extends Bloc<SigninEvent, SigninState> {
-  late SignloginModel isvalid;
   SigninApi signinApi=SigninApi();
   SigninBloc() : super(SigninInitial()) {
     on<FetchSignin>((event, emit)async {
       final preferences = await SharedPreferences.getInstance();
       emit(SigninblocLoading());
       try{
-        isvalid=await signinApi.postSignlogindata(event.userName, event.password,event.ctx);
+     final isvalid=await signinApi.postSignlogindata(event.userName, event.password,event.ctx);
        preferences.setString("userId", isvalid.result!.userId.toString());
-        emit(SigninblocLoaded());
+        emit(SigninblocLoaded(signloginModel:isvalid ));
       }
       catch(e){
-        ToastMessage().toastmessage(message:e.toString());
+       // ToastMessage().toastmessage(message:e.toString());
 
         print('*****$e');
-        emit(SigninblocError());
+        emit(SigninblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

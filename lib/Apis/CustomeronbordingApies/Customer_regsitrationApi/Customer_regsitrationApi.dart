@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -8,7 +9,7 @@ import '../../../modeles/customeronboradingModel/customer_regsitrationModel/Cust
 class CustomerregsitrationApi {
   ApiClient_1 apiClient_1 = ApiClient_1();
   String trendingpath = 'gateway/LOS/Registration';
-  Future<Customer_regsitrationModel> postCustomerregsitrtiondata(String userid,String data,BuildContext context) async {
+  Future<CustomerRegsitrationModel> postCustomerregsitrtiondata(String userid,String data,BuildContext context) async {
     var body = {
       'ApiUserId': "Test",
       'UserId': userid,
@@ -20,8 +21,20 @@ class CustomerregsitrationApi {
 
     Response response = await apiClient_1.invokeAPI(
       trendingpath, 'POST_', jsonEncode(body),context);
-    print(response.body);
-    return Customer_regsitrationModel.fromJson(json.decode(response.body));
+     try{
+       final responseFromAPi = CustomerRegsitrationModel.fromJson(
+           json.decode(response.body));
+       log(responseFromAPi.toJson().toString(),
+           name: "gateway/LOS/Registration");
+       if (responseFromAPi.status?.toLowerCase() == "failed") {
+         throw Exception(responseFromAPi.errorMessage);
+       }
+       return responseFromAPi;
+     }
+     catch (e) {
+       log(e.toString(), name: "gateway/LOS/Registration Error");
+       throw Exception(e.toString());
+     }
   }
 
 }

@@ -5,6 +5,7 @@ abstract class UpadateaddressEvent {}
 class FetchUpadteaddress extends UpadateaddressEvent{
   final String userid;
   final String Customercode;
+  final String applicationId;
   final String Address1;
   final String Address2;
   final String Address3;
@@ -16,6 +17,7 @@ class FetchUpadteaddress extends UpadateaddressEvent{
   FetchUpadteaddress({
     required this.userid,
     required this.Customercode,
+    required this.applicationId,
     required this.Address1,
     required this.Address2,
     required this.Address3,

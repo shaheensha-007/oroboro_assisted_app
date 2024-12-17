@@ -1,9 +1,15 @@
 part of 'customerupdate_bloc.dart';
 
 @immutable
-abstract class CustomerupdateState {}
+abstract class CustomerupdatenextState {}
 
-class CustomerupdateInitial extends CustomerupdateState {}
-class CustomerupdateblocLoading extends CustomerupdateState{}
-class CustomerupadateblocLoaded extends CustomerupdateState{}
-class CustomerupadateblocError extends CustomerupdateState{}
+class CustomerupdateInitial extends CustomerupdatenextState {}
+class CustomerupdatenextblocLoading extends CustomerupdatenextState{}
+class CustomerupdatenextblocLoaded extends CustomerupdatenextState{
+  final UpadatenextprocessModel upadatenextprocessModel;
+  CustomerupdatenextblocLoaded({required this.upadatenextprocessModel});
+}
+class CustomerupdatenextblocError extends CustomerupdatenextState{
+  final String Errormessage;
+  CustomerupdatenextblocError({required this.Errormessage});
+}

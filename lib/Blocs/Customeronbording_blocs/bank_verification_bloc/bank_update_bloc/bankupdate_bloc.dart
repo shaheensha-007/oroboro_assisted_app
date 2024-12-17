@@ -12,17 +12,16 @@ part 'bankupdate_event.dart';
 part 'bankupdate_state.dart';
 
 class BankupdateBloc extends Bloc<BankupdateEvent, BankupdateState> {
-  late BankupdateModel isbankupadte;
   BankupdateApi bankupdateApi=BankupdateApi();
   BankupdateBloc() : super(BankupdateInitial()) {
     on<FetchBankupdate>((event, emit) async{
       emit(BankupdateblocLoading());
       try{
-        isbankupadte=await bankupdateApi.postBankupdatedata(event.userId, event.Customercode, event.Accountnumber, event.Accounttype, event.ifsccode,event.ctx);
-        emit(BankupdateblocLoaded());
+       final isbankupadte=await bankupdateApi.postBankupdatedata(event.userId, event.Customercode, event.Accountnumber, event.Accounttype, event.ifsccode,event.ctx);
+        emit(BankupdateblocLoaded(bankupdateModel:isbankupadte ));
       }catch(e){
         ToastMessage().toastmessage(message: e.toString());
-        emit(BankupdateblocError());
+        emit(BankupdateblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

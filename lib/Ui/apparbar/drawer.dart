@@ -54,7 +54,7 @@ class _drawerState extends State<drawer> {
                           padding: EdgeInsets.only(bottom: mheight * 0.01 ,left: mwidth*0.02),
                           child: const Text(
                             "Home",
-                           style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                           style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                           ),
                         )
                       ],
@@ -72,11 +72,11 @@ class _drawerState extends State<drawer> {
                 child: ExpansionTile(
                   shape: const RoundedRectangleBorder(),
                   title: const Text("Onboarding",
-                  style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                  style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                 ),
                   children: [
                     ListTile(
-                      title: const Text("Customer Onboarding",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                      title: const Text("Customer Onboarding",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                       onTap: (){
                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Customer_onbording_mobile()), (route) => false);
                       },
@@ -98,18 +98,14 @@ class _drawerState extends State<drawer> {
                title: const Text(
                  "Loan",
                  style: TextStyle(
-                   fontSize: 15,
-                   fontFamily: "headers",
-                   fontWeight: FontWeight.w800,
+                     fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800
                  ),
                ),
                children: <Widget>[
                  // Add your expanded content here
                  ListTile(
                    title: const Text("Loan Detalis",  style: TextStyle(
-                     fontSize: 15,
-                     fontFamily: "headers",
-                     fontWeight: FontWeight.w800,
+                       fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800
                    ),),
                    onTap: (){
                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Loan_detalis()), (route) => false);
@@ -117,9 +113,7 @@ class _drawerState extends State<drawer> {
                  ),
                  ListTile(
                    title: const Text("Upload Documents",  style: TextStyle(
-                     fontSize: 15,
-                     fontFamily: "headers",
-                     fontWeight: FontWeight.w800,
+                       fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800
                    ),),
                    onTap: (){
                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Upload_document_loan()), (route) => false);
@@ -127,9 +121,7 @@ class _drawerState extends State<drawer> {
                  ),
                  ListTile(
                    title: const Text("Loan Disbursal",  style: TextStyle(
-                     fontSize: 15,
-                     fontFamily: "headers",
-                     fontWeight: FontWeight.w800,
+                       fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800
                    ),),
                    onTap: (){
                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Loan_disbursal()), (route) => false);
@@ -154,11 +146,11 @@ class _drawerState extends State<drawer> {
                   shape: const RoundedRectangleBorder(),
                   title:  const Text(
                     "EMI Calculator",
-                    style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                   ),
                   children: [
                     ListTile(
-                      title: const Text("EMI Calculator",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                      title: const Text("EMI Calculator",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                       onTap: (){
                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Emi_calculator()), (route) => false);
                       },
@@ -179,11 +171,11 @@ class _drawerState extends State<drawer> {
                   shape: const RoundedRectangleBorder(),
                   title: const Text(
                     "Ledger",
-                    style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                    style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                   ),
                   children: [
                     ListTile(
-                      title: const Text("Ledger",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                      title: const Text("Ledger",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                       onTap: (){
                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Ledger()), (route) => false);
                       },
@@ -204,11 +196,11 @@ class _drawerState extends State<drawer> {
                      shape: const RoundedRectangleBorder(),
                      title: const Text(
                        "Cash Flow",
-                       style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                       style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: const Text("Cash Flow",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Cash Flow",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                          onTap: (){
                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Cash_flow()), (route) => false);
                          },
@@ -229,11 +221,11 @@ class _drawerState extends State<drawer> {
                      shape: const RoundedRectangleBorder(),
                      title: const Text(
                        "Payment",
-                       style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                       style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: const Text("Payment",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Payment",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                          onTap: (){
                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Payments()), (route) => false);
                          },
@@ -254,11 +246,11 @@ class _drawerState extends State<drawer> {
                      shape: const RoundedRectangleBorder(),
                      title: const Text(
                        "Schedules",
-                       style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                       style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: const Text("Schedules",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Schedules",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                          onTap: (){
                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Schedule()), (route) => false);
                          },
@@ -279,11 +271,11 @@ class _drawerState extends State<drawer> {
                      shape: const RoundedRectangleBorder(),
                      title: const Text(
                        "Mandate Status",
-                       style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                       style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: const Text("Mandate Status",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Mandate Status",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                          onTap: (){
                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Mandate_Status()), (route) => false);
                          },
@@ -304,11 +296,11 @@ class _drawerState extends State<drawer> {
                     shape: const RoundedRectangleBorder(),
                     title: const Text(
                       "Comments",
-                      style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                      style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                     ),
                     children: [
                       ListTile(
-                        title: const Text("Comments",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                        title: const Text("Comments",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                           onTap: (){
                           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Lastest_comments()), (route) => false);
                           },
@@ -329,11 +321,11 @@ class _drawerState extends State<drawer> {
                      shape: const RoundedRectangleBorder(),
                      title: const Text(
                        "Notification",
-                       style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),
+                       style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),
                      ),
                      children: [
                        ListTile(
-                         title: const Text("Notification",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Notification",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                     onTap: (){
                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Notification1()), (route) => false);
                     },
@@ -359,7 +351,7 @@ class _drawerState extends State<drawer> {
                      ),
                      children: [
                        ListTile(
-                         title: const Text("Search Customer",style: TextStyle(fontSize: 15,fontFamily:"headers",fontWeight: FontWeight.w800),),
+                         title: const Text("Search Customer",style: TextStyle(fontSize: 18,fontFamily:"boldtext",fontWeight: FontWeight.w800),),
                          onTap: (){
                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Search_Customers()), (route) => false);
                          },

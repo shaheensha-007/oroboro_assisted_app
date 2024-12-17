@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -17,8 +18,20 @@ class ForgotpasswordApi {
 
     Response response = await apiClient_1.invokeAPI(
       trendingpath, 'POST_', jsonEncode(body),context);
-    print(response.body);
-    return ForgotpasswordModel.fromJson(json.decode(response.body));
+   try{
+     final responseFromAPi = ForgotpasswordModel.fromJson(
+         json.decode(response.body));
+     log(responseFromAPi.toJson().toString(),
+         name: "gateway/ForgotPassword");
+     if (responseFromAPi.status?.toLowerCase() == "failed") {
+       throw Exception(responseFromAPi.errorMessage);
+     }
+     return responseFromAPi;
+   }
+   catch (e) {
+     log(e.toString(), name: " gateway/ForgotPassword rror");
+     throw Exception(e.toString());
+   }
   }
 
 }

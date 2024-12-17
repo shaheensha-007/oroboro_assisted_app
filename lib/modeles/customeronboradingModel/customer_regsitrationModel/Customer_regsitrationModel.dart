@@ -1,5 +1,5 @@
-class Customer_regsitrationModel {
-  Customer_regsitrationModel({
+class CustomerRegsitrationModel {
+  CustomerRegsitrationModel({
       this.transactionId, 
       this.responseCode, 
       this.status, 
@@ -8,7 +8,7 @@ class Customer_regsitrationModel {
       this.errorMessage, 
       this.result,});
 
-  Customer_regsitrationModel.fromJson(dynamic json) {
+  CustomerRegsitrationModel.fromJson(dynamic json) {
     transactionId = json['TransactionId'];
     responseCode = json['ResponseCode'];
     status = json['Status'];
@@ -43,16 +43,20 @@ class Customer_regsitrationModel {
 
 class Result {
   Result({
-      this.customerCode,});
+      this.customerCode, 
+      this.applicationId,});
 
   Result.fromJson(dynamic json) {
     customerCode = json['CustomerCode'];
+    applicationId = json['ApplicationId'];
   }
   String? customerCode;
+  String? applicationId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['CustomerCode'] = customerCode;
+    map['ApplicationId'] = applicationId;
     return map;
   }
 

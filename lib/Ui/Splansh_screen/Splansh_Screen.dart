@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+
+import 'package:oroboro_assisted_app/widgets/NavigationServies.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -22,12 +24,10 @@ class _Splash_ScreenState extends State<Splash_Screen> {
 
     Future.delayed(const Duration(seconds: 2), () {
       if (preferences.containsKey('success')) {
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-            builder: (context) => const Already_mpin()), (route) => true);
+      NavigationService.pushAndRemoveUntil(Already_mpin(), (Route<dynamic>route) => false);
       }
       else {
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-            builder: (context) => const Signin_page ()), (route) => true);
+      NavigationService.pushAndRemoveUntil(Signin_page(), (Route<dynamic>route) => false);
       }
     });
   }

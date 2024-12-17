@@ -2,12 +2,19 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oroboro_assisted_app/Ui/Signin/signin_page.dart';
+import 'package:oroboro_assisted_app/modeles/UserdetalisModel/UserdetalisModel.dart';
+import 'package:oroboro_assisted_app/widgets/NavigationServies.dart';
+import 'package:oroboro_assisted_app/widgets/responsive_size.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
+import '../../Blocs/Userdetalis_bloc/userdetalis_bloc.dart';
 import '../../main.dart';
 import '../../notification.dart';
 import '../AlertDialog/Restpassword.dart';
@@ -24,8 +31,7 @@ import 'barchart.dart';
 import 'linechart.dart';
 
 class Mainhome extends StatefulWidget {
-  const Mainhome({super.key});
-
+  const Mainhome({super.key,});
   @override
   State<Mainhome> createState() => _MainhomeState();
 }
@@ -34,6 +40,11 @@ final _controller01 = ValueNotifier<bool>(false);
 final __controller02 = ValueNotifier<bool>(false);
 TextEditingController showenterie = TextEditingController();
 TextEditingController homeSearch = TextEditingController();
+
+
+UserdetalisModel? userdetalisModel;
+
+String? MainUsername;
 
 class _MainhomeState extends State<Mainhome> {
   @override
@@ -45,11 +56,22 @@ class _MainhomeState extends State<Mainhome> {
     ));
     // TODO: implement initState
     super.initState();
+    fetchuserdetlisDetails();
   }
+
+  Future<void> fetchuserdetlisDetails() async {
+    final preferences = await SharedPreferences.getInstance();
+  BlocProvider.of<UserdetalisBloc>(context).add(FetchUserdetalis(
+      userId: preferences.getString("Userid")??"",
+      Identity: preferences.getString("Userid")??"",
+      ctx: context));
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    var mheight = MediaQuery.of(context).size.height;
-    var mwidth = MediaQuery.of(context).size.width;
     return Scaffold(
         drawer: const ClipRRect(
           borderRadius: BorderRadius.only(
@@ -67,18 +89,15 @@ class _MainhomeState extends State<Mainhome> {
               children: [
                 const Spacer(),
                 Padding(
-                  padding: EdgeInsets.only(right: mwidth * 0.03),
+                  padding: EdgeInsets.only(right: 10.rw(context)),
                   child: IconButton(
                       onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const Notification1()),
-                            (route) => false);
+                     NavigationService.pushAndRemoveUntil(Notification1(), (Route<dynamic>route) => false);
                       },
                       icon: const Icon(Icons.notifications)),
                 ),
                 SizedBox(
-                  width: mwidth * 0.03,
+                  width: 1.rw(context),
                 ),
                 PopupMenuButton<String>(
                     color: Color(0xff284389),
@@ -100,9 +119,9 @@ class _MainhomeState extends State<Mainhome> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Change Passsword",
+                                    "Change Password",
                                     style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 16.rf(context),
                                         fontWeight: FontWeight.w800,
                                         color: Colors.white,
                                         fontFamily: "regulartext"),
@@ -111,7 +130,8 @@ class _MainhomeState extends State<Mainhome> {
                               )),
                           PopupMenuItem(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Signin_page()));
+
+                               NavigationService.pushAndRemoveUntil(Signin_page(), (Route<dynamic>route) => false);
                               },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +139,7 @@ class _MainhomeState extends State<Mainhome> {
                                   Text(
                                     "Logout",
                                     style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 16.rf(context),
                                         fontWeight: FontWeight.w800,
                                         color: Colors.white,
                                         fontFamily: "regulartext"),
@@ -135,35 +155,49 @@ class _MainhomeState extends State<Mainhome> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: mheight * 0.03,
+                    height: 30.rh(context),
                   ),
                   Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Image(
-                          image: AssetImage("assets/oroboro.png"),
-                        ),
-                        SizedBox(
-                          height: mheight * 0.02,
-                        ),
-                        const Text(
-                          "Shivan Electronics",
-                          style: TextStyle(fontSize: 25, fontFamily: "headers"),
-                        ),
-                        const Text(
-                          "Jetfinix Services",
-                          style: TextStyle(fontSize: 18, fontFamily: "shorts"),
-                        )
-                      ],
-                    ),
+                    child: BlocBuilder<UserdetalisBloc, UserdetalisState>(
+                            builder: (context, state) {
+                              if(state is UserdetalisblocLoaded) {
+                                userdetalisModel = state.userdetalisModel;
+                                final mainusername = userdetalisModel?.result
+                                    ?.first.name;
+                                final Mainpartnername=userdetalisModel?.result?.first.partnername;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                      image: AssetImage("assets/oroboro.png"),
+                                      width: 600.rw(context),
+                                    ),
+                                    SizedBox(
+                                      height: 10.rh(context),
+                                    ),
+                                    Text(mainusername??"No value",
+                                      style: TextStyle(fontSize: 25.rf(context),
+                                          fontFamily: "boldtext"),
+                                    ),
+                                    Text(
+                                      Mainpartnername??"No value",
+                                      style: TextStyle(fontSize: 25.rf(context),
+                                          fontFamily: "boldtext"),
+                                    )
+                                  ],
+                                );
+                              }
+                              if(state is UserdetalisblocError){
+                                SizedBox();
+                              }
+                              return Container();
+  },
+),
                   ),
                   SizedBox(
-                    height: mheight * 0.05,
+                    height: 50.rh(context),
                   ),
                   Container(
-                    height: mheight,
-                    width: mwidth,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
@@ -174,46 +208,42 @@ class _MainhomeState extends State<Mainhome> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: mheight * 0.06,
+                          height: 60.rh(context),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: mwidth * 0.1),
+                          padding: EdgeInsets.only(left: 30.rw(context)),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Customer_onbording_mobile()),
-                                      (route) => false);
+                                NavigationService.pushAndRemoveUntil(Customer_onbording_mobile(), (Route<dynamic>route) => false);
                                 },
                                 child: Padding(
                                   padding:
-                                      EdgeInsets.only(bottom: mheight * 0.01),
+                                      EdgeInsets.only(bottom: 10.rh(context)),
                                   child: Container(
-                                    child: const Column(
+                                    child:  Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                            height: 60,
-                                            child: Image(
-                                              image: AssetImage(
-                                                  "assets/consumer onbording.png"),
-                                            )),
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/consumer onbording.png"),
+                                          height: 55.rh(context),
+                                            width:59.rw(context)
+                                        ),
                                         Text(
                                           "Customer",
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 18.rf(context),
                                               fontFamily: "regulartext",
                                               color: Colors.white),
                                         ),
                                         Text(
                                           "Onboarding",
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 18.rf(context),
                                               fontFamily: "regulartext",
                                               color: Colors.white),
                                         )
@@ -225,11 +255,7 @@ class _MainhomeState extends State<Mainhome> {
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Loan_detalis()),
-                                      (route) => false);
+                                   NavigationService.pushAndRemoveUntil(Loan_detalis(), (Route<dynamic>route) => false);
                                 },
                                 child: Container(
                                   child: Column(
@@ -238,21 +264,23 @@ class _MainhomeState extends State<Mainhome> {
                                     children: [
                                       Image(
                                         image: AssetImage("assets/Loan.png"),
+                                        height: 44.rh(context),
+                                          width:41.rw(context)
                                       ),
                                       SizedBox(
-                                        height: mheight * 0.01,
+                                        height: 10.rh(context)
                                       ),
-                                      const Text(
+                                       Text(
                                         "Loan",
                                         style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 18.rf(context),
                                             fontFamily: "regulartext",
                                             color: Colors.white),
                                       ),
-                                      const Text(
+                                       Text(
                                         "Details",
                                         style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 18.rf(context),
                                             fontFamily: "regulartext",
                                             color: Colors.white),
                                       )
@@ -262,14 +290,10 @@ class _MainhomeState extends State<Mainhome> {
                               ),
                               const Spacer(),
                               Padding(
-                                padding: EdgeInsets.only(right: mwidth * 0.10),
+                                padding: EdgeInsets.only(right: 20.rw(context)),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Emi_calculator()),
-                                        (route) => false);
+                                  NavigationService.pushAndRemoveUntil(Emi_calculator(), (Route<dynamic>route) => false);
                                   },
                                   child: Container(
                                     child: Column(
@@ -279,21 +303,23 @@ class _MainhomeState extends State<Mainhome> {
                                         Image(
                                           image: AssetImage(
                                               "assets/emi calculator.png"),
+                                          height: 44.rh(context),
+                                            width:41.rw(context)
                                         ),
                                         SizedBox(
-                                          height: mheight * 0.01,
+                                          height: 10.rh(context)
                                         ),
-                                        const Text(
+                                         Text(
                                           "EMI",
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 18.rf(context),
                                               fontFamily: "regulartext",
                                               color: Colors.white),
                                         ),
-                                        const Text(
+                                        Text(
                                           "Calculator",
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 18.rf(context),
                                               fontFamily: "regulartext",
                                               color: Colors.white),
                                         )
@@ -306,10 +332,10 @@ class _MainhomeState extends State<Mainhome> {
                           ),
                         ),
                         SizedBox(
-                          height: mheight * 0.05,
+                          height:50.rh(context),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: mwidth * 0.1),
+                          padding: EdgeInsets.only(left: 25.rw(context)),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -317,19 +343,19 @@ class _MainhomeState extends State<Mainhome> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                        height: 45,
-                                        child: Image(
-                                          image: AssetImage(
-                                              "assets/notification.png"),
-                                        )),
-                                    SizedBox(
-                                      height: mheight * 0.01,
+                                    Image(
+                                      image: AssetImage(
+                                          "assets/notification.png"),
+                                      height: 55.rh(context),
+                                        width:41.rw(context)
                                     ),
-                                    const Text(
+                                    SizedBox(
+                                      height: 10.rh(context),
+                                    ),
+                                     Text(
                                       "Notification",
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 18.rf(context),
                                           fontFamily: "regulartext",
                                           color: Colors.white),
                                     ),
@@ -339,25 +365,24 @@ class _MainhomeState extends State<Mainhome> {
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) => const Ledger()),
-                                      (route) => false);
+                                NavigationService.pushAndRemoveUntil(Ledger(), (Route<dynamic>route) => false);
                                 },
                                 child: Container(
                                   child: Column(
                                     children: [
-                                      const Center(
+                                       Center(
                                           child: Image(
                                         image: AssetImage("assets/Ledger.png"),
+                                            height: 55.rh(context),
+                                            width:41.rw(context),
                                       )),
                                       SizedBox(
-                                        height: mheight * 0.01,
+                                        height:10.rh(context),
                                       ),
-                                      const Text(
+                                       Text(
                                         "Ledger",
                                         style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 18.rf(context),
                                             fontFamily: "regulartext",
                                             color: Colors.white),
                                       ),
@@ -368,29 +393,27 @@ class _MainhomeState extends State<Mainhome> {
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Cash_flow()),
-                                      (route) => false);
+                              NavigationService.pushAndRemoveUntil(Cash_flow(), (Route<dynamic>route) => false);
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.only(right: mwidth * 0.1),
+                                  padding: EdgeInsets.only(right: 25.rw(context)),
                                   child: Container(
                                     child: Column(
                                       children: [
-                                        const Center(
+                                         Center(
                                             child: Image(
                                           image: AssetImage(
                                               "assets/cash-flow 1.png"),
+                                                height: 55.rh(context),
+                                                width:41.rw(context)
                                         )),
                                         SizedBox(
-                                          height: mheight * 0.01,
+                                          height:10.rh(context),
                                         ),
-                                        const Text(
+                                         Text(
                                           "Cash Flow",
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 18.rf(context),
                                               fontFamily: "regulartext",
                                               color: Colors.white),
                                         ),
@@ -403,7 +426,7 @@ class _MainhomeState extends State<Mainhome> {
                           ),
                         ),
                         SizedBox(
-                          height: mheight * 0.05,
+                          height: 50.rh(context),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -413,7 +436,7 @@ class _MainhomeState extends State<Mainhome> {
                                 (route) => false);
                           },
                           child: Padding(
-                            padding: EdgeInsets.only(left: mwidth * 0.10),
+                            padding: EdgeInsets.only(left:25.rw(context)),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -422,19 +445,19 @@ class _MainhomeState extends State<Mainhome> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                          height: 40,
-                                          child: Image(
-                                            image: AssetImage(
-                                                "assets/payment.png"),
-                                          )),
-                                      SizedBox(
-                                        height: mheight * 0.01,
+                                      Image(
+                                        image: AssetImage(
+                                            "assets/payment.png"),
+                                          height: 55.rh(context),
+                                          width:41.rw(context)
                                       ),
-                                      const Text(
+                                      SizedBox(
+                                        height: 10.rh(context),
+                                      ),
+                                       Text(
                                         "Payment",
                                         style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 18.rf(context),
                                             fontFamily: "regulartext",
                                             color: Colors.white),
                                       ),
@@ -444,30 +467,28 @@ class _MainhomeState extends State<Mainhome> {
                                 const Spacer(),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Schedule()),
-                                        (route) => false);
+                                    NavigationService.pushAndRemoveUntil(Schedule(), (Route<dynamic>route) => false);
                                   },
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: mwidth * 0.05),
+                                        EdgeInsets.only(left: 25.rw(context)),
                                     child: Container(
                                       child: Column(
                                         children: [
-                                          const Center(
+                                           Center(
                                               child: Image(
                                             image: AssetImage(
                                                 "assets/Schedules icon.png"),
+                                                  height: 44.rh(context),
+                                                  width:41.rw(context)
                                           )),
                                           SizedBox(
-                                            height: mheight * 0.01,
+                                            height:25.rh(context),
                                           ),
-                                          const Text(
+                                           Text(
                                             "Schedules",
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 18.rf(context),
                                                 fontFamily: "regulartext",
                                                 color: Colors.white),
                                           ),
@@ -479,30 +500,28 @@ class _MainhomeState extends State<Mainhome> {
                                 const Spacer(),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Mandate_Status()),
-                                        (route) => false);
+                                  NavigationService.pushAndRemoveUntil(Mandate_Status(), (Route<dynamic>route) => false);
                                   },
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(right: mwidth * 0.05),
+                                        EdgeInsets.only(right: 10.rw(context)),
                                     child: Container(
                                       child: Column(
                                         children: [
-                                          const Center(
+                                          Center(
                                               child: Image(
                                             image: AssetImage(
                                                 "assets/mandateStatus.png"),
+                                                  height: 55.rh(context),
+                                                  width:41.rw(context)
                                           )),
                                           SizedBox(
-                                            height: mheight * 0.01,
+                                            height:15.rh(context),
                                           ),
-                                          const Text(
+                                          Text(
                                             "Mandate Status",
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 18.rf(context),
                                                 fontFamily: "regulartext",
                                                 color: Colors.white),
                                           ),
@@ -516,66 +535,66 @@ class _MainhomeState extends State<Mainhome> {
                           ),
                         ),
                         SizedBox(
-                          height: mheight * 0.05,
+                          height: 50.rh(context),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: mwidth * 0.1),
+                          padding: EdgeInsets.only(left: 25.rw(context)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  const Text(
+                                   Text(
                                     "Year",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16.rf(context),
                                         fontFamily: "regulartext",
                                         color: Colors.white),
                                   ),
                                   SizedBox(
-                                    width: mwidth * 0.02,
+                                    width: 20.rw(context),
                                   ),
-                                  Container(
-                                    height: mheight * 0.03,
-                                    width: mwidth * 0.1,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5)),
-                                    child: AdvancedSwitch(
-                                      activeColor: Colors.blue,
-                                      controller: _controller01,
-                                      thumb: ValueListenableBuilder<bool>(
-                                        valueListenable: _controller01,
-                                        builder: (_, value, __) {
-                                          return Icon(
+                                  AdvancedSwitch(
+                                    height: 30.rh(context),
+                                    activeColor: Colors.blue,
+                                    controller: _controller01,
+                                    thumb: ValueListenableBuilder<bool>(
+                                      valueListenable: _controller01,
+                                      builder: (_, value, __) {
+                                        return Center(
+                                          child: Icon(
                                             value ? Icons.circle : Icons.circle,
                                             color: Colors.white,
-                                          );
-                                        },
-                                      ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                   SizedBox(
-                                    width: mwidth * 0.02,
+                                    width: 20.rw(context),
                                   ),
-                                  const Text(
+                                   Text(
                                     "Month",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16.rf(context),
                                         fontFamily: "regulartext",
                                         color: Colors.white),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: mheight * 0.03,
+                                height: 30.rh(context),
                               ),
                               Container(
-                                height: mheight * 0.1,
-                                width: mwidth * 0.85,
+                                height: 100.rh(context),
+                                width: 330.rw(context),
                                 decoration: BoxDecoration(
                                   color: const Color(0xff1C3984),
                                   boxShadow: const [
-                                    BoxShadow(color: Colors.black)
+                                    BoxShadow(color: Colors.black,
+                                      blurRadius: 20.0,
+                                    ),
+
                                   ],
                                   borderRadius: BorderRadius.circular(15),
                                 ),
@@ -584,8 +603,8 @@ class _MainhomeState extends State<Mainhome> {
                                     ClipPath(
                                       clipper: CustomPath(),
                                       child: Container(
-                                        height: mheight * 0.15,
-                                        width: mwidth * 0.55,
+                                        height: 150.rh(context),
+                                        width: 190.rw(context),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(15),
@@ -597,7 +616,7 @@ class _MainhomeState extends State<Mainhome> {
                                           children: [
                                             Padding(
                                               padding: EdgeInsets.only(
-                                                  left: mwidth * 0.1),
+                                                  left:30.rw(context)),
                                               child: const Center(
                                                   child: Image(
                                                       image: AssetImage(
@@ -610,25 +629,25 @@ class _MainhomeState extends State<Mainhome> {
                                     const Spacer(),
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(right: mwidth * 0.1),
-                                      child: const Column(
+                                          EdgeInsets.only(right: 50.rw(context)),
+                                      child:  Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             "Total Loan",
                                             style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 16.rf(context),
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: "boldtext",
+                                                fontFamily: "regulartext",
                                                 color: Colors.white),
                                           ),
                                           Text(
                                             "20000",
                                             style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20.rf(context),
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: "boldtext",
+                                                fontFamily: "regulartext",
                                                 color: Colors.white),
                                           ),
                                         ],
@@ -641,66 +660,64 @@ class _MainhomeState extends State<Mainhome> {
                           ),
                         ),
                         SizedBox(
-                          height: mheight * 0.03,
+                          height: 50.rh(context),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: mwidth * 0.1),
+                          padding: EdgeInsets.only(left: 25.rw(context)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Year",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16.rf(context),
                                         fontFamily: "regulartext",
                                         color: Colors.white),
                                   ),
                                   SizedBox(
-                                    width: mwidth * 0.02,
+                                    width: 20.rw(context),
                                   ),
-                                  Container(
-                                    height: mheight * 0.03,
-                                    width: mwidth * 0.1,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5)),
-                                    child: AdvancedSwitch(
-                                      activeColor: Colors.blue,
-                                      controller: __controller02,
-                                      thumb: ValueListenableBuilder<bool>(
-                                        valueListenable: __controller02,
-                                        builder: (_, value, __) {
-                                          return Icon(
-                                            value ? Icons.circle : Icons.circle,
-                                            color: Colors.white,
-                                          );
-                                        },
-                                      ),
+                                  AdvancedSwitch(
+                                    height: 30.rh(context),
+                                    activeColor: Colors.blue,
+                                    controller: __controller02,
+                                    thumb: ValueListenableBuilder<bool>(
+                                      valueListenable: __controller02,
+                                      builder: (_, value, __) {
+                                        return Icon(
+                                          value ? Icons.circle : Icons.circle,
+                                          color: Colors.white,
+                                        );
+                                      },
                                     ),
                                   ),
                                   SizedBox(
-                                    width: mwidth * 0.02,
+                                    width: 20.rw(context),
                                   ),
-                                  const Text(
+                                   Text(
                                     "Month",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16.rf(context),
                                         fontFamily: "regulartext",
                                         color: Colors.white),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: mheight * 0.03,
+                                height:30.rh(context),
                               ),
                               Container(
-                                height: mheight * 0.1,
-                                width: mwidth * 0.85,
+                                height: 100.rh(context),
+                                width: 330.rw(context),
                                 decoration: BoxDecoration(
                                   color: const Color(0xff1C3984),
                                   boxShadow: const [
-                                    BoxShadow(color: Colors.black)
+                                    BoxShadow(color: Colors.black,
+                                      blurRadius: 20.0,
+                                    ),
+
                                   ],
                                   borderRadius: BorderRadius.circular(15),
                                 ),
@@ -709,8 +726,8 @@ class _MainhomeState extends State<Mainhome> {
                                     ClipPath(
                                       clipper: CustomPath(),
                                       child: Container(
-                                        height: mheight * 0.15,
-                                        width: mwidth * 0.55,
+                                   height: 150.rh(context),
+                                   width: 190.rw(context),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(15),
@@ -722,7 +739,7 @@ class _MainhomeState extends State<Mainhome> {
                                           children: [
                                             Padding(
                                               padding: EdgeInsets.only(
-                                                  left: mwidth * 0.1),
+                                                  left: 30.rw(context)),
                                               child: const Center(
                                                   child: Image(
                                                       image: AssetImage(
@@ -735,25 +752,25 @@ class _MainhomeState extends State<Mainhome> {
                                     const Spacer(),
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(right: mwidth * 0.1),
-                                      child: const Column(
+                                          EdgeInsets.only(right:50.rw(context)),
+                                      child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             "Total Loan",
                                             style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 16.rf(context),
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: "boldtext",
+                                                fontFamily: "regulartext",
                                                 color: Colors.white),
                                           ),
                                           Text(
                                             "20000",
                                             style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20.rf(context),
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: "boldtext",
+                                                fontFamily: "regulartext",
                                                 color: Colors.white),
                                           ),
                                         ],
@@ -763,7 +780,7 @@ class _MainhomeState extends State<Mainhome> {
                                 ),
                               ),
                               SizedBox(
-                                height: mheight * 0.03,
+                                height: 60.rh(context),
                               )
                             ],
                           ),
@@ -772,69 +789,68 @@ class _MainhomeState extends State<Mainhome> {
                     ),
                   ),
                   SizedBox(
-                    height: mheight * 0.1,
+                    height:50.rh(context),
                   ),
-                  const Center(
+                   Center(
                     child: Text(
                       "Current Year Sales",
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 18.rf(context),
                           fontFamily: "boldtext",
-                          fontWeight: FontWeight.w800),
+                          ),
                     ),
                   ),
                   SizedBox(
-                    height: mheight * 0.02,
+                    height: 20.rh(context),
                   ),
                   const Barchart(),
                   SizedBox(
-                    height: mheight * 0.05,
+                    height: 50.rh(context),
                   ),
-                  const Center(
+                   Center(
                     child: Text(
                       "Current  FY-Sales ",
                       style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "boldtext",
-                          fontWeight: FontWeight.w800),
+                          fontSize: 18.rf(context),
+                          fontFamily: "boldtext"),
                     ),
                   ),
                   SizedBox(
-                    height: mheight * 0.02,
+                    height: 20.rh(context),
                   ),
                   const Linechart(),
                   SizedBox(
-                    height: mheight * 0.05,
+                    height: 50.rh(context),
                   ),
-                  const Center(
+                   Center(
                     child: Text(
                       "Recent  Activities",
                       style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "boldtext",
-                          fontWeight: FontWeight.w800),
+                          fontSize: 18.rf(context),
+                          fontFamily: "boldtext"),
                     ),
                   ),
                   SizedBox(
-                    height: mheight * 0.03,
+                    height: 30.rh(context),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: mwidth * 0.09),
+                    padding: EdgeInsets.only(left: 30.rw(context)),
                     child: Column(
                       children: [
                         Row(
                           children: [
-                            const Text("Show entries",
+                             Text("Show entries",
                                 style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: "boldtext",
-                                    fontWeight: FontWeight.w800)),
+                                    fontSize: 12.rf(context),
+                                    fontFamily: "regulartext",
+                                  fontWeight: FontWeight.w800
+                                )),
                             SizedBox(
-                              width: mwidth * 0.02,
+                              width: 20.rw(context),
                             ),
                             Container(
-                              height: mheight * 0.03,
-                              width: mwidth * 0.1,
+                              height: 30.rh(context),
+                              width: 100.rw(context),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   boxShadow: const [
@@ -849,20 +865,20 @@ class _MainhomeState extends State<Mainhome> {
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(4)
                                 ],
-                                style: const TextStyle(
-                                    fontSize: 12,
+                                style:  TextStyle(
+                                    fontSize: 12.rf(context),
                                     fontWeight: FontWeight.w800,
                                     fontFamily: "regulartext"),
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                   border: InputBorder.none,
                                   enabledBorder: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintStyle: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w200,
-                                      fontFamily: "regulartext"),
+                                      fontSize: 12.rf(context),
+                                      fontFamily: "regulartext",
+                                      fontWeight: FontWeight.w200),
                                   errorStyle: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 12.rf(context),
                                       fontWeight: FontWeight.w200,
                                       fontFamily: "regulartext"),
                                 ),
@@ -871,21 +887,21 @@ class _MainhomeState extends State<Mainhome> {
                           ],
                         ),
                         SizedBox(
-                          height: mheight * 0.03,
+                          height: 30.rh(context),
                         ),
                         Row(
                           children: [
-                            const Text("Search",
+                            Text("Search",
                                 style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: "boldtext",
+                                    fontSize: 12.rf(context),
+                                    fontFamily: "regulartext",
                                     fontWeight: FontWeight.w800)),
                             SizedBox(
-                              width: mwidth * 0.02,
+                              width: 20.rw(context),
                             ),
                             Container(
-                              height: mheight * 0.03,
-                              width: mwidth * 0.5,
+                              height: 30.rh(context),
+                              width: 50.rw(context),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   boxShadow: const [
@@ -899,21 +915,21 @@ class _MainhomeState extends State<Mainhome> {
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(4)
                                 ],
-                                style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w200,
+                                style: TextStyle(
+                                    fontSize: 12.rf(context),
+                                    fontWeight: FontWeight.w800,
                                     fontFamily: "regulartext"),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   border: InputBorder.none,
                                   enabledBorder: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintStyle: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w200,
+                                      fontSize: 12.rf(context),
+                                      fontWeight: FontWeight.w800,
                                       fontFamily: "regulartext"),
                                   errorStyle: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w200,
+                                      fontSize: 12.rf(context),
+                                      fontWeight: FontWeight.w800,
                                       fontFamily: "regulartext"),
                                 ),
                               ),
@@ -921,226 +937,214 @@ class _MainhomeState extends State<Mainhome> {
                           ],
                         ),
                         SizedBox(
-                          height: mheight * 0.05,
+                          height: 20.rh(context),
                         ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.only(right: mwidth * 0.1),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: mheight * 0.04,
-                                  ),
-                                  SizedBox(
-                                    height: mheight * 0.13,
-                                    child: Container(
-                                      height: mheight * 0.12,
-                                      width: mwidth * 0.8,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              color: Colors.grey,
-                                              spreadRadius: 1),
-                                        ],
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: mheight * 0.02),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Row(children: [
-                                              SizedBox(
-                                                height: mheight * 0.11,
-                                                width: mwidth * 0.2,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: mwidth * 0.02),
-                                                  child: const Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text("Agent",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily:
-                                                                  "shorts",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Color(
-                                                                  0xff284389))),
-                                                      Center(
-                                                          child: FittedBox(
-                                                              child: Text(
-                                                                  "shaheenpk",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                      fontFamily:
-                                                                          "shorts",
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold)))),
-                                                      Divider(),
-                                                      Text("Pan",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily:
-                                                                  "shorts",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Color(
-                                                                  0xff284389))),
-                                                      Center(
-                                                          child: FittedBox(
-                                                              child: Text(
-                                                                  "HSHPP1158J",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                      fontFamily:
-                                                                          "shorts",
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold)))),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: mwidth * 0.08,
-                                              ),
-                                              SizedBox(
-                                                height: mheight * 0.11,
-                                                width: mwidth * 0.2,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: mwidth * 0.02),
-                                                  child: const Column(
-                                                    children: [
-                                                      Text("Customer",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily:
-                                                                  "shorts",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Color(
-                                                                  0xff284389))),
-                                                      FittedBox(
-                                                          child: Text("RAVI",
-                                                              style: TextStyle(
-                                                                  fontSize: 10,
-                                                                  fontFamily:
-                                                                      "shorts",
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold))),
-                                                      Divider(),
-                                                      Text("Loan  no",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily:
-                                                                  "shorts",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Color(
-                                                                  0xff284389))),
-                                                      FittedBox(
-                                                          child: Text(
-                                                              "ORO003A11-9009",
-                                                              style: TextStyle(
-                                                                  fontSize: 10,
-                                                                  fontFamily:
-                                                                      "shorts",
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold))),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: mwidth * 0.08,
-                                              ),
-                                              SizedBox(
-                                                height: mheight * 0.11,
-                                                width: mwidth * 0.2,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: mwidth * 0.02),
-                                                  child: const Column(
-                                                    children: [
-                                                      Text("Amount",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily:
-                                                                  "shorts",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Color(
-                                                                  0xff284389))),
-                                                      FittedBox(
-                                                          child: Text("590000",
-                                                              style: TextStyle(
-                                                                  fontSize: 10,
-                                                                  fontFamily:
-                                                                      "shorts",
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold))),
-                                                      Divider(),
-                                                      Text("Status",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily:
-                                                                  "shorts",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Color(
-                                                                  0xff284389))),
-                                                      FittedBox(
-                                                          child: Text("Active",
-                                                              style: TextStyle(
-                                                                  fontSize: 10,
-                                                                  fontFamily:
-                                                                      "shorts",
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .green))),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ])
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.rw(context)),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:  EdgeInsets.only(right: 10.rw(context)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 40.rh(context),
+                                    ),
+                                    SizedBox(
+                                      height: 130.rh(context),
+                                      child: Container(
+                                        height: 50.rh(context),
+                                        width: 300.rw(context),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(5),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                                color: Colors.grey,
+                                                spreadRadius: 2),
                                           ],
+                                          color: Colors.white,
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 20.rh(context)),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Row(children: [
+                                                SizedBox(
+                                                  height: 110.rh(context),
+                                                  width: 80.rw(context),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 20.rw(context)),
+                                                    child: const Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text("Agent",
+                                                            style: TextStyle(
+                                                                fontSize: 9,
+                                                                fontFamily:
+                                                                    "boldtext",
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Color(
+                                                                    0xff284389))),
+                                                        Text(
+                                                            "shaheenpk",
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    11,
+                                                                fontFamily:
+                                                                    "regulartext",
+                                                               )),
+                                                        Divider(),
+                                                        Text("PAN",
+                                                            style: TextStyle(
+                                                                fontSize: 9,
+                                                                fontFamily:
+                                                                    "boldtext",
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Color(
+                                                                    0xff284389))),
+                                                        FittedBox(
+                                                            child: Text(
+                                                                "HSHPP1158J",
+                                                                style: TextStyle(
+                                                                  fontSize:
+                                                                  11,
+                                                                  fontFamily:
+                                                                  "regulartext",))),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 30.rw(context),
+                                                ),
+                                                SizedBox(
+                                                  height: 110.rh(context),
+                                                  width: 80.rw(context),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left:20.rh(context)),
+                                                    child: const Column(
+                                                      children: [
+                                                        Text("Customer",
+                                                            style: TextStyle(
+                                                                fontSize: 9,
+                                                                fontFamily:
+                                                                "boldtext",
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                                color: Color(
+                                                                    0xff284389))),
+                                                        FittedBox(
+                                                            child: Text("RAVI",
+                                                                style: TextStyle(
+                                                                  fontSize:
+                                                                  11,
+                                                                  fontFamily:
+                                                                  "regulartext",))),
+                                                        Divider(),
+                                                        Text("LOAN NO",
+                                                            style: TextStyle(
+                                                                fontSize: 9,
+                                                                fontFamily:
+                                                                "boldtext",
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                                color: Color(
+                                                                    0xff284389))),
+                                                        FittedBox(
+                                                            child: Text(
+                                                                "ORO003A11-9009",
+                                                                style: TextStyle(
+                                                                  fontSize:
+                                                                  11,
+                                                                  fontFamily:
+                                                                  "regulartext",))),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width:30.rw(context),
+                                                ),
+                                                SizedBox(
+                                                  height: 110.rh(context),
+                                                  width: 80.rw(context),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 20.rw(context)),
+                                                    child: const Column(
+                                                      children: [
+                                                        Text("Amount",
+                                                            style: TextStyle(
+                                                                fontSize: 9,
+                                                                fontFamily:
+                                                                "boldtext",
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                                color: Color(
+                                                                    0xff284389))),
+                                                        FittedBox(
+                                                            child: Text("590000",
+                                                                style: TextStyle(
+                                                                  fontSize:
+                                                                  11,
+                                                                  fontFamily:
+                                                                  "regulartext",))),
+                                                        Divider(),
+                                                        Text("Status",
+                                                            style: TextStyle(
+                                                                fontSize: 9,
+                                                                fontFamily:
+                                                                "boldtext",
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                                color: Color(
+                                                                    0xff284389))),
+                                                        FittedBox(
+                                                            child: Text("Active",
+                                                                style: TextStyle(
+                                                                  fontSize:
+                                                                  11,
+                                                                  fontFamily:
+                                                                  "regulartext",
+                                                                  color: Colors.green
+                                                                ))),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ])
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         ),
                         SizedBox(
-                          height: mheight * 0.05,
+                          height: 50.rh(context),
                         )
                       ],
                     ),

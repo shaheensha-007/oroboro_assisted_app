@@ -23,7 +23,7 @@ class UpadatenextprocessModel {
   int? responseStatus;
   String? responseMessage;
   String? errorMessage;
-  String? result;
+  dynamic result;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

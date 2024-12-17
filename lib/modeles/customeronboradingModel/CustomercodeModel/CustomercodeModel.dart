@@ -68,19 +68,25 @@ class Result {
 class CustomerCodes {
   CustomerCodes({
       this.customerCode, 
-      this.status,});
+      this.status,
+      this.pan,
+  });
 
   CustomerCodes.fromJson(dynamic json) {
     customerCode = json['CustomerCode'];
     status = json['Status'];
+    pan=json['PAN'];
+
   }
   String? customerCode;
   bool? status;
+  String? pan;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['CustomerCode'] = customerCode;
     map['Status'] = status;
+    map['PAN']=pan;
     return map;
   }
 

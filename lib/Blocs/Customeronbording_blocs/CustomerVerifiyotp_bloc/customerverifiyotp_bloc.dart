@@ -19,10 +19,10 @@ class CustomerverifiyotpBloc extends Bloc<CustomerverifiyotpEvent, Customerverif
       emit(CustomerverifiyotpblocLoading());
       try{
         iscustomerverifiyotp=await customerverifiyotpApi.postCustomerVerifiyotpdata(event.userId, event.mobilenumber, event.Mobilenumberotp,event.ctx);
-        emit(CustomerverifiyotpblocLoaded());
+        emit(CustomerverifiyotpblocLoaded(customerVerifiyotpModel: iscustomerverifiyotp));
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());
-        emit(CustomerverifiyotpblocError());
+        emit(CustomerverifiyotpblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

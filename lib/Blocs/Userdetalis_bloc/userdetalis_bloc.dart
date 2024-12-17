@@ -19,10 +19,10 @@ class UserdetalisBloc extends Bloc<UserdetalisEvent, UserdetalisState> {
       emit(UserdetalisblocLoading());
       try{
         isuser=await userdetalisApi.postuserdetalisdata(event.userId, event.Identity,event.ctx);
-        emit(UserdetalisblocLoaded());
+        emit(UserdetalisblocLoaded(userdetalisModel: isuser));
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());
-        emit(UserdetalisblocError());
+        emit(UserdetalisblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

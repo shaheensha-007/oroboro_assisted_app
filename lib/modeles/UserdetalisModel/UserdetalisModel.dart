@@ -1,12 +1,15 @@
+import 'dart:developer';
+
 class UserdetalisModel {
   UserdetalisModel({
-      this.transactionId, 
-      this.responseCode, 
-      this.status, 
-      this.responseStatus, 
-      this.responseMessage, 
-      this.errorMessage, 
-      this.result,});
+    this.transactionId,
+    this.responseCode,
+    this.status,
+    this.responseStatus,
+    this.responseMessage,
+    this.errorMessage,
+    this.result,
+  });
 
   UserdetalisModel.fromJson(dynamic json) {
     transactionId = json['TransactionId'];
@@ -43,24 +46,25 @@ class UserdetalisModel {
     }
     return map;
   }
-
 }
 
 class Result {
   Result({
-      this.userId, 
-      this.name, 
-      this.emailId, 
-      this.mobileNumber, 
-      this.roleId, 
-      this.roleName, 
-      this.userType, 
-      this.userName, 
-      this.status, 
-      this.partnerCodes, 
-      this.regions, 
-      this.agentCode, 
-      this.onboardingRights,});
+    this.userId,
+    this.name,
+    this.emailId,
+    this.mobileNumber,
+    this.roleId,
+    this.roleName,
+    this.userType,
+    this.userName,
+    this.status,
+    this.partnerCodes,
+    this.regions,
+    this.agentCode,
+    this.onboardingRights,
+    this.partnername,
+  });
 
   Result.fromJson(dynamic json) {
     userId = json['UserId'];
@@ -72,10 +76,14 @@ class Result {
     userType = json['UserType'];
     userName = json['UserName'];
     status = json['Status'];
-    partnerCodes = json['PartnerCodes'] != null ? json['PartnerCodes'].cast<String>() : [];
+    partnerCodes = (json['PartnerCodes'] is List)
+        ? (json['PartnerCodes'] as List).first.toString()
+        : json['PartnerCodes'].toString();
     regions = json['Regions'] != null ? json['Regions'].cast<String>() : [];
     agentCode = json['AgentCode'];
     onboardingRights = json['OnboardingRights'];
+    partnername=json["PartnerName"];
+
   }
   String? userId;
   String? name;
@@ -86,10 +94,11 @@ class Result {
   String? userType;
   String? userName;
   bool? status;
-  List<String>? partnerCodes;
+  String? partnerCodes;
   List<String>? regions;
   String? agentCode;
   bool? onboardingRights;
+  String?partnername;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -106,7 +115,7 @@ class Result {
     map['Regions'] = regions;
     map['AgentCode'] = agentCode;
     map['OnboardingRights'] = onboardingRights;
+    map['PartnerName']=partnername;
     return map;
   }
-
 }

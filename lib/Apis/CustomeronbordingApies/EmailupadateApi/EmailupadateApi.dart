@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -23,8 +24,20 @@ class EmailupadateApi {
 
     Response response = await apiClient_1.invokeAPI(
       trendingpath, 'POST_', jsonEncode(body),context);
-    print(response.body);
-    return EmailupdateModel.fromJson(json.decode(response.body));
+try{
+  final responseFromAPi = EmailupdateModel.fromJson(
+      json.decode(response.body));
+  log(responseFromAPi.toJson().toString(),
+      name: "gateway/Customer/EmailUpdate");
+  if (responseFromAPi.status?.toLowerCase() == "failed") {
+    throw Exception(responseFromAPi.errorMessage);
+  }
+  return responseFromAPi;
+}
+catch (e) {
+  log(e.toString(), name: "gateway/Customer/EmailUpdate Error");
+  throw Exception(e.toString());
+}
   }
 
 }

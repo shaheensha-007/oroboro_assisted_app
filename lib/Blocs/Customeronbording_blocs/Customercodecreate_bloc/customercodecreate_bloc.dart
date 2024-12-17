@@ -19,10 +19,10 @@ class CustomercodecreateBloc extends Bloc<CustomercodecreateEvent, Customercodec
       emit(CustomercodecreateblocLoading());
       try{
         iscreatecustomercode=await customercodecreateApi.postCustomercodecreatedata(event.userId, event.data, event.ctx);
-        emit(CustomercodecreateblocLoaded());
+        emit(CustomercodecreateblocLoaded(customercodecreateModel: iscreatecustomercode));
       }catch (e){
         ToastMessage().toastmessage(message:e.toString());
-        emit(CustomerCodecreateblocError());
+        emit(CustomerCodecreateblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

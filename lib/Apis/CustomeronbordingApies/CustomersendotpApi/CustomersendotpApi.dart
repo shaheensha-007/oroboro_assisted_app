@@ -20,6 +20,19 @@ class CustomersendotpApi {
 
     Response response = await apiClient_1.invokeAPI(
       trendingpath, 'POST_', jsonEncode(body),context);
-    return CustomersendotpModel.fromJson(json.decode(response.body));
+    try{
+      final responseFromAPi = CustomersendotpModel.fromJson(
+          json.decode(response.body));
+      log(responseFromAPi.toJson().toString(),
+          name: "gateway/LOS/SendMobileOTP");
+      if (responseFromAPi.status?.toLowerCase() == "failed") {
+        throw Exception(responseFromAPi.errorMessage);
+      }
+      return responseFromAPi;
+    }
+    catch (e) {
+      log(e.toString(), name: "gateway/LOS/SendMobileOTP Error");
+      throw Exception(e.toString());
+    }
   }
 }

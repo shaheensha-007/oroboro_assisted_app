@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -19,8 +20,20 @@ class IfscverificationApi {
 
     Response response = await apiClient_1.invokeAPI(
       trendingpath, 'POST_', jsonEncode(body),context);
-    print(response.body);
-    return IfscverificationModel.fromJson(json.decode(response.body));
+    try{
+      final responseFromAPi = IfscverificationModel.fromJson(
+          json.decode(response.body));
+      log(responseFromAPi.toJson().toString(),
+          name: "gateway/Customer/IFSCVerification");
+      if (responseFromAPi.status?.toLowerCase() == "failed") {
+        throw Exception(responseFromAPi.errorMessage);
+      }
+      return responseFromAPi;
+    }
+    catch (e) {
+      log(e.toString(), name: "gateway/Customer/IFSCVerification Error");
+      throw Exception(e.toString());
+    }
   }
 
 }

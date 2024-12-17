@@ -20,11 +20,11 @@ class ForgotpasswordBloc extends Bloc<ForgotpasswordEvent, ForgotpasswordState> 
       try {
         isforgotpassword = await forgotpasswordApi.postForgotpassworddata(
             event.Username, event.Mobilenumber, event.ctx);
-        emit(ForgotpasswordblocLoaded());
+        emit(ForgotpasswordblocLoaded(forgotpasswordModel: isforgotpassword));
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());
         print("*****$e");
-        emit(ForgotpasswordblocError());
+        emit(ForgotpasswordblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

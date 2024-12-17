@@ -20,10 +20,10 @@ class RestpasswordBloc extends Bloc<RestpasswordEvent, RestpasswordState> {
       try {
         isrestpassword = await restPasswordApi.postRestpassworddata(
             event.userId, event.password,event.ctx);
-        emit(RestpasswordblocLoaded());
+        emit(RestpasswordblocLoaded(restpasswordModel: isrestpassword));
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());
-        emit(RestpasswordblocError());
+       emit(RestpasswordblocError(invalidmessage: e.toString()));
       }
       // TODO: implement event handler
     });

@@ -19,10 +19,10 @@ class EmailupadateBloc extends Bloc<EmailupadateEvent, EmailupadateState> {
       emit(EmailupadateblocLoading());
       try{
         isemailupadate=await emailupadateApi.postEmailupadatedata(event.userid, event.Customercode, event.Emailid,event.ctx);
-        emit(EmailupadateblocLoaded());
+        emit(EmailupadateblocLoaded(emailupdateModel: isemailupadate));
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());
-        emit(EmailupadateblocError());
+        emit(EmailupadateblocError(errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

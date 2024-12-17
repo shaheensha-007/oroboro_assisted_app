@@ -22,10 +22,10 @@ class CustomersendotpBloc extends Bloc<CustomersendotpEvent, CustomersendotpStat
         isCustomersendotp = await customersendotpApi.postCustomersendotpdata(
             event.userId, event.mobilenumber,event.ctx);
         log(isCustomersendotp.responseMessage.toString());
-        emit(CustomersendotpblocLoaded());
+        emit(CustomersendotpblocLoaded(customersendotpModel: isCustomersendotp));
       } catch (e) {
         ToastMessage().toastmessage(message: e.toString());
-        emit(CustomersendotpblocError());
+        emit(CustomersendotpblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

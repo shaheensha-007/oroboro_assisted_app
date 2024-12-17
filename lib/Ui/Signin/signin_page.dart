@@ -4,9 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oroboro_assisted_app/Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
 import 'package:oroboro_assisted_app/Ui/homepage/Mainhome_page.dart';
-import 'package:oroboro_assisted_app/modeles/SigninModel/SignloginModel/SignloginModel.dart';
+import 'package:oroboro_assisted_app/widgets/NavigationServies.dart';
+import 'package:oroboro_assisted_app/widgets/responsive_size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Blocs/Signinblocs/Signin_bloc/signin_bloc.dart';
 import '../../Blocs/token_bloc/token_bloc.dart';
 import '../../main.dart';
@@ -22,8 +22,6 @@ class Signin_page extends StatefulWidget {
   @override
   State<Signin_page> createState() => _Signin_pageState();
 }
-
-late SignloginModel isSigninsucess;
 late MerchartTokenModel ismercharttoken;
 bool isNewUser = false;
 bool _isPasswordVisible = false;
@@ -33,22 +31,10 @@ TextEditingController Signinusername = TextEditingController();
 TextEditingController Signinpassword = TextEditingController();
 
 class _Signin_pageState extends State<Signin_page> {
-  // String validateEmail(String? name) {
-  //   if (name!.isEmpty) {
-  //     return 'Username must not be empty';
-  //   }
-  //   String pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$';
-  //   RegExp regExp = RegExp(pattern);
-  //   if (!regExp.hasMatch(name)) {
-  //     return 'you must contain only uppercase,lowercase and numbers';
-  //   }
-  //   return 'invalid name';
-  // }
-
   @override
   void initState() {
-    BlocProvider.of<MerchartTokenBloc>(context)
-        .add(FetchMerchartToken(userName: "Test", password: tokenpassword,ctx: context));
+    BlocProvider.of<MerchartTokenBloc>(context).add(FetchMerchartToken(
+        userName: "Test", password: tokenpassword, ctx: context));
     // TODO: implement initState
     super.initState();
     _loadUserCredentials();
@@ -81,20 +67,17 @@ class _Signin_pageState extends State<Signin_page> {
 
   @override
   Widget build(BuildContext context) {
-    var mheight = MediaQuery.of(context).size.height;
-    var mwidth = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: BlocListener<MerchartTokenBloc, MerchartTokenState>(
             listener: (context, state) async {
               if (state is MerchartTokenblocLoading) {
-               setState(() {
+                setState(() {
                   isLoading = true;
-               });
+                });
               }
               if (state is MerchartTokenblocLoaded) {
-
                 ismercharttoken = BlocProvider.of<MerchartTokenBloc>(context)
                     .mercharttokenmodel;
                 setState(() {
@@ -105,8 +88,9 @@ class _Signin_pageState extends State<Signin_page> {
                 String jwttoken = ismercharttoken.jwtToken.toString();
                 preferences.setString("jwttoken", jwttoken);
                 print("shaheen pk$jwttoken");
-              } else {
-                Container();
+              }
+              if(state is MerchartTokenblocError){
+               _showErrorSnackBar(state.Errormessage);
               }
               // TODO: implement listener
             },
@@ -117,40 +101,40 @@ class _Signin_pageState extends State<Signin_page> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: mheight * 0.2,
+                        height: 150.rh(context),
                       ),
                       Image(
                         image: const AssetImage("assets/oroborologo.png"),
-                        width: mwidth * 0.4,
+                        width: 400.rw(context),
                       ),
                       SizedBox(
-                        height: mheight * 0.01,
+                        height: 2.rh(context),
                       ),
-                      const Text(
+                       Text(
                         "Welcome to",
                         style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 28.rf(context),
                             fontFamily: "boldtext",
-                            fontWeight: FontWeight.w800),
+                            ),
                       ),
                       SizedBox(
-                        height: mheight * 0.02,
+                        height: 10.rh(context),
                       ),
-                      const Text(
+                       Text(
                         "Merchant Assisted App",
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 28.rf(context),
                             fontFamily: "boldtext",
-                            fontWeight: FontWeight.w800),
+                        ),
                       ),
                       SizedBox(
-                        height: mheight * 0.05,
+                        height: 50.rh(context),
                       ),
                       AutofillGroup(
                         child: Column(children: [
                           Container(
-                            height: mheight * 0.06,
-                            width: mwidth * 0.8,
+                            height: 50.rh(context),
+                            width: 300.rw(context),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 boxShadow: const [
@@ -159,35 +143,37 @@ class _Signin_pageState extends State<Signin_page> {
                                 ],
                                 color: Colors.white),
                             child: Padding(
-                              padding: EdgeInsets.only(left: mwidth * 0.03),
+                              padding: EdgeInsets.only(left: 10.rw(context)),
                               child: TextFormField(
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(10)
                                 ],
-                                validator: (value){
-                                  if(value!.isEmpty){
-                                    return'Username must not be empty';
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Username must not be empty';
                                   }
-                                  if(!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$').hasMatch(value)){
-                                    return'you must contain only uppercase,lowercase and numbers';
+                                  if (!RegExp(
+                                          r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$')
+                                      .hasMatch(value)) {
+                                    return 'you must contain only uppercase,lowercase and numbers';
                                   }
                                 },
-                                style: const TextStyle(
-                                    fontSize: 14,
+                                style: TextStyle(
+                                    fontSize: 14.rf(context),
                                     fontWeight: FontWeight.w800,
                                     fontFamily: "regulartext"),
                                 controller: Signinusername,
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                   border: InputBorder.none,
                                   enabledBorder: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: "Username",
                                   hintStyle: TextStyle(
-                                      fontSize: 10,
+                                      fontSize: 10.rf(context),
                                       fontWeight: FontWeight.w200,
                                       fontFamily: "regulartext"),
                                   errorStyle: TextStyle(
-                                      fontSize: 10,
+                                      fontSize: 10.rf(context),
                                       fontWeight: FontWeight.w200,
                                       fontFamily: "regulartext"),
                                 ),
@@ -196,11 +182,11 @@ class _Signin_pageState extends State<Signin_page> {
                             ),
                           ),
                           SizedBox(
-                            height: mheight * 0.04,
+                            height: 40.rh(context),
                           ),
                           Container(
-                            height: mheight * 0.06,
-                            width: mwidth * 0.8,
+                            height: 50.rh(context),
+                            width: 300.rw(context),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 boxShadow: const [
@@ -209,39 +195,39 @@ class _Signin_pageState extends State<Signin_page> {
                                 ],
                                 color: Colors.white),
                             child: Padding(
-                              padding: EdgeInsets.only(left: mwidth * 0.03),
+                              padding: EdgeInsets.only(left: 10.rw(context)),
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: TextFormField(
-                                      validator: (value){
-                                        if(value!.isEmpty){
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
                                           return 'please enter your password';
                                         }
                                       },
-                                      style: const TextStyle(
-                                          fontSize: 14,
+                                      style: TextStyle(
+                                          fontSize: 14.rf(context),
                                           fontWeight: FontWeight.w800,
                                           fontFamily: "regulartext"),
                                       controller: Signinpassword,
                                       inputFormatters: [
-                                        LengthLimitingTextInputFormatter(8)
+                                        LengthLimitingTextInputFormatter(16)
                                       ],
                                       autofillHints: const [
                                         AutofillHints.password
                                       ],
                                       obscureText: !_isPasswordVisible,
-                                      decoration: const InputDecoration(
+                                      decoration:  InputDecoration(
                                         border: InputBorder.none,
                                         enabledBorder: InputBorder.none,
                                         errorBorder: InputBorder.none,
                                         hintText: "Password",
                                         hintStyle: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 12.rf(context),
                                             fontWeight: FontWeight.w200,
                                             fontFamily: "regulartext"),
                                         errorStyle: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 12.rf(context),
                                             fontWeight: FontWeight.w200,
                                             fontFamily: "regulartext"),
                                       ),
@@ -265,10 +251,10 @@ class _Signin_pageState extends State<Signin_page> {
                         ]),
                       ),
                       SizedBox(
-                        height: mheight * 0.02,
+                        height: 20.rh(context),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: mwidth * 0.1),
+                        padding: EdgeInsets.only(left: 30.rw(context)),
                         child: Row(
                           children: [
                             Transform.scale(
@@ -283,16 +269,15 @@ class _Signin_pageState extends State<Signin_page> {
                                     });
                                   }),
                             ),
-                            const Text(
+                             Text(
                               "Remember me",
                               style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: "regulartext"),
+                                  fontSize: 13.rf(context),
+                                  fontFamily: "boldtext"),
                             ),
-                            const Spacer(),
+                           Spacer(),
                             Padding(
-                              padding: EdgeInsets.only(right: mwidth * 0.08),
+                              padding: EdgeInsets.only(right: 30.rw(context)),
                               child: TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pushAndRemoveUntil(
@@ -301,12 +286,11 @@ class _Signin_pageState extends State<Signin_page> {
                                                 Fogotpassword()),
                                         (route) => false);
                                   },
-                                  child: const Text(
+                                  child:  Text(
                                     "Forgot Password?",
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily: "regulartext",
+                                        fontSize: 13.rf(context),
+                                        fontFamily: "boldtext",
                                         color: Color(0xffFF7C00)),
                                   )),
                             ),
@@ -314,7 +298,7 @@ class _Signin_pageState extends State<Signin_page> {
                         ),
                       ),
                       SizedBox(
-                        height: mheight * 0.05,
+                        height: 50.rh(context),
                       ),
                       BlocListener<SigninBloc, SigninState>(
                         listener: (context, state) async {
@@ -326,44 +310,54 @@ class _Signin_pageState extends State<Signin_page> {
                               context: context,
                               barrierDismissible: false,
                               builder: (BuildContext context) {
-                                return Center(
+                                return const Center(
                                   child: CircularProgressIndicator(),
                                 );
                               },
                             );
                           } else {
-                            Navigator.of(context).pop();
+                            if(state  is SigninblocLoaded) {
+                              Navigator.of(context, rootNavigator: true)
+                                  .pop();
 
-                            isSigninsucess =
-                                BlocProvider.of<SigninBloc>(context).isvalid;
+                            final isSigninsucess =state.signloginModel;
 
-                            if (isSigninsucess.result != null) {
-                              if (isSigninsucess.result!.userId != null) {
-                                preferences.setString("Userid",
-                                    isSigninsucess.result!.userId.toString());
+
+                              // Check if result is null before proceeding
+                              if (isSigninsucess?.result != null) {
+                                if (isSigninsucess?.result!.userId != null) {
+                                  preferences.setString("Userid",
+                                      isSigninsucess?.result!.userId??"");
+                                } else {
+                                  print("Error: userId is null");
+                                }
+
+                                if (isSigninsucess?.result!.name != null) {
+                                  preferences.setString("username",
+                                      isSigninsucess?.result!.name??"");
+                                  _saveUserCredentials();
+                                } else {
+                                  print("Error: username is null");
+                                }
                               } else {
-                                print("Error: userId is null");
+                                print("Error: result is null");
                               }
-                              if (isSigninsucess.result!.name != null) {
-                                preferences.setString("username",
-                                    isSigninsucess.result!.name.toString());
-                                _saveUserCredentials();
-                              } else {
-                                print("Error: username is null");
-                              }
-                            } else {
-                              print("Error: result is null");
-                            }
 
-                            if (isSigninsucess.status.toString() == "Success") {
-                              Navigator.of(context).pushAndRemoveUntil(
+
+                              // Handle success or failure based on the status
+                              if (isSigninsucess?.status.toString() == "Success") {
+                                Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) => Mainhome()),
-                                  (route) => false);
-                            } else {
-                              String errormessage =
-                                  isSigninsucess.status.toString();
-                              _showErrorSnackBar(errormessage);
+                                      (route) => false,
+                                );
+                              }
+                            }
+                            if(state is SigninblocError){
+                              Navigator.of(context, rootNavigator: true)
+                                  .pop();
+                              _showErrorSnackBar(state.Errormessage);
+
                             }
                           }
                         },
@@ -374,58 +368,56 @@ class _Signin_pageState extends State<Signin_page> {
                             backgroundColor: const Color(0xff284389),
                           ),
                           onPressed: () async {
-                            final signprocess = signinFormKey.currentState!
-                                .validate();
+                            final signprocess =
+                                signinFormKey.currentState!.validate();
                             if (signprocess) {
                               BlocProvider.of<SigninBloc>(context).add(
                                   FetchSignin(
                                       userName: Signinusername.text,
-                                      password: Signinpassword.text, ctx: context));
+                                      password: Signinpassword.text,
+                                      ctx: context));
                             }
                             signinFormKey.currentState!.save();
                           },
-                          child: const Text(
+                          child: Text(
                             "Sign in",
                             style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w800,
+                                fontSize: 20.rf(context),
                                 color: Colors.white,
-                                fontFamily: "regulartext"),
+                                fontFamily: "boldtext"),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: mheight * 0.05,
+                        height: 50.rh(context),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             "No Account ?",
                             style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: "regulartext"),
+                                fontSize: 17.rf(context),
+                                fontFamily: "boldtext"),
                           ),
                           TextButton(
                               onPressed: () {
                                 _partnercodeshowDialog();
                               },
-                              child: const Text(
+                              child: Text(
                                 "Register now.",
                                 style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily: "regulartext",
+                                    fontSize: 17.rf(context),
+                                    fontFamily: "boldtext",
                                     color: Color(0xffFF7C00)),
                               ))
                         ],
                       ),
-                      SizedBox(height: mheight * 0.2),
-                      const Text(
+                      SizedBox(height: 200.rh(context)),
+                       Text(
                         "Version 1.0.0.1",
                         style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 12.rf(context),
                             fontWeight: FontWeight.w800,
                             fontFamily: "regulartext"),
                       )
@@ -543,10 +535,7 @@ class _Signin_pageState extends State<Signin_page> {
                         const CircularProgressIndicator();
                       }
                       if (state is TokenblocError) {
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const Signin_page()),
-                            (route) => false);
+                      NavigationService.pop();
                       }
                       if (state is TokenblocLoaded) {
                         tokenModel =
@@ -554,11 +543,7 @@ class _Signin_pageState extends State<Signin_page> {
                         final isvalid = partnercodekey.currentState?.validate();
                         if (isvalid == true) {
                           print(isvalid);
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const Agent_onborading()),
-                              (route) => false);
+                         NavigationService.pushAndRemoveUntil(Agent_onborading(), (Route<dynamic>route) => false);
                         }
                       }
                       // TODO: implement listener
@@ -610,11 +595,68 @@ class _Signin_pageState extends State<Signin_page> {
   }
 
   void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message,
-          style: const TextStyle(fontSize: 12, fontFamily: "font2")),
-      duration: Duration(milliseconds: 2000),
-    ));
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white, // Set the background color
+          contentPadding: EdgeInsets.zero, // Remove default padding
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), // Customize corner radius
+          ),
+          content: Container(
+            constraints: BoxConstraints(
+              maxWidth: 300, // Set the maximum width
+              minHeight: 150, // Set the minimum height
+            ),
+            padding: const EdgeInsets.all(16), // Padding for content
+            color: Colors.blueGrey[50], // Set the container's background color
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  message,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: "font2",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: const Color(0xff284389),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: const Text(
+                      "OK",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: "regulartext",
+                        color: Colors.white,
+                      ),
+                    ), // Button text
+                  ),
+                ), // Add spacing between text and button
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 

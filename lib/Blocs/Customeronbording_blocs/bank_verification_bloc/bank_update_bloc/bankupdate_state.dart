@@ -5,5 +5,11 @@ abstract class BankupdateState {}
 
 class BankupdateInitial extends BankupdateState {}
 class BankupdateblocLoading extends BankupdateState{}
-class BankupdateblocLoaded extends BankupdateState{}
-class BankupdateblocError extends BankupdateState{}
+class BankupdateblocLoaded extends BankupdateState{
+  final BankupdateModel bankupdateModel;
+  BankupdateblocLoaded({required this.bankupdateModel});
+}
+class BankupdateblocError extends BankupdateState{
+  final String Errormessage;
+  BankupdateblocError({required this.Errormessage});
+}

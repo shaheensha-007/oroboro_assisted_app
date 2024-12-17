@@ -23,7 +23,7 @@ class MerchartTokenBloc extends Bloc<MerchartTokenEvent, MerchartTokenState> {
       }catch(e){
         ToastMessage().toastmessage(message:e.toString());
         print("*******$e");
-        emit(MerchartTokenblocError());
+        emit(MerchartTokenblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

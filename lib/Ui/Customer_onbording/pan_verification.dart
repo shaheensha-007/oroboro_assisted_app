@@ -1,21 +1,31 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/Upadateaddress_bloc/upadateaddress_bloc.dart';
+import 'package:oroboro_assisted_app/Blocs/Customeronbording_blocs/customeronbording_bloc/Customeronbording2_blocs/customeronbording2_bloc.dart';
+import 'package:oroboro_assisted_app/Ui/Customer_onbording/Mobileotp.dart';
+import 'package:oroboro_assisted_app/modeles/customeronboradingModel/Customer_onbordingStatusModel/CustomeronbordingstatusModel.dart';
 import 'package:oroboro_assisted_app/modeles/customeronboradingModel/panverificationModel/PanverificationModel.dart';
+import 'package:oroboro_assisted_app/widgets/NavigationServies.dart';
+import 'package:oroboro_assisted_app/widgets/responsive_size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Blocs/Customeronbording_blocs/Customerupadate_bloc/customerupdate_bloc.dart';
 import '../../Blocs/Customeronbording_blocs/Emailupdate_bloc/emailupadate_bloc.dart';
+import '../../Blocs/Customeronbording_blocs/Panverification_blocs/Cilbilscore_Bloc/cibilscore_bloc.dart';
+import '../../Blocs/Customeronbording_blocs/Panverification_blocs/Statecode_bloc/statecode_bloc.dart';
 import '../../Blocs/Customeronbording_blocs/Panverification_blocs/panverification_bloc.dart';
 import '../../Blocs/Customeronbording_blocs/customeronbording_bloc/customeronbording_bloc.dart';
 import '../../Blocs/MerchartToken_bloc/merchart_token_bloc.dart';
 import '../../main.dart';
-import '../../modeles/customeronboradingModel/Customer_onbordingStatusModel/CustomeronbordingStatusModel.dart';
+import '../../modeles/customeronboradingModel/Customer_onbordingStatusModel/Customer_onbording2model/Customeronbording2Model.dart';
 import '../../modeles/customeronboradingModel/Customer_onbordingupadteprocessModel;/UpadatenextprocessModel.dart';
 import '../../modeles/customeronboradingModel/EmailupadteModel/EmailupdateModel.dart';
 import '../../modeles/customeronboradingModel/UpadateaddressModel/UpadateaddaressModel.dart';
-import 'Customer_onbording_mobile.dart';
+import '../../modeles/customeronboradingModel/panverificationModel/CIBILscoreModel/CibilscoreModel.dart';
+import '../../modeles/customeronboradingModel/panverificationModel/StatecodeModel/StatecodeModel.dart';
 import 'addhaar number.dart';
 
 class Panverfication extends StatefulWidget {
@@ -25,118 +35,88 @@ class Panverfication extends StatefulWidget {
   State<Panverfication> createState() => _PanverficationState();
 }
 
+PanverificationModel? verificationpan;
+EmailupdateModel? isEmailupadate;
+StatecodeModel? statecodeModel;
+CibilscoreModel? iscibilscoreModel;
+UpadateaddressModel? isaddressupadate;
+CustomeronbordingstatusModel? ispancustomerstatuts;
+UpadatenextprocessModel? ispanupadatenextprocess;
+Customeronbording2Model? ispancustomeronbordingvalue;
+
+
+///modless
+
 TextEditingController pannumber = TextEditingController();
 TextEditingController dateInput = TextEditingController();
 TextEditingController Address1contoller = TextEditingController();
 TextEditingController Address2contoller = TextEditingController();
 TextEditingController Address3controller = TextEditingController();
 TextEditingController citycontroller = TextEditingController();
-TextEditingController statecontroller = TextEditingController();//
+TextEditingController statecontroller = TextEditingController(); //
 TextEditingController districtcontroller = TextEditingController();
 TextEditingController villagepincode = TextEditingController();
 TextEditingController verificationemail = TextEditingController();
-late PanverificationModel verificationpan;
-late EmailupdateModel isEmailupadate;
-late UpadateaddressModel isaddressupadate;
-late CustomeronbordingstatusModel iscustomerstatuts;
-late UpadatenextprocessModel isupadatenextprocess;
 bool CibiDetalischeck = false;
+
 String? selectedtype;
-String? Flowid1;
-String? Pageorder1;
+String? Pageorder2;
+String? pagename2;
 
 class _PanverficationState extends State<Panverfication> {
   @override
   void initState() {
-    BlocProvider.of<MerchartTokenBloc>(context)
-        .add(FetchMerchartToken(userName: "Test", password: tokenpassword,ctx: context));
+    BlocProvider.of<MerchartTokenBloc>(context).add(FetchMerchartToken(
+        userName: "Test", password: tokenpassword, ctx: context));
+    context.read<StatecodeBloc>().add(Fetchstatecode(ctx: context));
+    // print("arun sir ");
     // TODO: implement initState
     super.initState();
-
-  }
-  @override
-  void dispose() {
-    setState(() {
-      pannumber.clear();
-      dateInput.clear();
-      Address1contoller.clear();
-      Address2contoller.clear();
-      Address3controller.clear();
-      citycontroller.clear();
-      statecontroller.clear();
-      districtcontroller.clear();
-      villagepincode.clear();
-      verificationemail.clear();
-    });
-
-    // TODO: implement dispose
-    super.dispose();
+    pannumber = TextEditingController();
+    dateInput = TextEditingController();
+    ;
+    Address1contoller = TextEditingController();
+    Address2contoller = TextEditingController();
+    ;
+    Address3controller = TextEditingController();
+    citycontroller = TextEditingController();
+    statecontroller = TextEditingController();
+    districtcontroller = TextEditingController();
+    villagepincode = TextEditingController();
+    verificationemail = TextEditingController();
   }
 
   final GlobalKey<FormState> panverifcationkey = GlobalKey<FormState>();
-  List<String> stateinindia = [
-    "Andhra Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chhattisgarh",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Nagaland",
-    "Odisha",
-    "Punjab",
-    "Rajasthan",
-    "Sikkim",
-    "Tamil Nadu",
-    "Telangana",
-    "Tripura",
-    "Uttar Pradesh",
-    "Uttarakhand",
-    "West Bengal"
-  ];
-
   @override
   Widget build(BuildContext context) {
-    var mheight = MediaQuery.of(context).size.height;
-    var mwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: mwidth * 0.1),
+              padding: EdgeInsets.only(left: 35.rw(context)),
               child: Form(
                 key: panverifcationkey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: mheight * 0.15,
+                      height: 100.rh(context),
                     ),
-                    const Text(
+                    Text(
                       "PAN Verification",
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 28.rf(context),
                           fontFamily: "boldtext",
                           fontWeight: FontWeight.w800),
                     ),
                     SizedBox(
-                      height: mheight * 0.05,
+                      height: 50.rh(context),
                     ),
                     Container(
-                      height: mheight * 0.06,
-                      width: mwidth * 0.8,
+                      height: 50.rh(context),
+                      width: 300.rw(context),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           boxShadow: const [
@@ -144,15 +124,15 @@ class _PanverficationState extends State<Panverfication> {
                           ],
                           color: Colors.white),
                       child: Padding(
-                        padding: EdgeInsets.only(left: mwidth * 0.03),
+                        padding: EdgeInsets.only(left: 15.rw(context)),
                         child: TextFormField(
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w800,
-                              fontFamily: "regulartext"),
+                          style: TextStyle(
+                              fontSize: 14.rf(context), fontFamily: "boldtext"),
                           controller: pannumber,
                           onChanged: (text) {
-                            String validText = text.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+                            String validText = text
+                                .toUpperCase()
+                                .replaceAll(RegExp(r'[^A-Z0-9]'), '');
                             pannumber.value = TextEditingValue(
                               text: validText,
                               selection: TextSelection.fromPosition(
@@ -160,17 +140,17 @@ class _PanverficationState extends State<Panverfication> {
                               ),
                             );
                           },
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             hintText: "PAN",
                             hintStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                             errorStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                           ),
@@ -185,11 +165,11 @@ class _PanverficationState extends State<Panverfication> {
                       ),
                     ),
                     SizedBox(
-                      height: mheight * 0.03,
+                      height: 30.rh(context),
                     ),
                     Container(
-                      height: mheight * 0.06,
-                      width: mwidth * 0.8,
+                      height: 50.rh(context),
+                      width: 300.rw(context),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           boxShadow: const [
@@ -197,7 +177,7 @@ class _PanverficationState extends State<Panverfication> {
                           ],
                           color: Colors.white),
                       child: Padding(
-                        padding: EdgeInsets.only(left: mwidth * 0.03),
+                        padding: EdgeInsets.only(left: 15.rw(context)),
                         child: Row(
                           children: [
                             Expanded(
@@ -206,21 +186,21 @@ class _PanverficationState extends State<Panverfication> {
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(10),
                                 ],
-                                style: const TextStyle(
-                                    fontSize: 14,
+                                style: TextStyle(
+                                    fontSize: 14.rf(context),
                                     fontWeight: FontWeight.w800,
                                     fontFamily: "regulartext"),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   border: InputBorder.none,
                                   enabledBorder: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: "Date",
                                   hintStyle: TextStyle(
-                                      fontSize: 10,
+                                      fontSize: 10.rf(context),
                                       fontWeight: FontWeight.w200,
                                       fontFamily: "regulartext"),
                                   errorStyle: TextStyle(
-                                      fontSize: 10,
+                                      fontSize: 10.rf(context),
                                       fontWeight: FontWeight.w200,
                                       fontFamily: "regulartext"),
                                 ),
@@ -262,11 +242,11 @@ class _PanverficationState extends State<Panverfication> {
                       ),
                     ),
                     SizedBox(
-                      height: mheight * 0.03,
+                      height: 30.rh(context),
                     ),
                     Container(
-                      height: mheight * 0.06,
-                      width: mwidth * 0.8,
+                      height: 50.rh(context),
+                      width: 300.rw(context),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           boxShadow: const [
@@ -274,24 +254,24 @@ class _PanverficationState extends State<Panverfication> {
                           ],
                           color: Colors.white),
                       child: Padding(
-                        padding: EdgeInsets.only(left: mwidth * 0.03),
+                        padding: EdgeInsets.only(left: 15.rw(context)),
                         child: TextFormField(
-                          style: const TextStyle(
-                              fontSize: 14,
+                          style: TextStyle(
+                              fontSize: 14.rf(context),
                               fontWeight: FontWeight.w800,
                               fontFamily: "regulartext"),
                           controller: Address1contoller,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             hintText: "Addaress1",
                             hintStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                             errorStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                           ),
@@ -306,11 +286,11 @@ class _PanverficationState extends State<Panverfication> {
                       ),
                     ),
                     SizedBox(
-                      height: mheight * 0.03,
+                      height: 30.rh(context),
                     ),
                     Container(
-                      height: mheight * 0.06,
-                      width: mwidth * 0.8,
+                      height: 50.rh(context),
+                      width: 300.rw(context),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           boxShadow: const [
@@ -318,24 +298,24 @@ class _PanverficationState extends State<Panverfication> {
                           ],
                           color: Colors.white),
                       child: Padding(
-                        padding: EdgeInsets.only(left: mwidth * 0.03),
+                        padding: EdgeInsets.only(left: 15.rw(context)),
                         child: TextFormField(
-                          style: const TextStyle(
-                              fontSize: 14,
+                          style: TextStyle(
+                              fontSize: 14.rf(context),
                               fontWeight: FontWeight.w800,
                               fontFamily: "regulartext"),
                           controller: Address2contoller,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             hintText: "Addaress2",
                             hintStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                             errorStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                           ),
@@ -350,11 +330,11 @@ class _PanverficationState extends State<Panverfication> {
                       ),
                     ),
                     SizedBox(
-                      height: mheight * 0.03,
+                      height: 30.rh(context),
                     ),
                     Container(
-                      height: mheight * 0.06,
-                      width: mwidth * 0.8,
+                      height: 50.rh(context),
+                      width: 300.rw(context),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           boxShadow: const [
@@ -362,24 +342,24 @@ class _PanverficationState extends State<Panverfication> {
                           ],
                           color: Colors.white),
                       child: Padding(
-                        padding: EdgeInsets.only(left: mwidth * 0.03),
+                        padding: EdgeInsets.only(left: 15.rw(context)),
                         child: TextFormField(
-                          style: const TextStyle(
-                              fontSize: 14,
+                          style: TextStyle(
+                              fontSize: 14.rf(context),
                               fontWeight: FontWeight.w800,
                               fontFamily: "regulartext"),
                           controller: Address3controller,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             hintText: "Addaress3",
                             hintStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                             errorStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                           ),
@@ -394,13 +374,13 @@ class _PanverficationState extends State<Panverfication> {
                       ),
                     ),
                     SizedBox(
-                      height: mheight * 0.03,
+                      height: 30.rh(context),
                     ),
                     Row(
                       children: [
                         Container(
-                          height: mheight * 0.06,
-                          width: mwidth * 0.35,
+                          height: 50.rh(context),
+                          width: 130.rw(context),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               boxShadow: const [
@@ -408,24 +388,24 @@ class _PanverficationState extends State<Panverfication> {
                               ],
                               color: Colors.white),
                           child: Padding(
-                            padding: EdgeInsets.only(left: mwidth * 0.03),
+                            padding: EdgeInsets.only(left: 15.rw(context)),
                             child: TextFormField(
-                              style: const TextStyle(
-                                  fontSize: 14,
+                              style: TextStyle(
+                                  fontSize: 14.rf(context),
                                   fontWeight: FontWeight.w800,
                                   fontFamily: "regulartext"),
                               controller: citycontroller,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 border: InputBorder.none,
                                 enabledBorder: InputBorder.none,
                                 errorBorder: InputBorder.none,
                                 hintText: "City",
                                 hintStyle: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 10.rf(context),
                                     fontWeight: FontWeight.w200,
                                     fontFamily: "regulartext"),
                                 errorStyle: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 10.rf(context),
                                     fontWeight: FontWeight.w200,
                                     fontFamily: "regulartext"),
                               ),
@@ -440,11 +420,11 @@ class _PanverficationState extends State<Panverfication> {
                           ),
                         ),
                         SizedBox(
-                          width: mwidth * 0.1,
+                          width: 40.rw(context),
                         ),
                         Container(
-                          height: mheight * 0.06,
-                          width: mwidth * 0.35,
+                          height: 50.rh(context),
+                          width: 130.rw(context),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             boxShadow: const [
@@ -452,60 +432,81 @@ class _PanverficationState extends State<Panverfication> {
                             ],
                             color: Colors.white,
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.only(right: mwidth * 0.03),
-                            child: DropdownButtonFormField<String>(
-                              isExpanded: true,
-                              icon: const Icon(Icons.arrow_drop_down),
-                              onChanged: (value) {
-                                setState(() {
-                                  statecontroller.text = value!;
-                                });
-                              },
-                              items: stateinindia.map((selectedstate) {
-                                return DropdownMenuItem(
-                                  value: selectedstate,
-                                  child: Text(
-                                    selectedstate,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: "regulartext",
+                          child:Padding(
+                            padding: EdgeInsets.only(right: 15.rw(context)),
+                            child: BlocBuilder<StatecodeBloc, StatecodeState>(
+                              builder: (context, state) {
+                                if (state is StatecodeblocLoaded) {
+                                  // Parse the result and extract StateCode values
+                                  statecodeModel = state.statecodeModelstatus;
+
+                                  // Assuming `Result` contains the list of states
+                                  final stateCodeList = statecodeModel?.result
+                                      ?.map<String>((item) =>item.stateCode.toString())
+                                      .toList() ??
+                                      [];
+
+                                  return DropdownButtonFormField<String>(
+                                    isExpanded: true,
+                                    icon: const Icon(Icons.arrow_drop_down),
+                                    onChanged: (value) {
+                                      // Update the text controller or perform an action on selection
+                                      statecontroller.text = value!;
+                                    },
+                                    items: stateCodeList.map((selectedState) {
+                                      return DropdownMenuItem(
+                                        value: selectedState,
+                                        child: Text(
+                                          selectedState,
+                                          style: TextStyle(
+                                            fontSize: 12.rf(context),
+                                            fontWeight: FontWeight.w800,
+                                            fontFamily: "regulartext",
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                                      border: InputBorder.none,
+                                      hintText: "Select State",
+                                      hintStyle: TextStyle(
+                                        fontSize: 10.rf(context),
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily: "regulartext",
+                                      ),
+                                      errorStyle: TextStyle(
+                                        fontSize: 10.rf(context),
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily: "regulartext",
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }).toList(),
-                              decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 10.0),
-                                // Adjust content padding as needed
-                                border: InputBorder.none,
-                                // Remove the border
-                                hintText: "Select State",
-                                hintStyle: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: "regulartext",
-                                ),
-                                errorStyle: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: "regulartext",
-                                ),
-                              ),
+                                  );
+                                }
+
+                                if (state is StatecodeblocError) {
+                                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                                    _showErrorSnackBar(
+                                      statecodeModel?.responseMessage ?? "An error occurred",
+                                    );
+                                  });
+                                }
+
+                                return SizedBox();
+                              },
                             ),
                           ),
                         )
                       ],
                     ),
                     SizedBox(
-                      height: mheight * 0.03,
+                      height: 30.rh(context),
                     ),
                     Row(
                       children: [
                         Container(
-                          height: mheight * 0.06,
-                          width: mwidth * 0.35,
+                          height: 50.rh(context),
+                          width: 130.rw(context),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               boxShadow: const [
@@ -513,24 +514,24 @@ class _PanverficationState extends State<Panverfication> {
                               ],
                               color: Colors.white),
                           child: Padding(
-                            padding: EdgeInsets.only(left: mwidth * 0.03),
+                            padding: EdgeInsets.only(left: 15.rw(context)),
                             child: TextFormField(
-                              style: const TextStyle(
-                                  fontSize: 14,
+                              style: TextStyle(
+                                  fontSize: 14.rf(context),
                                   fontWeight: FontWeight.w800,
                                   fontFamily: "regulartext"),
                               controller: districtcontroller,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 border: InputBorder.none,
                                 enabledBorder: InputBorder.none,
                                 errorBorder: InputBorder.none,
                                 hintText: "District",
                                 hintStyle: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 10.rf(context),
                                     fontWeight: FontWeight.w200,
                                     fontFamily: "regulartext"),
                                 errorStyle: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 10.rf(context),
                                     fontWeight: FontWeight.w200,
                                     fontFamily: "regulartext"),
                               ),
@@ -545,11 +546,11 @@ class _PanverficationState extends State<Panverfication> {
                           ),
                         ),
                         SizedBox(
-                          width: mwidth * 0.1,
+                          width: 40.rw(context),
                         ),
                         Container(
-                          height: mheight * 0.06,
-                          width: mwidth * 0.35,
+                          height: 50.rh(context),
+                          width: 130.rw(context),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               boxShadow: const [
@@ -557,10 +558,10 @@ class _PanverficationState extends State<Panverfication> {
                               ],
                               color: Colors.white),
                           child: Padding(
-                            padding: EdgeInsets.only(left: mwidth * 0.03),
+                            padding: EdgeInsets.only(left: 15.rw(context)),
                             child: TextFormField(
-                              style: const TextStyle(
-                                  fontSize: 14,
+                              style: TextStyle(
+                                  fontSize: 14.rf(context),
                                   fontWeight: FontWeight.w800,
                                   fontFamily: "regulartext"),
                               controller: villagepincode,
@@ -568,17 +569,17 @@ class _PanverficationState extends State<Panverfication> {
                                 LengthLimitingTextInputFormatter(6),
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 border: InputBorder.none,
                                 enabledBorder: InputBorder.none,
                                 errorBorder: InputBorder.none,
                                 hintText: "Pincode",
                                 hintStyle: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 10.rf(context),
                                     fontWeight: FontWeight.w200,
                                     fontFamily: "regulartext"),
                                 errorStyle: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 10.rf(context),
                                     fontWeight: FontWeight.w200,
                                     fontFamily: "regulartext"),
                               ),
@@ -595,11 +596,11 @@ class _PanverficationState extends State<Panverfication> {
                       ],
                     ),
                     SizedBox(
-                      height: mheight * 0.03,
+                      height: 30.rh(context),
                     ),
                     Container(
-                      height: mheight * 0.06,
-                      width: mwidth * 0.8,
+                      height: 50.rh(context),
+                      width: 300.rw(context),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           boxShadow: const [
@@ -607,24 +608,24 @@ class _PanverficationState extends State<Panverfication> {
                           ],
                           color: Colors.white),
                       child: Padding(
-                        padding: EdgeInsets.only(left: mwidth * 0.03),
+                        padding: EdgeInsets.only(left: 15.rw(context)),
                         child: TextFormField(
-                          style: const TextStyle(
-                              fontSize: 14,
+                          style: TextStyle(
+                              fontSize: 14.rf(context),
                               fontWeight: FontWeight.w800,
                               fontFamily: "regulartext"),
                           controller: verificationemail,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             hintText: "Email",
                             hintStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                             errorStyle: TextStyle(
-                                fontSize: 10,
+                                fontSize: 10.rf(context),
                                 fontWeight: FontWeight.w200,
                                 fontFamily: "regulartext"),
                           ),
@@ -643,34 +644,35 @@ class _PanverficationState extends State<Panverfication> {
                       ),
                     ),
                     SizedBox(
-                      height: mheight * 0.03,
+                      height:30.rh(context)
                     ),
                     Row(
                       children: [
                         Checkbox(
-                            shape: const RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.grey)),
-                            value: CibiDetalischeck,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                CibiDetalischeck = value ?? false;
-                              });
-                            }),
-                        const Text(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          value: CibiDetalischeck,
+                          onChanged: (bool? value) {
+                        
+                            setState(() {
+                              CibiDetalischeck = value ?? false;
+                            });
+                          }),
+                        Text(
                           "I  agree to  fetch my Cibil  Detalis",
                           style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 14.rf(context),
                               fontWeight: FontWeight.w800,
-                              fontFamily: "boldtext",
+                              fontFamily: "regulartext",
                               color: Colors.black),
                         )
                       ],
                     ),
                     SizedBox(
-                      height: mheight * 0.05,
+                      height: 20.rh(context),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(right: mwidth * 0.1),
+                      padding: EdgeInsets.only(right: 40.rw(context)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -680,213 +682,367 @@ class _PanverficationState extends State<Panverfication> {
                                       borderRadius: BorderRadius.circular(5)),
                                   backgroundColor: const Color(0xff284389)),
                               onPressed: () {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Customer_onbording_mobile()),
-                                    (route) => false);
+                                NavigationService.push(Mobileotp());
                               },
-                              child: const Text(
+                              child: Text(
                                 "Previous",
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
+                                    fontSize: 20.rf(context),
                                     color: Colors.white,
-                                    fontFamily: "regulartext"),
+                                    fontFamily: "boldtext"),
                               )),
-                          BlocListener<PanverificationBloc, PanverificationState>(
-                              listener: (context, state) {
-                                if (state is PanverificationblocLoading) {
-                                  CircularProgressIndicator();
-                                }
-                                if (state is PanverificationblocLoaded) {
-                                  verificationpan = BlocProvider.of<PanverificationBloc>(context).iscustomerverification;
-                                  if (verificationpan.status.toString() == "Success") {
-                                  } else {
-                                    _showErrorSnackBar(
-                                        verificationpan.errorMessage.toString());
-                                  }
-                                }
-                                // TODO: implement listener
-                              },
-                              child: BlocListener<EmailupadateBloc, EmailupadateState>(
-                                listener: (context, state) {
-                                  if (state is EmailupadateblocLoading) {
-                                    CircularProgressIndicator();
-                                  }
-                                  if (state is EmailupadateblocLoaded) {
-                                    isEmailupadate =
-                                        BlocProvider.of<EmailupadateBloc>(context)
-                                            .isemailupadate;
-                                    if (isEmailupadate.status.toString() == "Success") {
-                                    }else {
-                                      _showErrorSnackBar(
-                                          isEmailupadate.errorMessage.toString());
-                                    }
-                                  }
-                                  // TODO: implement listener
-                                },
-                                child: BlocListener<UpadateaddressBloc, UpadateaddressState>(
-                                  listener: (context, state){
-                                    if(state is UpadateaddressblocLoading){
-                                      CircularProgressIndicator();
-                                    }
-                                    if(state is UpadateaddressblocLoaded) {
-                                      isaddressupadate = BlocProvider
-                                          .of<UpadateaddressBloc>(context)
-                                          .isupadateaddress;
-                                      if (isaddressupadate.status.toString()== "Success") {
-                                      } else {
-                                        _showErrorSnackBar(
-                                            isaddressupadate.errorMessage.toString());
-                                      }
-                                    }
-                                    // TODO: implement listener
+
+                          ///Funcationn
+
+                          BlocListener<PanverificationBloc,
+                              PanverificationState>(
+                            listener: (context, state) async {
+                              final preferences =
+                                  await SharedPreferences.getInstance();
+                              if (state is PanverificationblocLoading) {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
                                   },
-                                  child: BlocListener<CustomeronbordingBloc, CustomeronbordingState>(
-                                    listener: (context, state) {
-                                      if(state is CustomeronbordingblocLoading){
-                                        CircularProgressIndicator();
-                                      }
-                                      if(state is CustomeronbordingblocLoaded){
-                                        iscustomerstatuts=BlocProvider.of<CustomeronbordingBloc>(context).isCustomeronbording;
-                                        if(iscustomerstatuts.status.toString()=="Success"){
-                                          Pageorder1= iscustomerstatuts.result?.pageOrder.toString();
-                                          Flowid1=iscustomerstatuts.result?.flowId.toString();
-
-                                        }else {
-                                          _showErrorSnackBar(
-                                              iscustomerstatuts.errorMessage.toString());
-                                        }
-
-                                      }
-                                      // TODO: implement listener
+                                );
+                              }
+                              if (state is PanverificationblocLoaded) {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                                verificationpan =state.panverificationModel;
+                                if (verificationpan?.status.toString() == "Success") {
+                                  final panusername=verificationpan?.result?.pANDetails?.name.toString();
+                                  preferences.setString("panusername", panusername??"");
+                                  ///EmailApi Call
+                                  BlocProvider.of<EmailupadateBloc>(context)
+                                      .add(
+                                    FetchEmailupadate(
+                                      userid:
+                                          preferences.getString("Userid") ?? "",
+                                      Customercode: preferences
+                                              .getString("CustomerCode") ??
+                                          "",
+                                      Emailid: verificationemail.text,
+                                      ctx: context,
+                                    ),
+                                  );
+                                }
+                              }
+                              if (state is PanverificationblocError) {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                                _showErrorSnackBar(state.Errormessage);
+                              }
+                            },
+                            child: BlocListener<EmailupadateBloc,
+                                EmailupadateState>(
+                              listener: (context, state) async {
+                                final preferences =
+                                    await SharedPreferences.getInstance();
+                                if (state is EmailupadateblocLoading) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
                                     },
-                                    child: BlocListener<CustomerupdateBloc, CustomerupdateState>(
-                                      listener: (context, state) {
-                                        if(state is CustomerupdateblocLoading){
-                                          CircularProgressIndicator();
-                                        }
-                                        if(state is CustomerupadateblocLoaded){
-                                          isupadatenextprocess=BlocProvider.of<CustomerupdateBloc>(context).iscustomerupadate;
-                                          if(isupadatenextprocess.result.toString()=="Success"){
-                                          }
-                                          else {
-                                            _showErrorSnackBar(
-                                                isupadatenextprocess.errorMessage.toString());
-                                          }
-                                        }
-                                        // TODO: implement listener
+                                  );
+                                }
+                                if (state is EmailupadateblocLoaded) {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  isEmailupadate =state.emailupdateModel;
+                                  if (isEmailupadate?.status.toString() ==
+                                      "Success") {
+                                    /// UpdateaddressApi call
+                                    BlocProvider.of<UpadateaddressBloc>(context)
+                                        .add(
+                                      FetchUpadteaddress(
+                                        userid:
+                                            preferences.getString("Userid") ??
+                                                "",
+                                        Customercode: preferences
+                                                .getString("CustomerCode") ??
+                                            "",
+                                        applicationId: preferences
+                                                .getString("applicationid") ??
+                                            "",
+                                        Address1: Address1contoller.text,
+                                        Address2: Address2contoller.text,
+                                        Address3: Address3controller.text,
+                                        City: citycontroller.text,
+                                        State: statecontroller.text,
+                                        Pincode: villagepincode.text,
+                                        District: districtcontroller.text,
+                                        ctx: context,
+                                      ),
+                                    );
+                                  }
+                                }
+                                if (state is EmailupadateblocError) {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  _showErrorSnackBar(state.errormessage);
+                                }
+                              },
+                              child: BlocListener<UpadateaddressBloc,
+                                  UpadateaddressState>(
+                                listener: (context, state) async {
+                                  log("updateAddress verification $state");
+                                  final preferences =
+                                      await SharedPreferences.getInstance();
+                                  if (state is UpadateaddressblocLoading) {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
                                       },
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(5)),
-                                            backgroundColor: const Color(0xff284389)),
-                                        onPressed: () async {
-                                          final preferences = await SharedPreferences.getInstance();
-                                          if (panverifcationkey.currentState!.validate()) {
-                                            try{
-                                              await Future.delayed(Duration(seconds: 1));
-                                              BlocProvider.of<PanverificationBloc>(context).add(FetchPanverification(
-                                                  userid:preferences.getString("Userid").toString(),
-                                                  Customercode: preferences.getString("CustomerCode").toString(),
-                                                  PAN:pannumber.text, ctx:context));
-                                            }catch(e){
-                                              _showErrorSnackBar(e.toString());
-                                              try{
-                                                await Future.delayed(Duration(seconds: 1));
-                                                BlocProvider.of<EmailupadateBloc>(context).add(FetchEmailupadate(
-                                                    userid: preferences.getString("Userid").toString(),
-                                                    Customercode: preferences.getString("CustomerCode").toString(),
-                                                    Emailid:verificationemail.text, ctx: context));
-                                              }catch(e){
-                                                _showErrorSnackBar(e.toString());
-                                              }
-                                            }
-                                            try{
-                                              await Future.delayed(Duration(seconds: 1));
-                                              BlocProvider.of<UpadateaddressBloc>(context).add(FetchUpadteaddress(
-                                                  userid:preferences.getString("Userid").toString() ,
-                                                  Customercode: preferences.getString("CustomerCode").toString(),
-                                                  Address1: Address1contoller.text,
-                                                  Address2: Address2contoller.text,
-                                                  Address3: Address3controller.text,
-                                                  City: citycontroller.text,
-                                                  State: statecontroller.text,
-                                                  Pincode: villagepincode.text,
-                                                  District: districtcontroller.text, ctx: context
-                                              ));
-                                            }catch(e){
-                                              _showErrorSnackBar(e.toString());
-                                            }
-                                            try{
-                                              await Future.delayed(Duration(seconds: 1));
-                                              BlocProvider.of<CustomeronbordingBloc>(context).add(
-                                                FetchCustomeronbording(
-                                                  userid: preferences.getString("Userid").toString(),
-                                                  Customercode: preferences.getString("CustomerCode").toString(), ctx: context,
-                                                ),
-                                              );
-                                            }catch(e){
-                                              _showErrorSnackBar(e.toString());
-                                            }
-                                            try{
-                                              await Future.delayed(Duration(seconds: 1));
-                                              BlocProvider.of<CustomerupdateBloc>(context).add(
-                                                FetchCustomerupdate(
-                                                  userid: preferences.getString("Userid").toString(),
-                                                  Customercode: preferences.getString("CustomerCode").toString(),
-                                                  PartnerCode:preferences.getString("partnercode").toString(),
-                                                  FlowId: Flowid1.toString(),
-                                                  PageOrder: Pageorder1.toString(), ctx: context,
-                                                ),
-                                              );
-                                            }catch(e){
-                                              _showErrorSnackBar(e.toString());
-                                            }
-                                            try{
-                                              await Future.delayed(Duration(seconds: 1));
-                                              BlocProvider.of<CustomeronbordingBloc>(context).add(
-                                                FetchCustomeronbording(
-                                                  userid: preferences.getString("Userid").toString(),
-                                                  Customercode: preferences.getString("CustomerCode").toString(), ctx: context,
-                                                ),
-                                              );
-                                            }
-                                            catch(e){
-                                              _showErrorSnackBar(e.toString());
-                                            }
-                                              Navigator.of(
-                                                  context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (
-                                                          context) =>
-                                                          Aadhaarnumber()));
-
-                                          }else{
-                                            _showErrorSnackBar("no values this case");
-                                          }
-
+                                    );
+                                  }
+                                  if (state is UpadateaddressblocLoaded) {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop();
+                                    isaddressupadate =state.upadateaddressModel;
+                                    if (isaddressupadate?.status.toString() ==
+                                        "Success") {
+                                      ///CustomeronbordingApi call
+                                      context.read<CibilscoreBloc>().add(FetchCilbilscore(
+                                          userid:preferences.getString("Userid")??"" ,
+                                          Customercode: preferences.getString("CustomerCode")??"",
+                                          ApplicationId: preferences.getString("applicationid")??"",
+                                          PAN: pannumber.text,
+                                          Name: preferences.getString("panusername")??"",
+                                          Address: Address1contoller.text,
+                                          City: citycontroller.text,
+                                          State:statecontroller.text ,
+                                          Pincode: villagepincode.text,
+                                          Dob: dateInput.text,
+                                          ctx: context));
+                                    }
+                                  }
+                                  if (state is UpadateaddressblocError) {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop();
+                                    _showErrorSnackBar(state.Errormessage);
+                                  }
+                                },
+                                child: BlocListener<CibilscoreBloc, CibilscoreState>(
+                                listener: (context, state)async {
+                                  final preferences = await SharedPreferences.getInstance();
+                                    log("cilbilscore=$state");
+                                    if(state is CibilscoreblocLoaded){
+                                      iscibilscoreModel=state.cibilscoreModel;
+                                      if(iscibilscoreModel?.status=="Success"){
+                                        BlocProvider.of<CustomeronbordingBloc>(
+                                            context)
+                                            .add(
+                                          FetchCustomeronbording(
+                                            userid:
+                                            preferences.getString("Userid") ??
+                                                "",
+                                            Customercode: preferences
+                                                .getString("CustomerCode") ??
+                                                "",
+                                            partnercode: preferences
+                                                .getString("partnercode") ??
+                                                "",
+                                            agentcode: preferences
+                                                .getString("agentcode") ??
+                                                "",
+                                            ctx: context,
+                                          ),
+                                        );
+                                      }
+                                    }
+                                    if(state is CibilscoreblocError){
+                                      _showErrorSnackBar(state.Errormessage);
+                                    }
+                                },
+                                 child: BlocListener<CustomeronbordingBloc,
+                                    CustomeronbordingState>(
+                                  listener: (context, state) async {
+                                    log("customeronbording pan verification $state");
+                                    final preferences = await SharedPreferences.getInstance();
+                                    if (state is CustomeronbordingblocLoading) {
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context) {
+                                          return const Center(
+                                              child:
+                                                  CircularProgressIndicator());
                                         },
-                                        child: const Text(
-                                          "Sumbit",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w800,
-                                              color: Colors.white,
-                                              fontFamily: "regulartext"),
-                                        ),
+                                      );
+                                    }
+                                    if (state is CustomeronbordingblocLoaded) {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop();
+                                      ispancustomerstatuts = state.customeronbordingstatusModel;
+                                      if (ispancustomerstatuts?.status.toString() ==
+                                          "Success") {
+                                        Pageorder2 = ispancustomerstatuts?.result?.pageOrder.toString();
+
+                                        ///Customerupdatenextprocess
+                                        BlocProvider.of<CustomerupdatenextBloc>(context).add(
+                                          FetchCustomerupdate(
+                                            userid: preferences.getString("Userid") ??
+                                                "",
+                                            Customercode: preferences.getString(
+                                                    "CustomerCode") ??
+                                                "",
+                                            PartnerCode: preferences
+                                                    .getString("partnercode") ??
+                                                "",
+                                            FlowId: preferences
+                                                .getString("Flowid")
+                                                .toString(),
+                                            PageOrder: Pageorder2.toString(),
+                                            ApplicationId:
+                                                preferences.getString(
+                                                        "applicationid") ??
+                                                    "",
+                                            PageType: preferences
+                                                .getString("pagetype")
+                                                .toString(),
+                                            ctx: context,
+                                          ),
+                                        );
+                                      }
+                                    }
+                                    if (state is CustomeronbordingblocError) {
+                                          Navigator.of(context,rootNavigator: true).pop();
+                                      _showErrorSnackBar(state.Errormessage);
+                                    }
+                                  },
+                                  child: BlocListener<CustomerupdatenextBloc, CustomerupdatenextState>(
+                                  listener: (context, state) async{
+                                    final preferences = await SharedPreferences.getInstance();
+                                    if(state is CustomerupdatenextblocLoading){
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context) {
+                                          return const Center(
+                                              child:
+                                              CircularProgressIndicator());
+                                        },
+                                      );
+                                    }
+                                    if(state is CustomerupdatenextblocLoaded){
+                                      Navigator.of(context,rootNavigator: true).pop();
+                                      ispanupadatenextprocess=state.upadatenextprocessModel;
+                                      if(ispanupadatenextprocess?.status=="Success"){
+                                        /// Customeronbording2 Api call 
+                                        BlocProvider.of<Customeronbording2Bloc>(context).add(FetchCustomeronbording2(
+                                            userid: preferences.getString("Userid")??"",
+                                            Customercode: preferences.getString("CustomerCode")??"",
+                                            partnercode: preferences.getString("partnercode")??"",
+                                            agentcode: preferences.getString("agentcode")??"",
+                                            ctx: context));
+                                      }
+                                      
+                                    }
+                                    if(state is CustomerupdatenextblocError){
+                                      Navigator.of(context,rootNavigator: true).pop();
+                                      _showErrorSnackBar(state.Errormessage);
+                                    }
+                                    },
+                                     child: BlocListener<Customeronbording2Bloc, Customeronbording2State>(
+                                       listener: (context, state) async{
+                                         final preferences = await SharedPreferences.getInstance();
+                                         if(state is Customeronbording2blocLoading){
+                                           showDialog(
+                                             context: context,
+                                             barrierDismissible: false,
+                                             builder: (BuildContext context) {
+                                               return const Center(
+                                                   child:
+                                                   CircularProgressIndicator());
+                                             },
+                                           );
+                                         }
+                                         if(state is Customeronbording2blocLoaded){
+                                           Navigator.of(context,rootNavigator: true).pop();
+                                           ispancustomeronbordingvalue=state.customeronbording2model;
+                                           if(ispancustomeronbordingvalue?.status=="Success"){
+                                             pagename2=ispancustomeronbordingvalue?.result?.pageName??"";
+                                             if(pagename2=="AadhaarVerification"){
+                                               NavigationService.pushAndRemoveUntil(Aadhaarnumber(), (Route<dynamic>route) => false);
+                                             }else{
+                                               _showErrorSnackBar("not value pass the way");
+                                             }
+                                           }
+                                         }
+                                         if(state is Customeronbording2blocError){
+                                           Navigator.of(context,rootNavigator: true).pop();
+                                           _showErrorSnackBar(state.Errormessage);
+                                         }
+                                       },
+                                     child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        backgroundColor:
+                                            const Color(0xff284389)),
+                                    onPressed: () async {
+                                      final preferences =
+                                          await SharedPreferences
+                                              .getInstance();
+                                      if (panverifcationkey.currentState!.validate()) {
+                                        if (CibiDetalischeck) {
+                                          BlocProvider.of<
+                                              PanverificationBloc>(
+                                              context)
+                                              .add(
+                                            FetchPanverification(
+                                              userid: preferences
+                                                  .getString("Userid") ??
+                                                  "",
+                                              Customercode:
+                                              preferences.getString(
+                                                  "CustomerCode") ??
+                                                  "",
+                                              PAN: pannumber.text,
+                                              ApplicationId:
+                                              preferences.getString(
+                                                  "applicationid") ??
+                                                  "",
+                                              ctx: context,
+                                            ),
+                                          );
+                                        }else{
+                                          _showErrorSnackBar("Enable  to check box");
+                                        }
+                                      }
+                                    },
+                                    child: Text(
+                                      "Submit",
+                                      style: TextStyle(
+                                        fontSize: 20.rf(context),
+                                        color: Colors.white,
+                                        fontFamily: "boldtext",
                                       ),
                                     ),
                                   ),
+),
+),
                                 ),
-                              )),
+),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: mheight * 0.05,
+                      height:50.rh(context)
                     )
                   ],
                 ),
@@ -899,11 +1055,187 @@ class _PanverficationState extends State<Panverfication> {
   }
 
   void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        message,
-        style: const TextStyle(fontSize: 12, fontFamily: "font2"),
-      ),
-    ));
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white, // Set the background color
+          contentPadding: EdgeInsets.zero, // Remove default padding
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), // Customize corner radius
+          ),
+          content: Container(
+            constraints: BoxConstraints(
+              maxWidth: 300, // Set the maximum width
+              minHeight: 150, // Set the minimum height
+            ),
+            padding: const EdgeInsets.all(16), // Padding for content
+            color: Colors.blueGrey[50], // Set the container's background color
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  message,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: "font2",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: const Color(0xff284389),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: const Text(
+                      "OK",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: "regulartext",
+                        color: Colors.white,
+                      ),
+                    ), // Button text
+                  ),
+                ), // Add spacing between text and button
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
+// void Panverifactionstart() async {
+//   final preferences = await SharedPreferences.getInstance();
+//
+//   setState(() {
+//     isLoading = true; // Show loading indicator
+//   });
+//
+//   try {
+//     // PAN Verification
+//  //   await Future.delayed(Duration(seconds: 3));
+//      BlocProvider.of<PanverificationBloc>(context).add(
+//       FetchPanverification(
+//         userid: preferences.getString("Userid") ?? "",
+//         Customercode: preferences.getString("CustomerCode") ?? "",
+//         PAN: pannumber.text,
+//         ApplicationId: preferences.getString("applicationid") ?? "",
+//         ctx: context,
+//       ),
+//     );
+//   } catch (error) {
+//     _showErrorSnackBar(verificationpan.responseMessage.toString());
+//     // debugPrint("PAN Verification failed: $error");
+//     // ScaffoldMessenger.of(context).showSnackBar(
+//     //   SnackBar(content: Text("PAN Verification failed. Continuing with the next step.")),
+//     // );
+//   }
+//
+//   try {
+//     // Email Update
+//    // await Future.delayed(Duration(seconds: 3));
+//      BlocProvider.of<EmailupadateBloc>(context).add(
+//       FetchEmailupadate(
+//         userid: preferences.getString("Userid") ?? "",
+//         Customercode: preferences.getString("CustomerCode") ?? "",
+//         Emailid: verificationemail.text,
+//         ctx: context,
+//       ),
+//     );
+//   } catch (error) {
+//     _showErrorSnackBar(isEmailupadate.responseMessage.toString());
+//
+//   }
+//
+//   try {
+//     // Address Update
+//   //  await Future.delayed(Duration(seconds: 3));
+//     BlocProvider.of<UpadateaddressBloc>(context).add(
+//       FetchUpadteaddress(
+//         userid: preferences.getString("Userid") ?? "",
+//         Customercode: preferences.getString("CustomerCode") ?? "",
+//         applicationId: preferences.getString("applicationid") ?? "",
+//         Address1: Address1contoller.text,
+//         Address2: Address2contoller.text,
+//         Address3: Address3controller.text,
+//         City: citycontroller.text,
+//         State: statecontroller.text,
+//         Pincode: villagepincode.text,
+//         District: districtcontroller.text,
+//         ctx: context,
+//       ),
+//     );
+//   } catch (error) {
+//     _showErrorSnackBar(isaddressupadate.responseMessage.toString());
+//   }
+//
+//   try {
+//     // Customer Onboarding
+//   //  await Future.delayed(Duration(seconds: 3));
+//     BlocProvider.of<CustomeronbordingBloc>(context).add(
+//       FetchCustomeronbording(
+//         userid: preferences.getString("Userid") ?? "",
+//         Customercode: preferences.getString("CustomerCode") ?? "",
+//         partnercode: preferences.getString("partnercode") ?? "",
+//         agentcode: preferences.getString("agentcode") ?? "",
+//         ctx: context,
+//       ),
+//     );
+//   } catch (error) {
+//     _showErrorSnackBar(iscustomerstatuts.responseMessage.toString());
+//   }
+//
+//   try {
+//     // Customer Update
+//    // await Future.delayed(Duration(seconds: 3));
+//   BlocProvider.of<CustomerupdateBloc>(context).add(
+//       FetchCustomerupdate(
+//         userid: preferences.getString("Userid") ?? "",
+//         Customercode: preferences.getString("CustomerCode") ?? "",
+//         PartnerCode: preferences.getString("partnercode") ?? "",
+//         FlowId: Flowid2.toString(),
+//         PageOrder: Pageorder2.toString(),
+//         ApplicationId: preferences.getString("applicationid") ?? "",
+//         PageType: pagetype2.toString(),
+//         ctx: context,
+//       ),
+//     );
+//   } catch (error) {
+//     _showErrorSnackBar(isupadatenextprocess.responseMessage.toString());
+//   }
+//
+//   try {
+//     // Final Customer Onboarding Step
+//    // Future.delayed(Duration(seconds: 3));
+//      BlocProvider.of<Customeronbording2Bloc>(context).add(
+//       FetchCustomeronbording2(
+//         userid: preferences.getString("Userid") ?? "",
+//         Customercode: preferences.getString("CustomerCode") ?? "",
+//         partnercode: preferences.getString("partnercode") ?? "",
+//         agentcode: preferences.getString("agentcode") ?? "",
+//         ctx: context,
+//       ),
+//     );
+//   } catch (error) {
+//     _showErrorSnackBar(Customeronbording2value.responseMessage.toString());
+//   }
+//
+//   setState(() {
+//     isLoading = false; // Hide loading indicator
+//   });
+// }
 }

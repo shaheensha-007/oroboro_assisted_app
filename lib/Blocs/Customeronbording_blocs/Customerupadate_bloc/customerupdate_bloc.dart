@@ -11,20 +11,26 @@ import '../../../widgets/tostmessage.dart';
 part 'customerupdate_event.dart';
 part 'customerupdate_state.dart';
 
-class CustomerupdateBloc extends Bloc<CustomerupdateEvent, CustomerupdateState> {
+class CustomerupdatenextBloc extends Bloc<CustomerupdatenextEvent, CustomerupdatenextState> {
   late UpadatenextprocessModel iscustomerupadate;
-  CustomerupdateApi customerupdateApi=CustomerupdateApi();
-  CustomerupdateBloc() : super(CustomerupdateInitial()) {
-    on<FetchCustomerupdate>((event, emit)async {
-      emit(CustomerupdateblocLoading());
+  CustomerupdateApi customerupdateApi = CustomerupdateApi();
+  CustomerupdatenextBloc() : super(CustomerupdateInitial()) {
+    on<FetchCustomerupdate>((event, emit) async {
+      emit(CustomerupdatenextblocLoading());
       try {
         iscustomerupadate = await customerupdateApi.postupdatestatusdata(
-            event.userid, event.Customercode, event.PartnerCode, event.FlowId,
-            event.PageOrder,event.ctx);
-        emit(CustomerupadateblocLoaded());
-      }catch(e){
-        ToastMessage().toastmessage(message:e.toString());
-        emit(CustomerupadateblocError());
+            event.userid,
+            event.Customercode,
+            event.PartnerCode,
+            event.FlowId,
+            event.PageOrder,
+            event.ApplicationId,
+            event.PageType,
+            event.ctx);
+        emit(CustomerupdatenextblocLoaded(upadatenextprocessModel: iscustomerupadate));
+      } catch (e) {
+        ToastMessage().toastmessage(message: e.toString());
+        emit(CustomerupdatenextblocError(Errormessage: e.toString()));
       }
       // TODO: implement event handler
     });

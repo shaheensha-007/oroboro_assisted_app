@@ -138,14 +138,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                                       setState(() {
                                         ownernameshow = false;
                                       });
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                              'Invalid GST number format!'),
-                                          backgroundColor: Colors.red,
-                                        ),
-                                      );
+                                      _showErrorSnackBar('Invalid GST number format!');
                                     }
                                   },
                                 )
@@ -339,14 +332,7 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
                                             setState(() {
                                               bussinessnbigbutton = false;
                                             });
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                    'Invalid TAN number format!'),
-                                                backgroundColor: Colors.red,
-                                              ),
-                                            );
+                                            _showErrorSnackBar('Invalid TAN number format!');
                                           }
                                         },
                                       )
@@ -426,10 +412,64 @@ class _Agent_business_onboardingState extends State<Agent_business_onboarding> {
   }
 
   void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message,
-          style: const TextStyle(fontSize: 12, fontFamily: "font2")),
-      duration: Duration(milliseconds: 2000),
-    ));
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white, // Set the background color
+          contentPadding: EdgeInsets.zero, // Remove default padding
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), // Customize corner radius
+          ),
+          content: Container(
+            constraints: BoxConstraints(
+              maxWidth: 300, // Set the maximum width
+              minHeight: 150, // Set the minimum height
+            ),
+            padding: const EdgeInsets.all(16), // Padding for content
+            color: Colors.blueGrey[50], // Set the container's background color
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  message,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: "font2",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: const Color(0xff284389),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: const Text("OK", style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: "regulartext",
+                      color: Colors.white,
+                    ),), // Button text
+                  ),
+                ), // Add spacing between text and button
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

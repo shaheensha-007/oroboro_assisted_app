@@ -6,4 +6,7 @@ abstract class MerchartTokenState {}
 class MerchartTokenInitial extends MerchartTokenState {}
 class MerchartTokenblocLoading extends MerchartTokenState{}
 class MerchartTokenblocLoaded extends MerchartTokenState{}
-class MerchartTokenblocError extends MerchartTokenState{}
+class MerchartTokenblocError extends MerchartTokenState{
+  final String Errormessage;
+  MerchartTokenblocError({required this.Errormessage});
+}
